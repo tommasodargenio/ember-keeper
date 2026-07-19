@@ -1,0 +1,54 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="EmberKeeper"
+config/version="0.0.1"
+config/tags=PackedStringArray("jams")
+run/main_scene="uid://dxxhrn63qhpvu"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="ProjectJ"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[autoload]
+
+Constants="*uid://ctovdtdyh7n6r"
+EventBus="*uid://b7x2m7ejl6cej"
+Utility="*uid://cufxlrdjx35yk"
+SceneTransition="*uid://dk0qisaeyoejk"
+GameManager="*uid://cfxbgnwmk88mo"
+PlayerManager="*uid://b7t5v285fq3s8"
+
+[debug]
+
+gdscript/warnings/unassigned_variable=0
+gdscript/warnings/unused_signal=0
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/kanban_tasks/plugin.cfg", "res://addons/project-time-tracker/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/tween_composer/plugin.cfg", "res://addons/yard/plugin.cfg")
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

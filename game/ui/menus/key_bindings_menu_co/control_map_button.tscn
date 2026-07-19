@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dywfe3jdb61gc"]
+
+[ext_resource type="LabelSettings" uid="uid://xm6tjqqy3waf" path="res://resources/ui/label_settings.tres" id="1_fanm5"]
+[ext_resource type="Script" uid="uid://6kojl2s2omv4" path="res://ui/key_bindings_menu_co/control_map_button.gd" id="1_x4cm0"]
+[ext_resource type="Script" uid="uid://cql28l35i8li8" path="res://singletons/InputReMapButton.gd" id="2_x4cm0"]
+
+[node name="ControlMapButton" type="HBoxContainer" unique_id=1715677656]
+custom_minimum_size = Vector2(200, 25)
+offset_right = 200.0
+offset_bottom = 25.0
+size_flags_horizontal = 3
+script = ExtResource("1_x4cm0")
+
+[node name="Label" type="Label" parent="." unique_id=661887607]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Random Map"
+label_settings = ExtResource("1_fanm5")
+
+[node name="InputReMapButton" type="Button" parent="." unique_id=1158642699]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+script = ExtResource("2_x4cm0")
+action = "generate_city_map"
+metadata/_custom_type_script = "uid://cql28l35i8li8"

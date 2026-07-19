@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://c5ogfpcb8jlb3"]
+
+[ext_resource type="PackedScene" uid="uid://nhv1aqgtybwm" path="res://base_components/ui/menus/main_menu_co/main_menu.tscn" id="1_nto6o"]
+[ext_resource type="Script" uid="uid://jhmu58lbr8qv" path="res://game/ui/menus/main_menu/main_menu.gd" id="2_5bjn0"]
+[ext_resource type="Script" uid="uid://dckbgyalb1pmr" path="res://base_components/ui/menus/main_menu_co/menu_item_definition.gd" id="3_xlkxe"]
+
+[sub_resource type="Resource" id="Resource_xlkxe"]
+script = ExtResource("3_xlkxe")
+name = "Play"
+destination_scene = ""
+action = "None"
+metadata/_custom_type_script = "uid://dckbgyalb1pmr"
+
+[sub_resource type="Resource" id="Resource_n3xbt"]
+script = ExtResource("3_xlkxe")
+name = "Settings"
+destination_scene = ""
+action = "None"
+metadata/_custom_type_script = "uid://dckbgyalb1pmr"
+
+[sub_resource type="Resource" id="Resource_5naww"]
+script = ExtResource("3_xlkxe")
+name = "Credits"
+destination_scene = ""
+action = "None"
+metadata/_custom_type_script = "uid://dckbgyalb1pmr"
+
+[sub_resource type="Resource" id="Resource_swmnj"]
+script = ExtResource("3_xlkxe")
+name = "Quit"
+destination_scene = ""
+action = "Quit"
+metadata/_custom_type_script = "uid://dckbgyalb1pmr"
+
+[node name="MainMenu" unique_id=467531739 instance=ExtResource("1_nto6o")]
+script = ExtResource("2_5bjn0")
+menu_footer = "0.1.0-26.5 Copyright (c) 2026-2026"
+menu_items = Array[ExtResource("3_xlkxe")]([SubResource("Resource_xlkxe"), SubResource("Resource_n3xbt"), SubResource("Resource_5naww"), SubResource("Resource_swmnj")])
+
+[node name="MenuTitleLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="0" unique_id=323291262]
+custom_minimum_size = Vector2(180, 61)
+text = "Project J"
+
+[node name="MenuFooterLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="4" unique_id=462098605]
+text = "0.1.0-26.5 Copyright (c) 2026-2026"

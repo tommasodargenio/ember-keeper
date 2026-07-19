@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://lwids5efmr32"]
+
+[ext_resource type="Script" uid="uid://c138oh6ihdlob" path="res://ui/key_bindings_menu_co/key_bindings_menu.gd" id="1_io4it"]
+[ext_resource type="PackedScene" uid="uid://nhv1aqgtybwm" path="res://ui/main_menu_co/main_menu.tscn" id="1_mnmhd"]
+[ext_resource type="Script" uid="uid://dckbgyalb1pmr" path="res://ui/main_menu_co/menu_item_definition.gd" id="2_io4it"]
+
+[sub_resource type="Resource" id="Resource_gft63"]
+script = ExtResource("2_io4it")
+name = "Back"
+transition = true
+source_node = &"KeyBindingsMenu"
+unhide_scene = &"Settings"
+destination_scene = ""
+action = "Close"
+metadata/_custom_type_script = "uid://dckbgyalb1pmr"
+
+[sub_resource type="Resource" id="Resource_o40nt"]
+script = ExtResource("2_io4it")
+name = "Apply"
+destination_scene = ""
+action = "SavePrefs"
+metadata/_custom_type_script = "uid://dckbgyalb1pmr"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_io4it"]
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 5
+border_blend = true
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4l7av"]
+
+[node name="KeyBindingsMenu" unique_id=467531739 instance=ExtResource("1_mnmhd")]
+script = ExtResource("1_io4it")
+placeholder_awaiting_input = "..."
+menu_title = "Controls"
+menu_items = Array[ExtResource("2_io4it")]([SubResource("Resource_gft63"), SubResource("Resource_o40nt")])
+
+[node name="MenuTitleLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="0" unique_id=323291262]
+custom_minimum_size = Vector2(176, 61)
+text = "Controls"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="2" unique_id=159278197]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer" index="0" unique_id=24069004]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/MarginContainer" index="0" unique_id=431181522]
+custom_minimum_size = Vector2(0, 280)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/scrollbar_h_separation = 5
+theme_override_styles/panel = SubResource("StyleBoxFlat_io4it")
+
+[node name="ControlsContainer" type="GridContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/MarginContainer/ScrollContainer" index="0" unique_id=2094055337]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HSeparator3" type="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="3" unique_id=11458725]
+layout_mode = 2
+theme_override_constants/separation = 15
+theme_override_styles/separator = SubResource("StyleBoxEmpty_4l7av")

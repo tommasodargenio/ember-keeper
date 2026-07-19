@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://nhv1aqgtybwm"]
+
+[ext_resource type="Script" uid="uid://bx8bpyn7hpoei" path="res://base_components/ui/menus/main_menu_co/main_menu.gd" id="1_4l7av"]
+[ext_resource type="LabelSettings" uid="uid://xm6tjqqy3waf" path="res://game/resources/models/ui/label_settings.tres" id="2_kqq14"]
+[ext_resource type="Script" uid="uid://byu6ijhjbxcpw" path="res://game/fx/ui/animated_label.gd" id="9_0di2d"]
+[ext_resource type="LabelSettings" uid="uid://dg4rysr5187ye" path="res://game/resources/models/ui/label_title_settings.tres" id="10_ucoer"]
+[ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://game/resources/models/ui/fonts/lilita_one_regular.ttf" id="11_6ngss"]
+[ext_resource type="Script" uid="uid://dlc3vj3ynnj7h" path="res://game/fx/vfx/tweens/window_slide_scroll/vfx_window_slide_scroll.gd" id="12_ks2mp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ekbk0"]
+bg_color = Color(0.25098, 0.278431, 0.337255, 0.67451)
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 20
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4l7av"]
+
+[node name="MainMenu" type="Control" unique_id=467531739 node_paths=PackedStringArray("target_container")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_4l7av")
+label_setting = ExtResource("2_kqq14")
+animate_title = true
+menu_item_min_size = Vector2(250, 50)
+container_animation = true
+target_container = NodePath("CenterContainer/PanelContainer/VBoxContainer/MenuItemContainer")
+container_animation_type = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=888014464]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1008529340]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ekbk0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer" unique_id=1394013805]
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MenuTitleLabel" type="Control" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=323291262]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(241, 61)
+layout_mode = 2
+script = ExtResource("9_0di2d")
+text = "MetroVend"
+label_settings = ExtResource("10_ucoer")
+animate_on_click = true
+wave_duration = 0.2
+metadata/_custom_type_script = "uid://byu6ijhjbxcpw"
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=485742059]
+layout_mode = 2
+theme_override_constants/separation = 15
+theme_override_styles/separator = SubResource("StyleBoxEmpty_4l7av")
+
+[node name="MenuItemContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=1041437249]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HSeparator2" type="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=398373851]
+layout_mode = 2
+theme_override_constants/separation = 15
+theme_override_styles/separator = SubResource("StyleBoxEmpty_4l7av")
+
+[node name="MenuFooterLabel" type="RichTextLabel" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=462098605]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("11_6ngss")
+text = "0.1.0-26.5 Copyright (c) 2025-2026"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="VFXWindowSlideScroll" type="Node" parent="." unique_id=1670067684]
+unique_name_in_owner = true
+script = ExtResource("12_ks2mp")
+transition = 10
+easing = 1
+exit_direction = 3
+entry_direction = 2
+metadata/_custom_type_script = "uid://dlc3vj3ynnj7h"

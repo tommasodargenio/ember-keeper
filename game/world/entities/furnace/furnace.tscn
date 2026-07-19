@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dism6vnkkkqf1"]
+
+[ext_resource type="Texture2D" uid="uid://qn3ssphl6m78" path="res://assets/tiles/Furnace.png" id="1_6ww2w"]
+[ext_resource type="Script" uid="uid://clufqd6do5ayu" path="res://game/world/entities/furnace/furnace.gd" id="1_ixjuu"]
+
+[node name="Furnace" type="Node2D" unique_id=171459215]
+script = ExtResource("1_ixjuu")
+is_lit = true
+
+[node name="Tex" type="Sprite2D" parent="." unique_id=1611027953]
+unique_name_in_owner = true
+texture = ExtResource("1_6ww2w")
+region_enabled = true

@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://dbngrypwajlmq"]
+
+[ext_resource type="PackedScene" uid="uid://nhv1aqgtybwm" path="res://ui/main_menu_co/main_menu.tscn" id="1_3su8j"]
+[ext_resource type="Script" uid="uid://dpomgkyj5igfh" path="res://ui/pause_menu_co/pause_menu.gd" id="1_h4i23"]
+[ext_resource type="Script" uid="uid://dckbgyalb1pmr" path="res://ui/main_menu_co/menu_item_definition.gd" id="2_xh6te"]
+
+[sub_resource type="Resource" id="Resource_xh6te"]
+script = ExtResource("2_xh6te")
+name = "Resume"
+transition = true
+destination_scene = ""
+action = "Resume"
+metadata/_custom_type_script = "uid://dckbgyalb1pmr"
+
+[sub_resource type="Resource" id="Resource_h4i23"]
+script = ExtResource("2_xh6te")
+name = "Exit to Main Menu"
+transition = true
+resume_game_if_paused = true
+destination_scene = "MainMenu"
+action = "Back"
+metadata/_custom_type_script = "uid://dckbgyalb1pmr"
+
+[sub_resource type="Resource" id="Resource_ibae5"]
+script = ExtResource("2_xh6te")
+name = "Settings"
+transition = true
+destination_scene = "Settings"
+action = "None"
+metadata/_custom_type_script = "uid://dckbgyalb1pmr"
+
+[sub_resource type="Resource" id="Resource_ijhdf"]
+script = ExtResource("2_xh6te")
+name = "Quit"
+transition = true
+destination_scene = ""
+action = "None"
+metadata/_custom_type_script = "uid://dckbgyalb1pmr"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4l7av"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xh6te"]
+
+[node name="PauseMenu" unique_id=467531739 instance=ExtResource("1_3su8j")]
+visible = false
+script = ExtResource("1_h4i23")
+start_hidden = true
+hide_as_close = true
+menu_title = "Pause"
+menu_items = Array[ExtResource("2_xh6te")]([SubResource("Resource_xh6te"), SubResource("Resource_h4i23"), SubResource("Resource_ibae5"), SubResource("Resource_ijhdf")])
+
+[node name="MenuTitleLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="0" unique_id=323291262]
+custom_minimum_size = Vector2(0, 61)
+text = "Pause"
+
+[node name="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="1" unique_id=485742059]
+theme_override_styles/separator = SubResource("StyleBoxEmpty_4l7av")
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="2" unique_id=1671244980]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator3" type="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="3" unique_id=2057682026]
+layout_mode = 2
+theme_override_constants/separation = 15
+theme_override_styles/separator = SubResource("StyleBoxEmpty_xh6te")
+
+[node name="HSeparator2" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="5" unique_id=398373851]
+theme_override_styles/separator = SubResource("StyleBoxEmpty_4l7av")
