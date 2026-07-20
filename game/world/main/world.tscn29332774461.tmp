@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c1jut3diux3vh"]
+
+[ext_resource type="PackedScene" uid="uid://ddl1jhofhuwv0" path="res://game/world/rooms/furnace_room.tscn" id="1_7deas"]
+[ext_resource type="PackedScene" uid="uid://ifkfhmg2yex7" path="res://game/world/entities/player/player.tscn" id="2_382eu"]
+[ext_resource type="PackedScene" uid="uid://blecwb62j0od3" path="res://game/world/main/environment.tscn" id="3_ln34i"]
+
+[node name="World" type="Node2D" unique_id=676933265]
+
+[node name="FurnaceRoom" parent="." unique_id=2132912707 instance=ExtResource("1_7deas")]
+
+[node name="Player" parent="." unique_id=25781300 instance=ExtResource("2_382eu")]
+position = Vector2(67, 110)
+
+[node name="Environment" parent="." unique_id=639537444 instance=ExtResource("3_ln34i")]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1938653477]
+
+[node name="Pause" type="CanvasLayer" parent="." unique_id=232628924]

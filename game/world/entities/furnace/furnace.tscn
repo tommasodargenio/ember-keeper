@@ -2,12 +2,38 @@
 
 [ext_resource type="Texture2D" uid="uid://qn3ssphl6m78" path="res://assets/tiles/Furnace.png" id="1_6ww2w"]
 [ext_resource type="Script" uid="uid://clufqd6do5ayu" path="res://game/world/entities/furnace/furnace.gd" id="1_ixjuu"]
+[ext_resource type="Resource" uid="uid://dpxgbkwdmpwss" path="res://game/resources/models/game/stone_furnace.tres" id="2_g2h8r"]
 
-[node name="Furnace" type="Node2D" unique_id=171459215]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gft63"]
+size = Vector2(28.940903, 38.260853)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o40nt"]
+radius = 25.897137
+
+[node name="Furnace" type="StaticBody2D" unique_id=1361453064]
+collision_layer = 2
+collision_mask = 4
 script = ExtResource("1_ixjuu")
 is_lit = true
+profile = ExtResource("2_g2h8r")
 
 [node name="Tex" type="Sprite2D" parent="." unique_id=1611027953]
 unique_name_in_owner = true
 texture = ExtResource("1_6ww2w")
 region_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2139897465]
+position = Vector2(1.2147293, 13.08013)
+shape = SubResource("RectangleShape2D_gft63")
+debug_color = Color(0.877882, 0.13496539, 0.4898103, 0.41960785)
+
+[node name="InteractSensor" type="Area2D" parent="." unique_id=687017662]
+unique_name_in_owner = true
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractSensor" unique_id=1743516335]
+shape = SubResource("CircleShape2D_o40nt")
+
+[node name="FuelBurningTimer" type="Timer" parent="." unique_id=249615355]
+unique_name_in_owner = true

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Fuel" format=3 uid="uid://bcuricqajthxq"]
+
+[ext_resource type="Script" uid="uid://cqhwbdnmruhhg" path="res://game/resources/base_models/fuel_res.gd" id="1_tpvsd"]
+[ext_resource type="Texture2D" uid="uid://dwpak5bg1u4pq" path="res://assets/tiles/Resources.png" id="2_u4gyk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgcxm"]
+atlas = ExtResource("2_u4gyk")
+region = Rect2(6, 51, 6, 10)
+
+[resource]
+script = ExtResource("1_tpvsd")
+name = "Basic Wood"
+description = "Cheap and cheerful. Burns quick"
+cost = 5
+energy = 10
+combustion_time = 5
+tex = SubResource("AtlasTexture_vgcxm")
+metadata/_custom_type_script = "uid://cqhwbdnmruhhg"

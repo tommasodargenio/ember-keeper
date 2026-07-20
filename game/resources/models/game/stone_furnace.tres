@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Furnace" format=3 uid="uid://dpxgbkwdmpwss"]
+
+[ext_resource type="Script" uid="uid://dhnhwuqrm3qty" path="res://game/resources/base_models/furnace_res.gd" id="1_oqdp4"]
+
+[resource]
+script = ExtResource("1_oqdp4")
+name = "Stone Kiln"
+description = "It does the job, just about"
+max_fuel_capacity = 10
+energy_burning_capacity = 5
+max_energy_output = 50
+metadata/_custom_type_script = "uid://dhnhwuqrm3qty"

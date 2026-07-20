@@ -1,6 +1,12 @@
 extends Node
 
 
+# PLAYER
+signal player_loading_fuel(fuel: Fuel, quantity: int)
+signal player_unloaded_fuel(fuel: Fuel, quantity: int)
+signal player_sitting()
+signal player_watering()
+
 # UI
 signal palette_changed(new_palette: String)
 signal show_info_panel(showing: bool,  grid_position: Vector3i, selected_structure, is_vending_machine : bool)
