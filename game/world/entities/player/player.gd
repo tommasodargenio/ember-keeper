@@ -25,13 +25,6 @@ func _register_events() -> void:
 		carrying.fuel = fuel
 		carrying.quantity = quantity
 	)
-	EventBus.player_unloaded_fuel.connect(func(fuel : Fuel, quantity: int):
-		pass
-		#if carrying.fuel == fuel:
-			#carrying.quantity -= quantity
-			#if carrying.quantity <= 0:
-				#carrying = {"fuel": null, "quantity": 0}
-	)
 #endregion
 
 

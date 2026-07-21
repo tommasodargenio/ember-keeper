@@ -7,6 +7,7 @@ const DEBUG_TYPE : DEBUG_LAYERS = DEBUG_LAYERS.GAME
 const GAME_NAME : String = "Ember Keeper"
 const GAME_VERSION : String = "0.1.0-26.7"
 
+# SAVE MANAGER
 const MAX_AUTOSAVE_SLOTS : int = 3
 const ENCRYPTION_KEY : String = "U(CTna;}3vK<m$+:drj;"
 const SAVE_ENCRYPTED: bool = false
@@ -18,9 +19,8 @@ const SAVE_FILE_BINARY: String = "udata.save"
 const SAVE_FILE_CLEAR : String = "udata.json"
 const SAVE_PREFERENCES_FILE : String = "prefs.json"
 
-var WINDOW_TITLE_FORMAT = func(title: String): 
-	return " :: %s " % title
-	
+# Game play
+const LANTERNS_GROUP = "lanterns"	
 	
 const DEFAULT_KEY_BINDINGS = {
 	"camera" : ["camera_back", "camera_forward", "camera_right", "camera_left", "camera_rotate", "camera_center", "zoom_in", "zoom_out"],
@@ -29,6 +29,9 @@ const DEFAULT_KEY_BINDINGS = {
 	"game" : ["save", "load", "generate_city_map", "regenerate_random_map"],
 	"vending_machines": ["show_vm_grid_view","fix_vm", "restock_vm", "collect_money_from_vm"]
 }
+
+
+
 
 # UI Colors and stuff
 const GAME_PALETTE = "amber"
@@ -41,6 +44,9 @@ const BUTTON_STYLEBOX : Dictionary = {
 	"disabled": "",
 	"focus": ""
 }
+var WINDOW_TITLE_FORMAT = func(title: String): 
+	return " :: %s " % title
+
 
 const SCENE_PATHS : Dictionary = {
 	"GameOver": "",

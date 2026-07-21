@@ -4,7 +4,10 @@
 [ext_resource type="TileSet" uid="uid://blef0bdwgmgcw" path="res://game/resources/models/tilesets/interior_props.tres" id="2_k0u28"]
 [ext_resource type="PackedScene" uid="uid://dism6vnkkkqf1" path="res://game/world/entities/furnace/furnace.tscn" id="3_qia00"]
 [ext_resource type="PackedScene" uid="uid://be61fr2p73q3b" path="res://game/world/entities/fuel_crate/fuel_crate.tscn" id="4_k0u28"]
+[ext_resource type="Resource" uid="uid://dpxgbkwdmpwss" path="res://game/resources/models/game/stone_furnace.tres" id="4_vgcxm"]
 [ext_resource type="Resource" uid="uid://bcuricqajthxq" path="res://game/resources/models/game/basic_wood.tres" id="5_kpjb5"]
+[ext_resource type="PackedScene" uid="uid://nts6xlg42gy6" path="res://game/world/entities/lantern/lantern.tscn" id="7_3u5ie"]
+[ext_resource type="Resource" uid="uid://dcpwx41ohj2ew" path="res://game/resources/models/game/basic_lantern.tres" id="8_1wirh"]
 
 [node name="FurnaceRoom" type="Node2D" unique_id=2132912707]
 
@@ -18,9 +21,13 @@ tile_set = ExtResource("2_k0u28")
 
 [node name="Furnace" parent="." unique_id=171459215 instance=ExtResource("3_qia00")]
 position = Vector2(116, 73)
-is_lit = false
+profile = ExtResource("4_vgcxm")
 
 [node name="FuelCrate" parent="." unique_id=1699193150 instance=ExtResource("4_k0u28")]
 position = Vector2(35, 95)
 fuel = ExtResource("5_kpjb5")
 quantity = 5
+
+[node name="Lantern" parent="." unique_id=348096580 instance=ExtResource("7_3u5ie")]
+position = Vector2(278, 60)
+profile = ExtResource("8_1wirh")

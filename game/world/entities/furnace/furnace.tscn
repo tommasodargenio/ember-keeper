@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://qn3ssphl6m78" path="res://assets/tiles/Furnace.png" id="1_6ww2w"]
 [ext_resource type="Script" uid="uid://clufqd6do5ayu" path="res://game/world/entities/furnace/furnace.gd" id="1_ixjuu"]
-[ext_resource type="Resource" uid="uid://dpxgbkwdmpwss" path="res://game/resources/models/game/stone_furnace.tres" id="2_g2h8r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gft63"]
 size = Vector2(28.940903, 38.260853)
@@ -14,8 +13,6 @@ size = Vector2(34.9907, 36.46227)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_ixjuu")
-is_lit = true
-profile = ExtResource("2_g2h8r")
 
 [node name="Tex" type="Sprite2D" parent="." unique_id=1611027953]
 unique_name_in_owner = true

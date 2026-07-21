@@ -102,9 +102,10 @@ func _process_burn(delta: float) -> void:
 	_burn_time_left -= delta
  
 	var target_output: int = clamp(loaded_fuel.energy, 0, max_energy_output)
+	
 	if energy_output != target_output:
 		energy_output = target_output
- 	
+		energy_output_changed.emit(energy_output)
 	# continuous pressure ramp while burning, instead of a lump on consume
 	var rate := pressure_gain_per_burn / loaded_fuel.combustion_time
 	pressure = min(100.0, pressure + rate * delta)

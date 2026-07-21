@@ -27,11 +27,13 @@ Utility="*uid://cufxlrdjx35yk"
 SceneTransition="*uid://dk0qisaeyoejk"
 GameManager="*uid://cfxbgnwmk88mo"
 PlayerManager="*uid://b7t5v285fq3s8"
+EnergyNetwork="*uid://ddn5foqhoceop"
 
 [debug]
 
 gdscript/warnings/unassigned_variable=0
 gdscript/warnings/unused_signal=0
+gdscript/warnings/standalone_ternary=0
 
 [display]
 

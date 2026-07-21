@@ -10,6 +10,9 @@ extends Control
 @onready var bottom_center: Control = %BottomCenter
 @onready var bottom_right: Control = %BottomRight
 
+
+@onready var network: RichTextLabel = %Network
+
 var message_window = preload("uid://d2pd5vnpg5jxk")
 
 func _ready() -> void:
@@ -32,3 +35,8 @@ func _register_events() -> void:
 			bottom_left.hide()
 			bottom_right.hide()
 	)	
+	
+	EnergyNetwork.network_updated.connect(func(supply: int, demand: int, lit_count: int, total_count: int):
+		var msg = "S: %s - D: %s - L: %s - T: %s" % [supply, demand, lit_count, total_count]
+		network.text = msg
+	)

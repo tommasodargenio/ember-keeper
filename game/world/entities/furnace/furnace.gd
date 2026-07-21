@@ -1,4 +1,4 @@
-extends Node2D
+extends StaticBody2D
 
 @export var is_lit: bool = false:
 	set(value):
@@ -16,7 +16,6 @@ extends Node2D
 
 @onready var tex: Sprite2D = %Tex
 @onready var interact_sensor: Area2D = %InteractSensor
-@onready var fuel_burning_timer: Timer = %FuelBurningTimer
 
 var can_interact : bool = false
 var interacting_player : Player
@@ -38,11 +37,18 @@ var model_unlit : Dictionary = {
 func _ready() -> void:
 	_update_tex()
 	_register_events()
-
-
+	EnergyNetwork.register_furnace(profile)
+	
+func _exit_tree() -> void:
+	EnergyNetwork.unregister_furnace(profile)
+	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and can_interact:
 		_handle_interact()
+	if event.is_action_pressed("ui_accept"):
+		var f = preload("res://game/resources/models/game/basic_wood.tres")
+		
+		profile.load_fuel(f, 10)
 
 func _process(delta: float) -> void:
 	profile.tick(delta)
