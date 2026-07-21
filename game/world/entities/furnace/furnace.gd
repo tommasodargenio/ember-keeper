@@ -1,6 +1,10 @@
 extends Node2D
 
-@export var is_lit: bool = false
+@export var is_lit: bool = false:
+	set(value):
+		is_lit = value
+		if is_node_ready():
+			_update_tex()	
 @export var use_fx: bool = false
 
 @export var profile : Furnace:
@@ -42,7 +46,8 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	profile.tick(delta)
-		
+	_handle_state()
+	
 func _register_events() -> void:
 	interact_sensor.body_entered.connect(func(body: Node2D):
 		if body is Player:
@@ -55,62 +60,62 @@ func _register_events() -> void:
 			interacting_player = null
 	)
 
+func _handle_state() -> void:
+	match profile.state:
+		Furnace.furnace_state.BURNING:
+			is_lit = true
+		Furnace.furnace_state.SHUTDOWN_LOW_PRESSURE:
+			is_lit = false
+		Furnace.furnace_state.IDLE:
+			is_lit = false
+		Furnace.furnace_state.OFF:
+			is_lit = false
+		_:	_update_tex()
+
 func _handle_interact() -> void:
 	if not (interacting_player is Player):
 		return
 
 	if not (interacting_player.carrying.fuel is Fuel):
-		print("Not sure what you are carrying but this ain't fuel!!")
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.FURNACE_NOT_FUEL)
+		print(LD.FURNACE_NOT_FUEL)
 		return
 
 	var player_carrying: Dictionary = interacting_player.carrying
 
 	if player_carrying.quantity <= 0:
-		print("You have nothing to load")
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.PLAYER_EMPTY_HANDED)
+		print(LD.PLAYER_EMPTY_HANDED)
 		return
 
 	if player_carrying.fuel.type != profile.fuel_type:
-		print("You can't load %s into this furnace which only accepts %s" % [
+		var msg = LD.FURNACE_WRONG_FUEL % [
 			player_carrying.fuel.name, Fuel.fuel_type.keys()[profile.fuel_type]
-		])
+		]
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", msg)
+
+		print(msg)
 		return
 
 	var accepted := profile.load_fuel(player_carrying.fuel, player_carrying.quantity)
 
 	if accepted == 0:
-		print("Furnace at max capacity, can't load")
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.FURNACE_FULL)
+		print(LD.FURNACE_FULL)
 		return
 
 	player_carrying.quantity -= accepted
 	EventBus.player_unloaded_fuel.emit(player_carrying.fuel, accepted)
 
 	if accepted < player_carrying.quantity + accepted:
-		print("Loaded %s, furnace is now full — %s still in hand" % [accepted, player_carrying.quantity])
+		var msg = LD.FURNACE_FUEL_LOADED % [accepted, player_carrying.quantity]
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", msg)
+		print(msg)
 	else:
-		print("We are burning baby, current load %s" % profile.current_fuel_units)
+		var msg = LD.FURNACE_BURNING_FUEL % profile.current_fuel_units
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", msg)
+		print(msg)
 			
-#func _handle_interact() -> void:
-	#if interacting_player is Player:
-		#if interacting_player.carrying.fuel is Fuel:
-			#var player_carrying: Dictionary = interacting_player.carrying
-			#if profile.fuel_type == player_carrying.fuel.type:
-				#if player_carrying.quantity and player_carrying.quantity > 0:
-					#var projected_load = current_fuel_load + player_carrying.quantity
-					#
-					#if projected_load > profile.max_fuel_capacity:
-						#print("Furnate at max capacity, can't load")
-						#return
-					#
-					#current_fuel_load = projected_load
-					#print("We are burning baby, current load %s" % current_fuel_load)
-					#EventBus.player_unloaded_fuel.emit(player_carrying.fuel, player_carrying.quantity)
-				#else:
-					#print("You have nothing to load")
-			#else:
-				#print("You can't load %s into this furnace which only accepts %s" % [player_carrying.fuel.name, Fuel.fuel_type.keys()[profile.fuel_type]])	
-		#else:
-			#print("Not sure what you are carrying but this ain't fuel!!")
-
 func _update_tex() -> void:
 	if not profile: return
 	

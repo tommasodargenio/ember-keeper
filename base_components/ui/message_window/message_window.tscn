@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://d2pd5vnpg5jxk"]
+
+[ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="1_0y21d"]
+[ext_resource type="StyleBox" uid="uid://c6kciv845e2vy" path="res://game/resources/models/ui/panel_style.tres" id="1_6qnic"]
+[ext_resource type="Script" uid="uid://dmjr1lj2t6hbg" path="res://base_components/ui/message_window/message_window.gd" id="1_exm5g"]
+[ext_resource type="StyleBox" uid="uid://d3q4vhqeku4x0" path="res://game/resources/models/ui/label_tag.tres" id="2_exm5g"]
+
+[node name="MessageWindow" type="Control" unique_id=1518361654]
+custom_minimum_size = Vector2(100, 80)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("1_0y21d")
+script = ExtResource("1_exm5g")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=134755395]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer" unique_id=1847219964]
+custom_minimum_size = Vector2(100, 90)
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer/MarginContainer" unique_id=618322541]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("1_6qnic")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/MarginContainer/PanelContainer" unique_id=1294447878]
+layout_mode = 2
+
+[node name="Title" type="RichTextLabel" parent="CenterContainer/MarginContainer/PanelContainer/VBoxContainer" unique_id=1686583255]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 10
+theme_override_font_sizes/bold_font_size = 10
+theme_override_font_sizes/bold_italics_font_size = 10
+theme_override_font_sizes/italics_font_size = 10
+theme_override_font_sizes/mono_font_size = 10
+theme_override_styles/normal = ExtResource("2_exm5g")
+bbcode_enabled = true
+text = "asas"
+fit_content = true
+
+[node name="Message" type="RichTextLabel" parent="CenterContainer/MarginContainer/PanelContainer/VBoxContainer" unique_id=823061587]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = ExtResource("2_exm5g")
+bbcode_enabled = true
+text = "awsas"
+fit_content = true
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/MarginContainer/PanelContainer/VBoxContainer" unique_id=1550354831]
+layout_mode = 2
+
+[node name="Close" type="Button" parent="CenterContainer/MarginContainer/PanelContainer/VBoxContainer" unique_id=1975613354]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1_0y21d")
+theme_override_font_sizes/font_size = 10
+text = "Close"

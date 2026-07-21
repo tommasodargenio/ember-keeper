@@ -1,6 +1,7 @@
 [gd_resource type="Theme" format=3 uid="uid://qqngc4whi7uh"]
 
-[ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://fonts/lilita_one_regular.ttf" id="1_wuyxw"]
+[ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://game/resources/models/ui/fonts/lilita_one_regular.ttf" id="1_wuyxw"]
 
 [resource]
 default_font = ExtResource("1_wuyxw")
+default_font_size = 10

@@ -38,6 +38,8 @@ var health: float = 100.0
 var state: furnace_state = furnace_state.OFF
 var _burn_time_left: float = 0.0
 var _venting: bool = false
+var _has_reached_operating_pressure: bool = false
+
 
 signal fuel_loaded(amount_accepted: int)
 signal fuel_depleted
@@ -76,6 +78,7 @@ func _try_ignite() -> bool:
 		return false
 	state = furnace_state.BURNING
 	_burn_time_left = loaded_fuel.combustion_time
+	_has_reached_operating_pressure = false
 	furnace_ignited.emit()
 	return true
  
@@ -101,8 +104,11 @@ func _process_burn(delta: float) -> void:
 	var target_output: int = clamp(loaded_fuel.energy, 0, max_energy_output)
 	if energy_output != target_output:
 		energy_output = target_output
-		energy_output_changed.emit(energy_output)
- 
+ 	
+	# continuous pressure ramp while burning, instead of a lump on consume
+	var rate := pressure_gain_per_burn / loaded_fuel.combustion_time
+	pressure = min(100.0, pressure + rate * delta)
+	
 	if _burn_time_left <= 0.0:
 		_consume_one_unit()
  
@@ -110,9 +116,7 @@ func _process_burn(delta: float) -> void:
 func _consume_one_unit() -> void:
 	print("One unit of fuel consumed")
 	current_fuel_units -= 1
-	pressure += pressure_gain_per_burn
-	pressure_changed.emit(pressure)
- 
+	
 	if current_fuel_units <= 0:
 		loaded_fuel = null
 		state = furnace_state.IDLE
@@ -130,15 +134,18 @@ func _update_pressure(delta: float) -> void:
  
 	pressure = max(0.0, pressure - decay * delta)
 	pressure_changed.emit(pressure)
- 
+	
+	if pressure >= pressure_min_operating:
+		_has_reached_operating_pressure = true
+
 	if pressure >= pressure_overheat_threshold:
 		health -= overheat_damage_per_second * delta
 		overheated.emit()
 		if health <= 0.0:
 			_shutdown("overheat_damage")
 			return
- 
-	if state == furnace_state.BURNING and pressure < pressure_min_operating:
+	
+	if state == furnace_state.BURNING and _has_reached_operating_pressure and pressure < pressure_min_operating:
 		_shutdown("low_pressure")
  
  
