@@ -31,3 +31,27 @@ quantity = 5
 [node name="Lantern" parent="." unique_id=348096580 instance=ExtResource("7_3u5ie")]
 position = Vector2(278, 60)
 profile = ExtResource("8_1wirh")
+
+[node name="Lantern2" parent="." unique_id=2071969239 instance=ExtResource("7_3u5ie")]
+position = Vector2(297, 60)
+profile = ExtResource("8_1wirh")
+
+[node name="Lantern3" parent="." unique_id=1423920453 instance=ExtResource("7_3u5ie")]
+position = Vector2(253, 61)
+profile = ExtResource("8_1wirh")
+
+[node name="Lantern4" parent="." unique_id=6712684 instance=ExtResource("7_3u5ie")]
+position = Vector2(230, 62)
+profile = ExtResource("8_1wirh")
+
+[node name="Lantern5" parent="." unique_id=1162481343 instance=ExtResource("7_3u5ie")]
+position = Vector2(209, 62)
+profile = ExtResource("8_1wirh")
+
+[node name="Lantern6" parent="." unique_id=230000664 instance=ExtResource("7_3u5ie")]
+position = Vector2(187, 61)
+profile = ExtResource("8_1wirh")
+
+[node name="Lantern7" parent="." unique_id=382696543 instance=ExtResource("7_3u5ie")]
+position = Vector2(164, 61)
+profile = ExtResource("8_1wirh")

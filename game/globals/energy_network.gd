@@ -16,6 +16,7 @@ var simulated_lantern_count: int = 0:
 	set(value):
 		simulated_lantern_count = value
 		distribute()
+var simulated_lantern_min_energy_required: int = 1
 var simulated_lantern_energy_required: int = 5
 
 
@@ -45,24 +46,39 @@ func _on_furnace_changed(_arg = null) -> void:
 func distribute() -> void:
 	var supply := _total_supply()
 	var entries: Array = _collect_demand_entries()
-
-	# cheapest-first: scarce energy goes to the least demanding lanterns before
-	# the hungrier ones. Swap this sort key for priority/distance-based logic
-	# later if "which lanterns matter most" becomes a gameplay question.
-	entries.sort_custom(func(a, b): return a.required < b.required)
-
+ 
+	entries.sort_custom(func(a, b): return a.min_required < b.min_required)
+ 
 	var remaining := supply
-	var lit_count := 0
 	var demand := 0
-
+	var lit_count := 0
+ 
+	# pass 1 — guarantee minimums, cheapest first
 	for entry in entries:
 		demand += entry.required
-		var can_light: bool = remaining >= entry.required
-		if can_light:
-			remaining -= entry.required
+		if remaining >= entry.min_required:
+			entry.allocated = entry.min_required
+			remaining -= entry.min_required
 			lit_count += 1
-		entry.apply.call(can_light)
-
+		else:
+			entry.allocated = 0
+ 
+	# pass 2 — top up toward full requirement, smallest gap first
+	var toppable: Array = entries.filter(func(e): return e.allocated > 0 and e.allocated < e.required)
+	toppable.sort_custom(func(a, b): return (a.required - a.allocated) < (b.required - b.allocated))
+ 
+	for entry in toppable:
+		var needed: int = entry.required - entry.allocated
+		if remaining >= needed:
+			entry.allocated = entry.required
+			remaining -= needed
+		else:
+			entry.allocated += remaining
+			remaining = 0
+ 
+	for entry in entries:
+		entry.apply.call(entry.allocated)
+ 
 	network_updated.emit(supply, demand, lit_count, entries.size())
 
 
@@ -74,15 +90,19 @@ func _collect_demand_entries() -> Array:
 			continue
 		entries.append({
 			"required": lantern_node.profile.energy_required,
-			"apply": func(lit: bool): _set_lantern_lit(lantern_node, lit)
+			"min_required": lantern_node.profile.min_energy_required,
+			"allocated": 0,
+			"apply": func(allocated: int): lantern_node.set_power(allocated)
 		})
 
 	for i in range(simulated_lantern_count):
 		entries.append({
 			"required": simulated_lantern_energy_required,
-			"apply": func(_lit: bool): pass  # no scene object, counted for demand/UI only
+			"min_required": simulated_lantern_min_energy_required,
+			"allocated": 0,
+			"apply": func(_allocated: int): pass  # no scene object, counted for demand/UI only
 		})
-
+		
 	return entries
 
 
@@ -94,9 +114,9 @@ func _total_supply() -> int:
 	return total
 
 
-func _set_lantern_lit(lantern_node: Node, lit: bool) -> void:
-	var new_state := Lantern.lantern_state.LIT if lit else Lantern.lantern_state.UNLIT
-	if lantern_node.profile.state == new_state:
-		return
-	lantern_node.profile.state = new_state
-	lantern_node.is_lit = lit
+#func _set_lantern_lit(lantern_node: Node, lit: bool) -> void:
+	#var new_state := Lantern.lantern_state.LIT if lit else Lantern.lantern_state.UNLIT
+	#if lantern_node.profile.state == new_state:
+		#return
+	#lantern_node.profile.state = new_state
+	#lantern_node.is_lit = lit

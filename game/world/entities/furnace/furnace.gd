@@ -48,7 +48,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		var f = preload("res://game/resources/models/game/basic_wood.tres")
 		
-		profile.load_fuel(f, 10)
+		profile.load_fuel(f, 20)
 
 func _process(delta: float) -> void:
 	profile.tick(delta)
