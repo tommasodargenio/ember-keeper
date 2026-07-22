@@ -9,7 +9,13 @@ extends StaticBody2D
 
 @export var profile : Furnace:
 	set(value):
+		if profile:
+			EnergyNetwork.unregister_furnace(profile)
 		profile = value
+		if profile:
+			EnergyNetwork.register_furnace(profile)
+		GameManager.current_furnace = profile
+		EventBus.active_furnace_changed.emit(profile)
 		if is_node_ready():
 			_update_tex()
 

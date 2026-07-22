@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dw71dvs0xp545"]
 
+[ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="1_8mv14"]
 [ext_resource type="Script" uid="uid://jen850vgv34w" path="res://game/ui/hud/hud.gd" id="1_d4vpa"]
+[ext_resource type="PackedScene" uid="uid://bsp7e11uvxurj" path="res://game/ui/gauge_meter/gauge.tscn" id="2_l7e5k"]
 
 [node name="HUD" type="Control" unique_id=245103641]
 layout_mode = 3
@@ -9,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_8mv14")
 script = ExtResource("1_d4vpa")
 
 [node name="TopLeft" type="Control" parent="." unique_id=645841863]
@@ -39,22 +42,6 @@ anchor_right = 1.0
 offset_left = -40.0
 offset_bottom = 32.0
 grow_horizontal = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="TopRight" unique_id=2067285045]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Network" type="RichTextLabel" parent="TopRight/HBoxContainer" unique_id=1778023260]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-fit_content = true
 
 [node name="CenterLeft" type="Control" parent="." unique_id=1371189148]
 unique_name_in_owner = true
@@ -106,6 +93,23 @@ offset_top = -32.0
 offset_right = 40.0
 grow_vertical = 0
 
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomLeft" unique_id=2067285045]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Network" type="RichTextLabel" parent="BottomLeft/HBoxContainer" unique_id=1778023260]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+fit_content = true
+
 [node name="BottomCenter" type="Control" parent="." unique_id=188833501]
 unique_name_in_owner = true
 layout_mode = 1
@@ -132,3 +136,10 @@ offset_left = -40.0
 offset_top = -32.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="Gauge" parent="BottomRight" unique_id=848230249 instance=ExtResource("2_l7e5k")]
+layout_mode = 1
+offset_left = -8.0
+offset_top = -32.0
+offset_right = -8.0
+offset_bottom = -32.0

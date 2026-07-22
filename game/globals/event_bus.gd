@@ -7,6 +7,9 @@ signal player_unloaded_fuel(fuel: Fuel, quantity: int)
 signal player_sitting()
 signal player_watering()
 
+# FURNACE
+signal active_furnace_changed(furnace: Furnace)
+
 # UI
 signal palette_changed(new_palette: String)
 signal show_info_panel(showing: bool,  grid_position: Vector3i, selected_structure, is_vending_machine : bool)

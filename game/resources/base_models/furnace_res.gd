@@ -21,13 +21,29 @@ var max_level : int = 3
 @export var max_energy_output: int = 0
 
 @export var fuel_type : Fuel.fuel_type
-# --- Pressure tuning (expose so you can balance per furnace type/level) ---
-@export var pressure_gain_per_burn: float = 8.0      # pressure added when a fuel unit ignites
-@export var pressure_passive_decay: float = 1.5       # pressure lost per second, always
-@export var pressure_vent_rate: float = 12.0          # pressure lost per second while player vents
-@export var pressure_overheat_threshold: float = 85.0 # above this = danger, damages furnace over time
-@export var pressure_min_operating: float = 10.0      # below this = forced shutdown
-@export var overheat_damage_per_second: float = 2.0   # "health" drained while overheated and unvented
+# --- Pressure tuning ---
+# Pressure chases a target proportional to current fuel intensity (how full
+# the furnace is right now), but asymmetrically: quick to climb, slow to
+# fall — thermal inertia, like a stove that stays hot well after the fire's
+# mostly out. min_operating_pressure is informational only (a "running
+# efficiently" reference line on the gauge) — it doesn't force a shutdown,
+# since low pressure from low fuel is expected, not a malfunction.
+# max_operating_pressure is the one real hard limit: overheating from not
+# venting is a genuine mismanagement failure, independent of fuel level.
+@export var pressure_rise_rate: float = 15.0             # pressure units/sec climbing toward target
+@export var pressure_cooldown_rate: float = 2.0           # pressure units/sec falling toward target — much slower, thermal mass
+@export var pressure_vent_rate: float = 12.0              # extra pressure lost per second while player actively vents
+@export var min_operating_pressure: float = 10.0          # visual reference only — "running efficiently" line on the gauge
+@export var max_operating_pressure: float = 85.0          # at/above this = overheat, damages furnace over time
+@export var overheat_damage_per_second: float = 2.0
+
+# --- Output tuning ---
+# Guarantees the furnace keeps producing at least a trickle of energy as
+# long as ANY fuel is loaded, so it never goes fully dark from scarcity
+# alone — output fades toward this floor as fuel runs low instead of
+# cutting off. Tune per furnace type if some models should sputter more
+# gracefully than others.
+@export var min_output_floor: int = 1
 
 # --- Runtime state (not exported, not part of the saved profile design necessarily —
 #     decide separately whether this belongs in your to_dict()/from_dict() save pattern) ---
@@ -73,6 +89,13 @@ func load_fuel(fuel: Fuel, amount: int) -> int:
  
 	return accepted
  
+func ignite() -> bool:
+	if state == furnace_state.BURNING:
+		return true
+	if current_fuel_units <= 0:
+		return false
+	return _try_ignite()
+	
 func _try_ignite() -> bool:
 	if current_fuel_units <= 0 or loaded_fuel == null:
 		return false
@@ -97,22 +120,31 @@ func tick(delta: float) -> void:
 				energy_output = 0
 				energy_output_changed.emit(energy_output)
  
- 
 func _process_burn(delta: float) -> void:
 	_burn_time_left -= delta
+	_update_output()
  
-	var target_output: int = clamp(loaded_fuel.energy, 0, max_energy_output)
-	
+	if _burn_time_left <= 0.0:
+		_consume_one_unit()
+
+# Fuel level sets the CEILING (how much energy this furnace could put out at
+# full pressure). Current pressure gates how much of that ceiling is actually
+# delivered right now — so output ramps up alongside pressure instead of
+# snapping instantly. min_output_floor still guarantees a small trickle the
+# moment the furnace is burning, so it's never fully dark while fuel remains,
+# even before pressure has had time to build.
+func _update_output() -> void:
+	var fuel_ratio := get_fuel_ratio()
+	var ceiling: int = int(round(loaded_fuel.energy * fuel_ratio))
+	ceiling = clamp(ceiling, 0, max_energy_output)
+ 
+	var spool_ratio: float = clamp(pressure / 100.0, 0.0, 1.0)
+	var scaled: int = int(round(ceiling * spool_ratio))
+	var target_output: int = clamp(max(scaled, min_output_floor), 0, max_energy_output)
+ 
 	if energy_output != target_output:
 		energy_output = target_output
 		energy_output_changed.emit(energy_output)
-	# continuous pressure ramp while burning, instead of a lump on consume
-	var rate := pressure_gain_per_burn / loaded_fuel.combustion_time
-	pressure = min(100.0, pressure + rate * delta)
-	
-	if _burn_time_left <= 0.0:
-		_consume_one_unit()
- 
  
 func _consume_one_unit() -> void:
 	print("One unit of fuel consumed")
@@ -126,29 +158,34 @@ func _consume_one_unit() -> void:
 		fuel_depleted.emit()
 	else:
 		_burn_time_left = loaded_fuel.combustion_time
+		_update_output()  # fuel_ratio just dropped, reflect it immediately
  
- 
+# Target is proportional to current fuel intensity — a full hopper pulls
+# pressure toward 100, an empty/off furnace pulls it toward 0. Climbing
+# toward the target is fast (pressure_rise_rate); falling toward it is slow
+# (pressure_cooldown_rate) — thermal inertia, so pressure lingers even as
+# fuel runs low or the fire goes out. Venting is a separate, faster, active
+# release that always applies regardless of which direction pressure is
+# already heading.
 func _update_pressure(delta: float) -> void:
-	var decay := pressure_passive_decay
-	if _venting:
-		decay += pressure_vent_rate
+	var target: float = get_fuel_ratio() * 100.0 if state == furnace_state.BURNING else 0.0
  
-	pressure = max(0.0, pressure - decay * delta)
+	if pressure < target:
+		pressure = move_toward(pressure, target, pressure_rise_rate * delta)
+	else:
+		pressure = move_toward(pressure, target, pressure_cooldown_rate * delta)
+ 
+	if _venting:
+		pressure = max(0.0, pressure - pressure_vent_rate * delta)
+ 
+	pressure = clamp(pressure, 0.0, 100.0)
 	pressure_changed.emit(pressure)
-	
-	if pressure >= pressure_min_operating:
-		_has_reached_operating_pressure = true
-
-	if pressure >= pressure_overheat_threshold:
+ 
+	if pressure >= max_operating_pressure:
 		health -= overheat_damage_per_second * delta
 		overheated.emit()
 		if health <= 0.0:
 			_shutdown("overheat_damage")
-			return
-	
-	if state == furnace_state.BURNING and _has_reached_operating_pressure and pressure < pressure_min_operating:
-		_shutdown("low_pressure")
- 
  
 func _shutdown(reason: String) -> void:
 	state = furnace_state.SHUTDOWN_LOW_PRESSURE
