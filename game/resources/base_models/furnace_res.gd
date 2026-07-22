@@ -1,7 +1,7 @@
 class_name Furnace extends Resource
 
 enum furnace_type {STONE, BRICK, IRON}
-enum furnace_state {OFF, IDLE, BURNING, SHUTDOWN_LOW_PRESSURE}
+enum furnace_state {OFF, IDLE, BURNING, SHUTDOWN_OVERHEAT}
 
 @export var name : String = ""
 @export var description: String = ""
@@ -115,7 +115,7 @@ func tick(delta: float) -> void:
 	match state:
 		furnace_state.BURNING:
 			_process_burn(delta)
-		furnace_state.SHUTDOWN_LOW_PRESSURE, furnace_state.OFF, furnace_state.IDLE:
+		furnace_state.SHUTDOWN_OVERHEAT, furnace_state.OFF, furnace_state.IDLE:
 			if energy_output != 0:
 				energy_output = 0
 				energy_output_changed.emit(energy_output)
@@ -188,7 +188,7 @@ func _update_pressure(delta: float) -> void:
 			_shutdown("overheat_damage")
  
 func _shutdown(reason: String) -> void:
-	state = furnace_state.SHUTDOWN_LOW_PRESSURE
+	state = furnace_state.SHUTDOWN_OVERHEAT
 	energy_output = 0
 	energy_output_changed.emit(energy_output)
 	furnace_shutdown.emit(reason)

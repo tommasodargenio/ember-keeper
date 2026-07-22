@@ -76,7 +76,7 @@ func _handle_state() -> void:
 	match profile.state:
 		Furnace.furnace_state.BURNING:
 			is_lit = true
-		Furnace.furnace_state.SHUTDOWN_LOW_PRESSURE:
+		Furnace.furnace_state.SHUTDOWN_OVERHEAT:
 			is_lit = false
 		Furnace.furnace_state.IDLE:
 			is_lit = false
