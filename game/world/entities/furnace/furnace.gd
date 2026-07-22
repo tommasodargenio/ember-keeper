@@ -89,14 +89,14 @@ func _handle_interact() -> void:
 		return
 
 	if not (interacting_player.carrying.fuel is Fuel):
-		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.FURNACE_NOT_FUEL)
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.FURNACE_NOT_FUEL, "TIMEOUT")
 		print(LD.FURNACE_NOT_FUEL)
 		return
 
 	var player_carrying: Dictionary = interacting_player.carrying
 
 	if player_carrying.quantity <= 0:
-		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.PLAYER_EMPTY_HANDED)
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.PLAYER_EMPTY_HANDED, "TIMEOUT")
 		print(LD.PLAYER_EMPTY_HANDED)
 		return
 
@@ -104,7 +104,7 @@ func _handle_interact() -> void:
 		var msg = LD.FURNACE_WRONG_FUEL % [
 			player_carrying.fuel.name, Fuel.fuel_type.keys()[profile.fuel_type]
 		]
-		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", msg)
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", msg, "TIMEOUT")
 
 		print(msg)
 		return
@@ -112,7 +112,7 @@ func _handle_interact() -> void:
 	var accepted := profile.load_fuel(player_carrying.fuel, player_carrying.quantity)
 
 	if accepted == 0:
-		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.FURNACE_FULL)
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.FURNACE_FULL, "TIMEOUT")
 		print(LD.FURNACE_FULL)
 		return
 
@@ -121,11 +121,11 @@ func _handle_interact() -> void:
 
 	if accepted < player_carrying.quantity + accepted:
 		var msg = LD.FURNACE_FUEL_LOADED % [accepted, player_carrying.quantity]
-		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", msg)
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", msg, "TIMEOUT")
 		print(msg)
 	else:
 		var msg = LD.FURNACE_BURNING_FUEL % profile.current_fuel_units
-		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", msg)
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", msg, "TIMEOUT")
 		print(msg)
 			
 func _update_tex() -> void:

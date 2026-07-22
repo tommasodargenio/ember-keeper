@@ -64,6 +64,7 @@ signal pressure_changed(new_pressure: float)
 signal overheated
 signal furnace_shutdown(reason: String)
 signal furnace_ignited
+signal health_changed(current_health: int)
 
 func can_accept_fuel(fuel: Fuel) -> bool:
 	if fuel.type != fuel_type:
@@ -183,6 +184,7 @@ func _update_pressure(delta: float) -> void:
  
 	if pressure >= max_operating_pressure:
 		health -= overheat_damage_per_second * delta
+		health_changed.emit(health)
 		overheated.emit()
 		if health <= 0.0:
 			_shutdown("overheat_damage")

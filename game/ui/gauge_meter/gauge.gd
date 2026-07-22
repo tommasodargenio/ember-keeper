@@ -1,5 +1,8 @@
 extends Control
 
+@export var gauge_pressure: bool = true
+@export var gauge_health : bool = false
+
 @onready var mano_meter: TextureRect = %ManoMeter
 @onready var pressure_read: RichTextLabel = %PressureRead
 @onready var needle: TextureRect = %Needle
@@ -21,15 +24,22 @@ func _ready() -> void:
 
 
 func _set_furnace(new_furnace: Furnace) -> void:
-	if furnace and furnace.pressure_changed.is_connected(_on_pressure_changed):
-		furnace.pressure_changed.disconnect(_on_pressure_changed)
+	if furnace and gauge_pressure and furnace.pressure_changed.is_connected(_on_meter_changed):
+		furnace.pressure_changed.disconnect(_on_meter_changed)
+	if furnace and gauge_health and furnace.health_changed.is_connected(_on_meter_changed):
+		furnace.health_changed.disconnect(_on_meter_changed)
+
 	furnace = new_furnace
 	if furnace:
-		furnace.pressure_changed.connect(_on_pressure_changed)
-		_on_pressure_changed(furnace.pressure)
+		if gauge_pressure:
+			furnace.pressure_changed.connect(_on_meter_changed)
+			_on_meter_changed(furnace.pressure)
+		elif gauge_health:
+			furnace.health_changed.connect(_on_meter_changed)
+			_on_meter_changed(furnace.health)
 		#_update_safe_zone_markers()
 
-func _on_pressure_changed(value: float) -> void:
+func _on_meter_changed(value: float) -> void:
 	needle.rotation_degrees = _angle_for(value)
 	pressure_read.text = "[color=%s][font_size=10]%.*f[/font_size][/color]" % [Palette.get_color("dark"),decimals, value]
  

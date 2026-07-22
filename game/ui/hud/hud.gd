@@ -25,7 +25,7 @@ func _register_events() -> void:
 		new_msg.message_text = message
 		new_msg.close_action = action
 		new_msg.message_flag = type
-		center.add_child(new_msg)
+		bottom_left.add_child(new_msg)
 		
 		if disable_ui:
 			top_left.hide()
