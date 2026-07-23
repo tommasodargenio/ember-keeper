@@ -655,3 +655,10 @@ animation = &"interact"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2075826669]
 position = Vector2(0.5, 13)
 shape = SubResource("RectangleShape2D_rc7es")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1550227971]
+offset = Vector2(93, -8)
+process_callback = 0
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
