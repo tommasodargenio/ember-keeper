@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://bh4j8fdgtcspu"]
+
+[ext_resource type="StyleBox" uid="uid://c6kciv845e2vy" path="res://game/resources/models/ui/panel_style.tres" id="1_ldci2"]
+[ext_resource type="Script" uid="uid://doit3ijgsctwj" path="res://game/ui/dashboard/dashboard.gd" id="1_w7oji"]
+[ext_resource type="StyleBox" uid="uid://d3q4vhqeku4x0" path="res://game/resources/models/ui/label_tag.tres" id="2_w7oji"]
+[ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="3_emk42"]
+
+[node name="Dashboard" type="Control" unique_id=524229284]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0.5, 0.5)
+script = ExtResource("1_w7oji")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=86459668]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=1264616210]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("1_ldci2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=594957993]
+layout_mode = 2
+
+[node name="Title" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=147352420]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 10
+theme_override_font_sizes/bold_font_size = 10
+theme_override_font_sizes/bold_italics_font_size = 10
+theme_override_font_sizes/italics_font_size = 10
+theme_override_font_sizes/mono_font_size = 10
+theme_override_styles/normal = ExtResource("2_w7oji")
+bbcode_enabled = true
+text = "Dashboard"
+fit_content = true
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=204899073]
+layout_mode = 2
+
+[node name="Close" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1749115010]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_emk42")
+theme_override_font_sizes/font_size = 10
+text = "Close"

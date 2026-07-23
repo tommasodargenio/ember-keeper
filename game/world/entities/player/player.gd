@@ -9,6 +9,8 @@ const FRICTION : int = 8
 
 var last_direction : Vector2 = Vector2.RIGHT
 var carrying : Dictionary = {"fuel": null, "quantity": 0}
+var can_walk : bool = true
+var is_sitting : bool = false
 
 func _ready() -> void:
 	_register_events()
@@ -25,12 +27,32 @@ func _register_events() -> void:
 		carrying.fuel = fuel
 		carrying.quantity = quantity
 	)
+	EventBus.player_sitting.connect(func():
+		is_sitting = true
+		can_walk = false
+		tex.play("sitting")
+	)
+	EventBus.player_standing.connect(func():
+		tex.play("standing")
+	)
+	tex.animation_finished.connect(func():
+		if tex.animation == "sitting":
+			print("we sat")
+			EventBus.player_sat.emit()
+		if tex.animation == "standing":
+			is_sitting = false
+			can_walk = true
+			tex.play("idle_down")
+	)
+	
 #endregion
 
 
 
 #region Movement and Animation
 func _handle_movements(delta: float) -> void:
+	if not can_walk : return
+	
 	var direction := Input.get_vector("player_left", "player_right", "player_up", "player_down")
 	
 	if direction != Vector2.ZERO:
@@ -42,6 +64,8 @@ func _handle_movements(delta: float) -> void:
 		
 
 func _animation_state() -> void:
+	if is_sitting: return
+	
 	if velocity != Vector2.ZERO:
 		_handle_animation("walking", last_direction)
 	else:

@@ -1,10 +1,35 @@
 extends Node
 
+# GAME
+signal game_loaded()
+signal level_started()
+signal map_loaded()
+signal game_ready()
+signal save_loaded()
+signal game_saved(save_filename : String, saved_at: String, quit_on_save: bool)
+signal game_options_saved()
+signal game_options_loaded()
+signal init_new_map()
+signal game_paused()
+signal game_resumed()
+
+# Settings
+signal music_toggle(status: bool)
+signal music_volume(level: float)
+signal sound_toggle(status: bool)
+signal sound_volume(level: float)
+signal main_volume(level: float)
+signal auto_save(status: bool)
+signal start_from_last_save(status: bool)
+signal save_before_exiting(status: bool)
+signal auto_save_frequency(value: int)
 
 # PLAYER
 signal player_loading_fuel(fuel: Fuel, quantity: int)
 signal player_unloaded_fuel(fuel: Fuel, quantity: int)
 signal player_sitting()
+signal player_standing()
+signal player_sat()
 signal player_watering()
 
 # FURNACE
