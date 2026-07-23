@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgu711yomvqby"
-path="res://.godot/imported/guage-max-pressure-marker.png-dd5c98e68d2a3dcffb9158fa17b0d6ab.ctex"
+uid="uid://dgd3k802njfwc"
+path="res://.godot/imported/min-marker.png-e0656549274b4054c4cd6b8674219a28.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/props/guage-max-pressure-marker.png"
-dest_files=["res://.godot/imported/guage-max-pressure-marker.png-dd5c98e68d2a3dcffb9158fa17b0d6ab.ctex"]
+source_file="res://assets/sprites/props/min-marker.png"
+dest_files=["res://.godot/imported/min-marker.png-e0656549274b4054c4cd6b8674219a28.ctex"]
 
 [params]
 

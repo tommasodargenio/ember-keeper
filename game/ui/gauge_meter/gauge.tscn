@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://srmo0jqtov1y" path="res://game/ui/gauge_meter/gauge.gd" id="1_vlv1o"]
 [ext_resource type="Texture2D" uid="uid://c0xvrml11njcv" path="res://assets/sprites/props/manometer_gauge.png" id="2_vmlna"]
 [ext_resource type="Texture2D" uid="uid://c770o4v3373o4" path="res://assets/sprites/props/manometer_needle.png" id="3_mb486"]
+[ext_resource type="Texture2D" uid="uid://dgd3k802njfwc" path="res://assets/sprites/props/min-marker.png" id="4_mb486"]
+[ext_resource type="Texture2D" uid="uid://qf82kjeoq8qg" path="res://assets/sprites/props/max-marker.png" id="5_sddhh"]
 
 [node name="Gauge" type="Control" unique_id=848230249]
 layout_mode = 3
@@ -13,30 +15,64 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vlv1o")
 
+[node name="GaugeType" type="RichTextLabel" parent="." unique_id=343518274]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 0
+offset_left = 2.0
+offset_top = 5.0
+offset_right = 49.0
+offset_bottom = 28.0
+bbcode_enabled = true
+text = "H"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="ManoMeter" type="TextureRect" parent="." unique_id=2060164314]
 unique_name_in_owner = true
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_vmlna")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="Needle" type="TextureRect" parent="ManoMeter" unique_id=1774694394]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 27.0
-offset_top = 30.0
-offset_right = 67.0
-offset_bottom = 70.0
-pivot_offset = Vector2(25, 25)
+offset_left = 32.0
+offset_top = 34.0
+offset_right = 63.0
+offset_bottom = 64.0
+pivot_offset = Vector2(20, 19)
 texture = ExtResource("3_mb486")
+
+[node name="MarkerMinPressure" type="TextureRect" parent="ManoMeter" unique_id=1600235860]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 18.0
+offset_top = 49.0
+offset_right = 55.0
+offset_bottom = 73.0
+pivot_offset = Vector2(34, 4)
+texture = ExtResource("4_mb486")
+
+[node name="MarkerMaxPressure" type="TextureRect" parent="ManoMeter" unique_id=1179585994]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 48.0
+offset_top = 49.0
+offset_right = 80.0
+offset_bottom = 73.0
+pivot_offset = Vector2(4, 4)
+texture = ExtResource("5_sddhh")
 
 [node name="PressureRead" type="RichTextLabel" parent="." unique_id=1607146582]
 unique_name_in_owner = true
 layout_mode = 0
-offset_top = 28.0
+offset_top = 27.0
 offset_right = 49.0
-offset_bottom = 51.0
+offset_bottom = 50.0
 theme_override_font_sizes/normal_font_size = 10
 theme_override_font_sizes/bold_font_size = 10
 theme_override_font_sizes/bold_italics_font_size = 10

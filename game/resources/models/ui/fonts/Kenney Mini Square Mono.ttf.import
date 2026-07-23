@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://d0cxd77jybrcn"
-path="res://.godot/imported/lilita_one_regular.ttf-c98385614f3a3c27cabc50004de371ee.fontdata"
+uid="uid://darcjb7xdy0vw"
+path="res://.godot/imported/Kenney Mini Square Mono.ttf-815c716595905abc87402aaf3e5d6764.fontdata"
 
 [deps]
 
-source_file="res://game/resources/models/ui/fonts/lilita_one_regular.ttf"
-dest_files=["res://.godot/imported/lilita_one_regular.ttf-c98385614f3a3c27cabc50004de371ee.fontdata"]
+source_file="res://game/resources/models/ui/fonts/Kenney Mini Square Mono.ttf"
+dest_files=["res://.godot/imported/Kenney Mini Square Mono.ttf-815c716595905abc87402aaf3e5d6764.fontdata"]
 
 [params]
 
@@ -22,20 +22,15 @@ msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
 modulate_color_glyphs=false
-hinting=1
-subpixel_positioning=1
+hinting=3
+subpixel_positioning=4
 keep_rounding_remainders=true
 oversampling=0.0
 Fallbacks=null
 fallbacks=[]
 Compress=null
 compress=true
-preload=[{
-"chars": [],
-"glyphs": [],
-"name": "New Configuration",
-"size": Vector2i(16, 0)
-}]
+preload=[]
 language_support={}
 script_support={}
 opentype_features={}
