@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dwiwxyb7xpukv" path="res://assets/spritesheets/character.png" id="1_f2dgn"]
 [ext_resource type="Script" uid="uid://jm40uac37ojk" path="res://game/world/entities/player/player.gd" id="1_ucj5q"]
+[ext_resource type="Script" uid="uid://cxhghyxuxii34" path="res://game/world/entities/player/camera.gd" id="3_0lumf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ucj5q"]
 atlas = ExtResource("1_f2dgn")
@@ -701,3 +702,4 @@ process_callback = 0
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+script = ExtResource("3_0lumf")
