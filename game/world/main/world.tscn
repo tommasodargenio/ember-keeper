@@ -2,12 +2,18 @@
 
 [ext_resource type="PackedScene" uid="uid://ddl1jhofhuwv0" path="res://game/world/rooms/furnace_room.tscn" id="1_7deas"]
 [ext_resource type="PackedScene" uid="uid://ifkfhmg2yex7" path="res://game/world/entities/player/player.tscn" id="2_382eu"]
+[ext_resource type="PackedScene" uid="uid://bp7bgoqaboxx6" path="res://game/world/rooms/chair_room.tscn" id="2_ln34i"]
 [ext_resource type="PackedScene" uid="uid://blecwb62j0od3" path="res://game/world/main/environment.tscn" id="3_ln34i"]
 [ext_resource type="PackedScene" uid="uid://dw71dvs0xp545" path="res://game/ui/hud/hud.tscn" id="4_382eu"]
+[ext_resource type="PackedScene" uid="uid://dbngrypwajlmq" path="res://game/ui/menus/pause_menu_co/pause_menu.tscn" id="6_61rfq"]
+[ext_resource type="PackedScene" uid="uid://bh4j8fdgtcspu" path="res://game/ui/dashboard/dashboard.tscn" id="6_n7a80"]
 
 [node name="World" type="Node2D" unique_id=676933265]
 
 [node name="FurnaceRoom" parent="." unique_id=2132912707 instance=ExtResource("1_7deas")]
+
+[node name="ChairRoom" parent="." unique_id=1533580783 instance=ExtResource("2_ln34i")]
+position = Vector2(318, 16)
 
 [node name="Player" parent="." unique_id=25781300 instance=ExtResource("2_382eu")]
 position = Vector2(67, 110)
@@ -18,4 +24,9 @@ position = Vector2(67, 110)
 
 [node name="HUD" parent="UI" unique_id=245103641 instance=ExtResource("4_382eu")]
 
+[node name="Dashboard" parent="UI" unique_id=524229284 instance=ExtResource("6_n7a80")]
+
 [node name="Pause" type="CanvasLayer" parent="." unique_id=232628924]
+
+[node name="PauseMenu" parent="Pause" unique_id=467531739 instance=ExtResource("6_61rfq")]
+menu_footer = "0.1.0-26.7 Copyright (c) 2026-2026"
