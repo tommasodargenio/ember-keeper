@@ -50,6 +50,13 @@ fit_content = true
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=204899073]
 layout_mode = 2
 
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1830264508]
+layout_mode = 2
+
+[node name="TownMoodStatus" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=331235977]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="Close" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1749115010]
 unique_name_in_owner = true
 layout_mode = 2

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Lantern" format=3 uid="uid://bvimwp5f46eal"]
+
+[ext_resource type="Script" uid="uid://bf6b4v5uqfd8n" path="res://game/resources/base_models/lantern_res.gd" id="1_kvjoi"]
+
+[resource]
+script = ExtResource("1_kvjoi")
+name = "Woods Lantern"
+min_energy_required = 2
+energy_required = 4
+metadata/_custom_type_script = "uid://bf6b4v5uqfd8n"

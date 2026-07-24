@@ -10,7 +10,6 @@ extends Control
 @onready var bottom_center: Control = %BottomCenter
 @onready var bottom_right: Control = %BottomRight
 
-
 @onready var network: RichTextLabel = %Network
 
 var message_window = preload("uid://d2pd5vnpg5jxk")

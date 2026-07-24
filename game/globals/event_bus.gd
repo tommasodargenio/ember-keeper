@@ -12,6 +12,7 @@ signal game_options_loaded()
 signal init_new_map()
 signal game_paused()
 signal game_resumed()
+signal town_mood_updated()
 
 # Settings
 signal music_toggle(status: bool)

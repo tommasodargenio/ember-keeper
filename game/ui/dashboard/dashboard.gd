@@ -3,6 +3,7 @@ extends Control
 @export var start_hidden : bool = true
 @onready var close: Button = %Close
 
+@onready var town_mood_status: RichTextLabel = %TownMoodStatus
 
 var tween : Tween
 
@@ -16,6 +17,9 @@ func _ready() -> void:
 		self.modulate.a = 1.0
 		
 func _register_events() -> void:
+	EventBus.town_mood_updated.connect(func():
+		town_mood_status.text = "%s" % [GameManager.get_town_mood(true)]
+	)	
 	EventBus.player_sat.connect(func():
 		print("dashboard in")
 		_transition_in()

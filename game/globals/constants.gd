@@ -20,14 +20,13 @@ const SAVE_FILE_CLEAR : String = "udata.json"
 const SAVE_PREFERENCES_FILE : String = "prefs.json"
 
 # Game play
-const LANTERNS_GROUP = "lanterns"	
-	
+const LANTERNS_GROUP = "lanterns"
+const STARTING_TOWN_LANTERNS = 5
+const STARTING_WOODS_LANTERNS = 5
+
 const DEFAULT_KEY_BINDINGS = {
-	"camera" : ["camera_back", "camera_forward", "camera_right", "camera_left", "camera_rotate", "camera_center", "zoom_in", "zoom_out"],
-	"debug" : ["telemetry", "debug", "debug_panel", "clear_npcs", "spawn_npc", "load_resources", "test_fx", "rotate_tex_back", "rotate_tex"],
-	"building" : ["building_mode", "resouce_selector", "structure_previous", "structure_next", "demolish", "rotate", "build"],
-	"game" : ["save", "load", "generate_city_map", "regenerate_random_map"],
-	"vending_machines": ["show_vm_grid_view","fix_vm", "restock_vm", "collect_money_from_vm"]
+	"game" : ["save", "load", "pause", "exit"],
+	"player": ["player_left","player_right", "player_up", "player_down", "interact"]
 }
 
 
@@ -50,6 +49,7 @@ var WINDOW_TITLE_FORMAT = func(title: String):
 
 const SCENE_PATHS : Dictionary = {
 	"GameOver": "",
+	"Lantern": "uid://nts6xlg42gy6",
 	"MainMenu": "uid://c5ogfpcb8jlb3",
 	"SaveLoadMenu": "",
 	"Credits": "",

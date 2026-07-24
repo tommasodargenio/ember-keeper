@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c1jut3diux3vh"]
 
 [ext_resource type="PackedScene" uid="uid://ddl1jhofhuwv0" path="res://game/world/rooms/furnace_room.tscn" id="1_7deas"]
+[ext_resource type="Script" uid="uid://f0kf7fa2572l" path="res://game/world/main/world.gd" id="1_h0x6e"]
 [ext_resource type="PackedScene" uid="uid://ifkfhmg2yex7" path="res://game/world/entities/player/player.tscn" id="2_382eu"]
 [ext_resource type="PackedScene" uid="uid://bp7bgoqaboxx6" path="res://game/world/rooms/chair_room.tscn" id="2_ln34i"]
 [ext_resource type="PackedScene" uid="uid://blecwb62j0od3" path="res://game/world/main/environment.tscn" id="3_ln34i"]
@@ -9,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bh4j8fdgtcspu" path="res://game/ui/dashboard/dashboard.tscn" id="6_n7a80"]
 
 [node name="World" type="Node2D" unique_id=676933265]
+script = ExtResource("1_h0x6e")
 
 [node name="FurnaceRoom" parent="." unique_id=2132912707 instance=ExtResource("1_7deas")]
 
@@ -30,3 +32,6 @@ position = Vector2(67, 110)
 
 [node name="PauseMenu" parent="Pause" unique_id=467531739 instance=ExtResource("6_61rfq")]
 menu_footer = "0.1.0-26.7 Copyright (c) 2026-2026"
+
+[node name="GameLanterns" type="Node" parent="." unique_id=986306071]
+unique_name_in_owner = true

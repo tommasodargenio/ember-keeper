@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Lantern" format=3 uid="uid://cwnfoj65xk8d1"]
+
+[ext_resource type="Script" uid="uid://bf6b4v5uqfd8n" path="res://game/resources/base_models/lantern_res.gd" id="1_cw6fy"]
+
+[resource]
+script = ExtResource("1_cw6fy")
+name = "Town Lantern"
+min_energy_required = 3
+energy_required = 8
+metadata/_custom_type_script = "uid://bf6b4v5uqfd8n"

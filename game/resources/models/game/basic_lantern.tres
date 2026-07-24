@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_eqtpp")
-name = "Basic Lanter"
+name = "Basic Lantern"
 min_energy_required = 1
 energy_required = 4
 metadata/_custom_type_script = "uid://bf6b4v5uqfd8n"
