@@ -25,11 +25,16 @@ func _physics_process(delta: float) -> void:
 func _register_events() -> void:
 	EventBus.player_has_water.connect(func(quantity: int):
 		carrying_water += quantity
+		var im = InputMap.action_get_events("watering")
+		EventBus.add_to_hotbar.emit("Water",load(Constants.RESOURCES["WaterBucket"]), quantity, im[0].as_text().replacen("- Physical", "").strip_edges() )
 	)
 	EventBus.player_loading_fuel.connect(func(fuel : Fuel, quantity: int):
 		print("Loading some %s" % fuel.name)
 		carrying.fuel = fuel
 		carrying.quantity = quantity
+		var fuel_tex = Constants.RESOURCES["FuelWood"] if fuel.type == Fuel.fuel_type.WOOD else Constants.RESOURCES["FuelCoal"]
+		var im = InputMap.action_get_events("interact")
+		EventBus.add_to_hotbar.emit(fuel.name, load(fuel_tex), quantity, im[0].as_text().replacen("- Physical", "").strip_edges())
 	)
 	EventBus.player_sitting.connect(func():
 		is_sitting = true

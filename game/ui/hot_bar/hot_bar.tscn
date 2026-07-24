@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://lunpcjqs7on8"]
+
+[ext_resource type="Script" uid="uid://botwsvgulgdic" path="res://game/ui/hot_bar/hot_bar.gd" id="1_1qeut"]
+
+[node name="HotBar" type="Control" unique_id=1860826930]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1qeut")
+
+[node name="Grid" type="GridContainer" parent="." unique_id=2113906752]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 6

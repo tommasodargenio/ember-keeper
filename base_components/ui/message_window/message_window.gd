@@ -14,6 +14,7 @@ var timeout : int = 3
 func _ready() -> void:
 	if close_action != "":
 		if close_action == "TIMEOUT":
+			close.hide()
 			var t = get_tree().create_timer(timeout)
 			t.timeout.connect(func():
 				var tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)

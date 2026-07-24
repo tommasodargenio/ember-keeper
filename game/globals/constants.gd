@@ -23,6 +23,7 @@ const SAVE_PREFERENCES_FILE : String = "prefs.json"
 const LANTERNS_GROUP = "lanterns"
 const STARTING_TOWN_LANTERNS = 0
 const STARTING_WOODS_LANTERNS = 0
+const WATER_TO_USE = 10
 
 const DEFAULT_KEY_BINDINGS = {
 	"game" : ["save", "load", "pause", "exit"],
@@ -45,14 +46,22 @@ const BUTTON_STYLEBOX : Dictionary = {
 	"disabled": "",
 	"focus": ""
 }
+const PANEL_STYLEBOX = "uid://c6kciv845e2vy"
 var WINDOW_TITLE_FORMAT = func(title: String): 
 	return " :: %s " % title
 
+
+const RESOURCES : Dictionary = {
+	"WaterBucket": "uid://c2laqg6ww1g0p",
+	"FuelWood": "uid://8n2mapwkgmp0",
+	"FuelCoal": "uid://3rkli5loqurd"
+}
 
 const SCENE_PATHS : Dictionary = {
 	"GameOver": "",
 	"Lantern": "uid://nts6xlg42gy6",
 	"MainMenu": "uid://c5ogfpcb8jlb3",
+	"HotBarItem" : "uid://cy717i5jy85m4",
 	"SaveLoadMenu": "",
 	"Credits": "",
 	"Game": "",

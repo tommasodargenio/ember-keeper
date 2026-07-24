@@ -27,10 +27,11 @@ position = Vector2(67, 110)
 [node name="HUD" parent="UI" unique_id=245103641 instance=ExtResource("4_382eu")]
 
 [node name="Dashboard" parent="UI" unique_id=524229284 instance=ExtResource("6_n7a80")]
+visible = false
 
-[node name="Pause" type="CanvasLayer" parent="." unique_id=232628924]
+[node name="Menus" type="CanvasLayer" parent="." unique_id=232628924]
 
-[node name="PauseMenu" parent="Pause" unique_id=467531739 instance=ExtResource("6_61rfq")]
+[node name="PauseMenu" parent="Menus" unique_id=467531739 instance=ExtResource("6_61rfq")]
 menu_footer = "0.1.0-26.7 Copyright (c) 2026-2026"
 
 [node name="GameLanterns" type="Node" parent="." unique_id=986306071]

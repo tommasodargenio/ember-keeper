@@ -111,9 +111,9 @@ func _handle_watering() -> void:
 		print(LD.PLAYER_DRY)
 		return		
 		
-	var amount_to_use: int = interacting_player.carrying_water
-	var used: int = profile.add_water(amount_to_use)
+	var used: int = profile.add_water(Constants.WATER_TO_USE)
 	interacting_player.carrying_water -= used
+	EventBus.update_hotbar.emit("Water", interacting_player.carrying_water)
  
 	#if used > 0:
 		#EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.INFO, "Watering", LD.FURNACE_DOUSED, "TIMEOUT")
@@ -153,6 +153,7 @@ func _handle_interact() -> void:
 
 	player_carrying.quantity -= accepted
 	EventBus.player_unloaded_fuel.emit(player_carrying.fuel, accepted)
+	EventBus.update_hotbar.emit(player_carrying.fuel.name, player_carrying.quantity)
 
 	if accepted < player_carrying.quantity + accepted:
 		var msg = LD.FURNACE_FUEL_LOADED % [accepted, player_carrying.quantity]

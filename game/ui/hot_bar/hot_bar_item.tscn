@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cy717i5jy85m4"]
+
+[ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="1_gr3bj"]
+[ext_resource type="Script" uid="uid://cj3lkfc2ygch0" path="res://game/ui/hot_bar/hot_bar_item.gd" id="2_xcpbu"]
+[ext_resource type="StyleBox" uid="uid://c6kciv845e2vy" path="res://game/resources/models/ui/panel_style.tres" id="3_fe1gh"]
+
+[node name="PanelContainer" type="PanelContainer" unique_id=589535377]
+custom_minimum_size = Vector2(40, 50)
+offset_right = 40.0
+offset_bottom = 50.0
+theme = ExtResource("1_gr3bj")
+theme_override_styles/panel = ExtResource("3_fe1gh")
+script = ExtResource("2_xcpbu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=919154631]
+custom_minimum_size = Vector2(30, 40)
+layout_mode = 2
+
+[node name="Tex" type="TextureRect" parent="VBoxContainer" unique_id=846804804]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 4
+stretch_mode = 5
+
+[node name="Qty" type="RichTextLabel" parent="VBoxContainer" unique_id=1007767005]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShortCut" type="RichTextLabel" parent="." unique_id=1638439780]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+theme_override_constants/outline_size = 2
+bbcode_enabled = true
+text = "Q"
+fit_content = true

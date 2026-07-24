@@ -1,6 +1,8 @@
 extends Control
 
 @export var start_hidden : bool = true
+@export var hide_ui : bool = true
+
 @onready var close: Button = %Close
 
 @onready var town_mood_status: RichTextLabel = %TownMoodStatus
@@ -9,6 +11,7 @@ var tween : Tween
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	show()
 	pivot_offset = size / 2.0
 	_register_events()
 	if start_hidden:
@@ -20,12 +23,15 @@ func _register_events() -> void:
 	EventBus.game_ready.connect(update_mood_status)
 	EventBus.town_mood_updated.connect(update_mood_status)	
 	EventBus.player_sat.connect(func():
-		print("dashboard in")
 		_transition_in()
+		if hide_ui:
+			EventBus.hide_ui.emit()
 	)
 	close.pressed.connect(func():
 		EventBus.player_standing.emit()
 		_transition_out()
+		if hide_ui:
+			EventBus.show_ui.emit()
 	)
 
 func update_mood_status() -> void:

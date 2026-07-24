@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="1_8mv14"]
 [ext_resource type="Script" uid="uid://jen850vgv34w" path="res://game/ui/hud/hud.gd" id="1_d4vpa"]
 [ext_resource type="PackedScene" uid="uid://bsp7e11uvxurj" path="res://game/ui/gauge_meter/gauge.tscn" id="2_l7e5k"]
+[ext_resource type="PackedScene" uid="uid://lunpcjqs7on8" path="res://game/ui/hot_bar/hot_bar.tscn" id="3_c644b"]
 
 [node name="HUD" type="Control" unique_id=245103641]
 layout_mode = 3
@@ -123,6 +124,9 @@ offset_top = -32.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="HotBar" parent="BottomCenter" unique_id=1860826930 instance=ExtResource("3_c644b")]
+layout_mode = 1
 
 [node name="BottomRight" type="Control" parent="." unique_id=629627278]
 unique_name_in_owner = true
