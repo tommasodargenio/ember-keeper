@@ -17,14 +17,20 @@ func _ready() -> void:
 		self.modulate.a = 1.0
 		
 func _register_events() -> void:
-	EventBus.town_mood_updated.connect(func():
-		town_mood_status.text = "%s" % [GameManager.get_town_mood(true)]
-	)	
+	EventBus.game_ready.connect(update_mood_status)
+	EventBus.town_mood_updated.connect(update_mood_status)	
 	EventBus.player_sat.connect(func():
 		print("dashboard in")
 		_transition_in()
 	)
-	close.pressed.connect(_transition_out)
+	close.pressed.connect(func():
+		EventBus.player_standing.emit()
+		_transition_out()
+	)
+
+func update_mood_status() -> void:
+		town_mood_status.text = "%s" % [GameManager.get_town_mood(true)]	
+	
 
 func _transition_in() -> void:
 	if tween and tween.is_running():
@@ -43,7 +49,7 @@ func _transition_out() -> void:
 	tween.set_parallel()
 	tween.tween_property(self, "modulate:a", 0.0, 0.5)
 	tween.tween_property(self, "scale", Vector2.ZERO, 0.3)
-	tween.tween_callback(hide)
+	tween.tween_callback(_hide)
 	
 	
 func _hide() -> void:

@@ -36,6 +36,19 @@ var max_level : int = 3
 @export var min_operating_pressure: float = 10.0          # visual reference only — "running efficiently" line on the gauge
 @export var max_operating_pressure: float = 85.0          # at/above this = overheat, damages furnace over time
 @export var overheat_damage_per_second: float = 2.0
+# --- Puffback ---
+# Fires when the furnace is BOTH over-pressured AND already damaged — a
+# flare-up, not just plain overheating. Ends the moment EITHER condition
+# clears, since health has no other way to recover — requiring both to
+# clear (as an AND) would mean puffback could trigger once and then never
+# turn off again for that furnace's remaining lifetime.
+@export var puffback_pressure_threshold: float = 80.0
+@export var puffback_health_threshold : float = 70.0
+# --- Watering ---
+# Player-driven fix for an active puffback: dumping water rapidly knocks
+# pressure down, distinct from the slow passive vent.
+@export var water_pressure_reduction: float = 1.5  # total pressure removed per unit of water used, spread over time
+@export var dousing_rate: float = 5.0                 # pressure removed per second while actively dousing
 
 # --- Output tuning ---
 # Guarantees the furnace keeps producing at least a trickle of energy as
@@ -55,6 +68,8 @@ var state: furnace_state = furnace_state.OFF
 var _burn_time_left: float = 0.0
 var _venting: bool = false
 var _has_reached_operating_pressure: bool = false
+var _puffback : bool = false
+var _dousing_remaining: float = 0.0
 
 
 signal fuel_loaded(amount_accepted: int)
@@ -65,6 +80,8 @@ signal overheated
 signal furnace_shutdown(reason: String)
 signal furnace_ignited
 signal health_changed(current_health: int)
+signal furnace_puffback
+signal furnace_puffback_ended
 
 func can_accept_fuel(fuel: Fuel) -> bool:
 	if fuel.type != fuel_type:
@@ -109,6 +126,18 @@ func _try_ignite() -> bool:
 func vent_pressure(is_venting: bool) -> void:
 	_venting = is_venting
  
+# Returns how much water was actually used (currently always equal to
+# `amount` — no capacity limit on watering itself, unlike fuel/pressure
+# which do have caps). Re-checks puffback immediately rather than waiting
+# for the next tick, so extinguishing a flare feels instant to the player.
+func add_water(amount: int) -> int:
+	if amount <= 0:
+		return 0
+ 
+	_dousing_remaining += water_pressure_reduction * amount
+ 
+	return amount
+
 #region Furnace Operations
 func tick(delta: float) -> void:
 	_update_pressure(delta)
@@ -171,7 +200,11 @@ func _consume_one_unit() -> void:
 func _update_pressure(delta: float) -> void:
 	var target: float = get_fuel_ratio() * 100.0 if state == furnace_state.BURNING else 0.0
  
-	if pressure < target:
+	if _dousing_remaining > 0.0:
+		var reduction: float = min(dousing_rate * delta, _dousing_remaining)
+		pressure = max(0.0, pressure - reduction)
+		_dousing_remaining -= reduction
+	elif pressure < target:
 		pressure = move_toward(pressure, target, pressure_rise_rate * delta)
 	else:
 		pressure = move_toward(pressure, target, pressure_cooldown_rate * delta)
@@ -182,12 +215,30 @@ func _update_pressure(delta: float) -> void:
 	pressure = clamp(pressure, 0.0, 100.0)
 	pressure_changed.emit(pressure)
  
+		
+
 	if pressure >= max_operating_pressure:
 		health -= overheat_damage_per_second * delta
 		health_changed.emit(health)
 		overheated.emit()
 		if health <= 0.0:
 			_shutdown("overheat_damage")
+	
+	_check_puffback()
+
+# A flare-up needs BOTH conditions at once. It ends the moment either one
+# clears — dropping pressure below the threshold (e.g. via water) stops the
+# active flare even though the furnace is still damaged; it just means the
+# furnace remains vulnerable to flaring up again if pressure climbs back up.
+func _check_puffback() -> void:
+	var puffback_condition: bool = pressure >= puffback_pressure_threshold and health <= puffback_health_threshold
+ 
+	if puffback_condition and not _puffback:
+		_puffback = true
+		furnace_puffback.emit()
+	elif not puffback_condition and _puffback:
+		_puffback = false
+		furnace_puffback_ended.emit()
  
 func _shutdown(reason: String) -> void:
 	state = furnace_state.SHUTDOWN_OVERHEAT

@@ -482,7 +482,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"sitting",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -505,7 +505,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"standing",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -691,7 +691,7 @@ script = ExtResource("1_ucj5q")
 [node name="Tex" type="AnimatedSprite2D" parent="." unique_id=296954677]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_gft63")
-animation = &"sitting"
+animation = &"standing"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2075826669]
 position = Vector2(0.5, 13)

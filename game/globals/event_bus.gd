@@ -28,10 +28,12 @@ signal auto_save_frequency(value: int)
 # PLAYER
 signal player_loading_fuel(fuel: Fuel, quantity: int)
 signal player_unloaded_fuel(fuel: Fuel, quantity: int)
+signal player_has_water(quantity: int)
+signal player_watering(quantity: int)
 signal player_sitting()
 signal player_standing()
 signal player_sat()
-signal player_watering()
+
 
 # FURNACE
 signal active_furnace_changed(furnace: Furnace)

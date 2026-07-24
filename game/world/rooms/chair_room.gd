@@ -22,6 +22,9 @@ func _register_events() -> void:
 		if body is Player:
 			can_sit = false
 	)
+	EventBus.player_standing.connect(func():
+		is_sitting = false
+	)
 	
 func _handle_interact() -> void:
 	if is_sitting:

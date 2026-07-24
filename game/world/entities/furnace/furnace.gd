@@ -5,7 +5,7 @@ extends StaticBody2D
 		is_lit = value
 		if is_node_ready():
 			_update_tex()	
-@export var use_fx: bool = false
+@export var use_puffing_fx: bool = false
 
 @export var profile : Furnace:
 	set(value):
@@ -39,18 +39,28 @@ var model_unlit : Dictionary = {
 	"iron" : [Rect2(0, 320, 32, 64),Rect2(0, 320, 32, 64),Rect2(48, 320, 48, 64),Rect2(112, 320, 48, 64)]
 }
 
+var puff_fx_position : Dictionary = {
+	"stone": [2.2, 2.2, -10.0, -24.0],
+	"brick": [-4.4, -4.4, -20.0, -24.0],
+	"iron": [-9.4, -9.4, -20.0, -27.0]
+}
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_update_tex()
 	_register_events()
+	_set_fx()
 	EnergyNetwork.register_furnace(profile)
 	
+			
 func _exit_tree() -> void:
 	EnergyNetwork.unregister_furnace(profile)
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and can_interact:
 		_handle_interact()
+	if event.is_action_pressed("watering") and can_interact:
+		_handle_watering()
 	if event.is_action_pressed("ui_accept"):
 		var f = preload("res://game/resources/models/game/basic_wood.tres")
 		
@@ -61,6 +71,14 @@ func _process(delta: float) -> void:
 	_handle_state()
 	
 func _register_events() -> void:
+	profile.furnace_puffback_ended.connect(func():
+		print("No longer puffing")
+		# Switch off FX
+	)
+	profile.furnace_puffback.connect(func():
+		print("We are on fire, literally")
+		# Swithc on FX
+	)
 	interact_sensor.body_entered.connect(func(body: Node2D):
 		if body is Player:
 			can_interact = true
@@ -83,6 +101,23 @@ func _handle_state() -> void:
 		Furnace.furnace_state.OFF:
 			is_lit = false
 		_:	_update_tex()
+
+
+func _handle_watering() -> void:
+	if not (interacting_player is Player): return
+
+	if not (interacting_player.carrying_water > 0):
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.PLAYER_DRY, "TIMEOUT")
+		print(LD.PLAYER_DRY)
+		return		
+		
+	var amount_to_use: int = interacting_player.carrying_water
+	var used: int = profile.add_water(amount_to_use)
+	interacting_player.carrying_water -= used
+ 
+	#if used > 0:
+		#EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.INFO, "Watering", LD.FURNACE_DOUSED, "TIMEOUT")
+ 	
 
 func _handle_interact() -> void:
 	if not (interacting_player is Player):
@@ -137,3 +172,15 @@ func _update_tex() -> void:
 		tex.region_rect = model_lit[f_type_literal][profile.level]
 	elif not is_lit and f_type_literal in model_unlit:
 		tex.region_rect = model_unlit[f_type_literal][profile.level]
+
+func _set_fx() -> void:
+	if not profile: return
+	if not use_puffing_fx: return
+	
+	if Constants.FX["Puffing"]:
+		var fx_ = preload(Constants.FX["Puffing"])
+		var fx = fx_.instantiate()
+		add_child(fx)
+		fx.add_to_group(Constants.VFX_GROUP)
+		var f_type_literal = Furnace.furnace_type.keys()[profile.type].to_lower()
+		fx.position.y = puff_fx_position[f_type_literal][profile.level]

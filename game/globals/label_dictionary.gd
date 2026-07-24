@@ -20,5 +20,7 @@ static var FURNACE_FUEL_LOADED = "Loaded %s, furnace is now full — %s still in
 static var FURNACE_BURNING_FUEL = "We are burning baby, current load %s"
 #PLAYER
 static var PLAYER_EMPTY_HANDED = "You have nothing to load"
-
+static var PLAYER_DRY = "You don't have any water on you!"
+#WATER
+static var WATER_BUCKET_EMPTY = "Not enough water in this bucket"
 #endregion

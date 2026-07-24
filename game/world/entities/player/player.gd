@@ -11,6 +11,7 @@ var last_direction : Vector2 = Vector2.RIGHT
 var carrying : Dictionary = {"fuel": null, "quantity": 0}
 var can_walk : bool = true
 var is_sitting : bool = false
+var carrying_water : int = 0
 
 func _ready() -> void:
 	_register_events()
@@ -22,6 +23,9 @@ func _physics_process(delta: float) -> void:
 
 #region events
 func _register_events() -> void:
+	EventBus.player_has_water.connect(func(quantity: int):
+		carrying_water += quantity
+	)
 	EventBus.player_loading_fuel.connect(func(fuel : Fuel, quantity: int):
 		print("Loading some %s" % fuel.name)
 		carrying.fuel = fuel

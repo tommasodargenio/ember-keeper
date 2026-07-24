@@ -21,8 +21,8 @@ const SAVE_PREFERENCES_FILE : String = "prefs.json"
 
 # Game play
 const LANTERNS_GROUP = "lanterns"
-const STARTING_TOWN_LANTERNS = 5
-const STARTING_WOODS_LANTERNS = 5
+const STARTING_TOWN_LANTERNS = 0
+const STARTING_WOODS_LANTERNS = 0
 
 const DEFAULT_KEY_BINDINGS = {
 	"game" : ["save", "load", "pause", "exit"],
@@ -33,6 +33,8 @@ const DEFAULT_KEY_BINDINGS = {
 
 
 # UI Colors and stuff
+const VFX_GROUP = "vfx"
+const SFX_GROUP = "sfx"
 const GAME_PALETTE = "amber"
 const DIALOG_HIGHLIGHT_BORDER_DRAGGING = Color.AQUA
 const DIALOG_HIGHLIGHT_BORDER_NORMAL = Color.DARK_CYAN
@@ -60,6 +62,10 @@ const SCENE_PATHS : Dictionary = {
 	"KeyBindings": "",
 	"Pause": "",
 	"Quit": ""
+}
+
+const FX : Dictionary = {
+	"Puffing": "uid://clcn45q5cyths",
 }
 
 const UI_RESOURCES : Dictionary = {
