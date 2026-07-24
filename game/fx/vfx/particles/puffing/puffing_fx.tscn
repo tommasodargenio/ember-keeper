@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://clcn45q5cyths"]
+
+[ext_resource type="Script" uid="uid://s411tju6wv72" path="res://game/fx/vfx/particles/puffing/puffing_fx.gd" id="1_tk1f6"]
+[ext_resource type="Texture2D" uid="uid://ni0ojit8n1mu" path="res://assets/textures/trace_05.png" id="2_at2es"]
+[ext_resource type="Texture2D" uid="uid://bkgw842r4fc47" path="res://assets/textures/smoke_03.png" id="3_xno5n"]
+
+[node name="PuffingFX" type="Node2D" unique_id=1655119147]
+script = ExtResource("1_tk1f6")
+fire_texture = ExtResource("2_at2es")
+smoke_texture = ExtResource("3_xno5n")
+fire_scale_min = 0.06
+fire_scale_max = 0.1
+smoke_scale_min = 0.05
+smoke_scale_max = 0.1
+
+[node name="SmokeParticles" type="GPUParticles2D" parent="." unique_id=1561978897]
+unique_name_in_owner = true
+
+[node name="FireParticles" type="GPUParticles2D" parent="." unique_id=192642744]
+unique_name_in_owner = true
+
+[node name="BurstTimer" type="Timer" parent="." unique_id=1294459163]
+unique_name_in_owner = true
