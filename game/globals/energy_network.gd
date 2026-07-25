@@ -1,17 +1,9 @@
 extends Node
-# Autoload: EnergyNetwork
-#
-# Producers (furnaces) are registered explicitly. Consumers (lanterns) are
-# discovered via the "lanterns" group each distribution pass, so scene
-# lanterns just need to add_to_group("lanterns") in their own _ready() and
-# nothing here needs to know about them individually.
 
 signal network_updated(supply: int, demand: int, lit_count: int, total_count: int)
 
 var _furnaces: Array[Furnace] = []
 
-# Fictitious lanterns you haven't placed as real scene objects yet — counted
-# toward demand but have no visual to update.
 var simulated_lantern_count: int = 0:
 	set(value):
 		simulated_lantern_count = value
@@ -112,11 +104,3 @@ func _total_supply() -> int:
 		if furnace.state == Furnace.furnace_state.BURNING:
 			total += furnace.energy_output
 	return total
-
-
-#func _set_lantern_lit(lantern_node: Node, lit: bool) -> void:
-	#var new_state := Lantern.lantern_state.LIT if lit else Lantern.lantern_state.UNLIT
-	#if lantern_node.profile.state == new_state:
-		#return
-	#lantern_node.profile.state = new_state
-	#lantern_node.is_lit = lit

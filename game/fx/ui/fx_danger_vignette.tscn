@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://5yrb15el64tk"]
+
+[ext_resource type="Script" uid="uid://7odqk6h75ll2" path="res://game/fx/ui/fx_danger_vignette.gd" id="1_gs1hh"]
+[ext_resource type="Shader" uid="uid://cvq8ryom5sq2i" path="res://game/fx/vfx/shaders/fx_danger_vignette.gdshader" id="2_iod7o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g6kqt"]
+shader = ExtResource("2_iod7o")
+shader_parameter/intensity = 0.0
+shader_parameter/vignette_color = Color(0.6, 0.05, 0.05, 1)
+shader_parameter/radius = 0.65
+shader_parameter/softness = 0.55
+
+[node name="FXDangerVignette" type="CanvasLayer" unique_id=178270019]
+layer = 100
+script = ExtResource("1_gs1hh")
+
+[node name="Glow" type="ColorRect" parent="." unique_id=2048071978]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_g6kqt")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.7977378, 0.24780053, 0.24780053, 0)

@@ -1,8 +1,4 @@
 extends Node
-# Autoload: GameClock
-# Simulates the night passing. current_hour advances continuously while
-# running; when night_duration_hours is reached, dawn_reached fires once
-# and the clock stops itself.
 
 signal hour_passed(hour: int)
 signal dawn_reached
@@ -10,10 +6,10 @@ signal clock_updated(time_str: String)
 signal clock_parts_updated(hours_str: String, minutes_str: String, ampm_str: String)
 
 @export var night_duration_hours: float = 8.0
-@export var real_seconds_per_game_hour: float = 50.0  # ~6-7 min total playthrough at 8 hours
+@export var real_seconds_per_game_hour: float = 50.0 
 
 @export_group("Clock Display")
-@export var night_start_clock_hour: float = 20.0  # 8:00 PM — what real-world clock time the night begins at
+@export var night_start_clock_hour: float = 20.0  
 @export var use_24_hour_format: bool = false
 
 var current_hour: float = 0.0
@@ -71,10 +67,7 @@ func _total_display_minutes() -> int:
 	return int(real_clock_hour * 60.0)
 
 
-# Returns the current time as separate pieces — useful when your HUD uses
-# individual labels per component (so a blinking separator label doesn't
-# force the hour/minute labels to reflow around it). "ampm" is "" when
-# use_24_hour_format is on.
+
 func get_clock_parts() -> Dictionary:
 	var total_minutes: int = _total_display_minutes()
 	var hours: int = total_minutes / 60
@@ -90,10 +83,7 @@ func get_clock_parts() -> Dictionary:
 	return {"hours": "%d" % hours_12, "minutes": "%02d" % minutes, "ampm": period}
 
 
-# Formats the current in-game time as a single real-clock string, e.g.
-# "11:42 PM" or "23:42" depending on use_24_hour_format. Call this directly
-# (e.g. from a HUD's _ready()) to get the current value without waiting for
-# the next clock_updated signal.
+
 func get_clock_string() -> String:
 	var parts: Dictionary = get_clock_parts()
 	if use_24_hour_format:

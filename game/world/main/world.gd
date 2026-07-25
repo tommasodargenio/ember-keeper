@@ -26,6 +26,7 @@ func _init_game() -> void:
 	GameManager.current_furnace.init_furnace()
 	GameClock.start_night()
 	NightOutcome._reset()
+	EnergyNetwork.distribute()
 	EventBus.player_reset.emit(player_start_marker.position)
 	EventBus.reset_hotbar.emit()
 	

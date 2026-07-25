@@ -1,16 +1,4 @@
 extends Node
-# NightOutcome — attach as an autoload, or a single node placed in your main
-# scene at game start. Wires EnergyNetwork, the active Furnace, and GameClock
-# together into mood/incident consequences and the win/lose check.
-#
-# Assumes:
-#   - GameManager.town_mood / GameManager.reported_incidents exist with
-#     setters that clamp/emit as needed (adjust the references below if your
-#     actual singleton/variable names differ)
-#   - EventBus.current_furnace / active_furnace_changed (same pattern used
-#     by the pressure gauge)
-#   - EventBus.show_message (same pattern used elsewhere for messages)
-#   - You add: signal game_ended(won: bool, forced_reason: String) to EventBus
 
 @export var outage_ratio_threshold: float = 0.5     # fraction of lanterns dark that counts as "trouble"
 @export var outage_grace_seconds: float = 8.0        # how long that has to persist before it's reported
@@ -19,6 +7,8 @@ extends Node
 
 @export var win_min_mood: int = 50
 @export var win_max_incidents: int = 6
+
+signal danger_level_changed(level: float)  # 0.0 = network fine, 1.0 = incident about to fire
 
 var _current_dark_ratio: float = 0.0
 var _outage_timer: float = 0.0
@@ -49,14 +39,16 @@ func _watch_furnace(furnace: Furnace) -> void:
 func _process(delta: float) -> void:
 	if _incident_cooldown > 0.0:
 		_incident_cooldown -= delta
-
+	
 	if _current_dark_ratio >= outage_ratio_threshold:
 		_outage_timer += delta
+		danger_level_changed.emit(clamp(_outage_timer / outage_grace_seconds, 0.0, 1.0))
 		if _outage_timer >= outage_grace_seconds and _incident_cooldown <= 0.0:
 			_report_incident()
 	else:
+		if _outage_timer != 0.0:
+			danger_level_changed.emit(0.0)
 		_outage_timer = 0.0
-
 
 func _on_network_updated(_supply: int, _demand: int, lit_count: int, total_count: int) -> void:
 	if total_count == 0:

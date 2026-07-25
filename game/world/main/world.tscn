@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://blecwb62j0od3" path="res://game/world/main/environment.tscn" id="3_ln34i"]
 [ext_resource type="PackedScene" uid="uid://dw71dvs0xp545" path="res://game/ui/hud/hud.tscn" id="4_382eu"]
 [ext_resource type="PackedScene" uid="uid://dbngrypwajlmq" path="res://game/ui/menus/pause_menu_co/pause_menu.tscn" id="6_61rfq"]
+[ext_resource type="PackedScene" uid="uid://5yrb15el64tk" path="res://game/fx/ui/fx_danger_vignette.tscn" id="6_g6kqt"]
 [ext_resource type="PackedScene" uid="uid://bh4j8fdgtcspu" path="res://game/ui/dashboard/dashboard.tscn" id="6_n7a80"]
 [ext_resource type="Shader" uid="uid://b1oflutuij11i" path="res://game/fx/vfx/shaders/blur.gdshader" id="8_k82js"]
 [ext_resource type="LabelSettings" uid="uid://xm6tjqqy3waf" path="res://game/resources/models/ui/label_settings.tres" id="9_evsdv"]
@@ -28,6 +29,8 @@ position = Vector2(318, 16)
 position = Vector2(41, 149)
 
 [node name="Environment" parent="." unique_id=639537444 instance=ExtResource("3_ln34i")]
+
+[node name="FXDangerVignette" parent="." unique_id=178270019 instance=ExtResource("6_g6kqt")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1938653477]
 unique_name_in_owner = true
