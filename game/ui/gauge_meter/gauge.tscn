@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://qf82kjeoq8qg" path="res://assets/sprites/props/max-marker.png" id="5_sddhh"]
 
 [node name="Gauge" type="Control" unique_id=848230249]
+custom_minimum_size = Vector2(50, 65)
+custom_maximum_size = Vector2(50, 65)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

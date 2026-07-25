@@ -126,17 +126,18 @@ grow_vertical = 2
 
 [node name="BottomLeft" type="Control" parent="." unique_id=1816333925]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 80)
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -32.0
-offset_right = 40.0
+offset_top = -80.0
+offset_right = 100.0
 grow_vertical = 0
 
 [node name="BottomCenter" type="Control" parent="." unique_id=188833501]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -161,10 +162,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -128.0
-offset_top = -59.0
-offset_right = 22.0
-offset_bottom = -9.0
+offset_left = -100.0
+offset_top = -50.0
 grow_horizontal = 0
 grow_vertical = 0
 
@@ -173,8 +172,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 2.0
-offset_bottom = 2.0
+offset_top = -7.66
+offset_right = 4.0
+offset_bottom = 7.34
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1

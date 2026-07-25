@@ -16,11 +16,7 @@ func _ready() -> void:
 		if close_action == "TIMEOUT":
 			close.hide()
 			var t = get_tree().create_timer(timeout)
-			t.timeout.connect(func():
-				var tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
-				tween.tween_property(self, "modulate:a", 0, 0.5)
-				tween.tween_callback(queue_free)
-			)
+			t.timeout.connect(_fade_out)
 		close.pressed.connect(func():
 			if close_action == "QUIT":
 				EventBus.message_window_closed.emit(title)
@@ -42,3 +38,8 @@ func _ready() -> void:
 	title.text = "%s [b]%s[/b]" % [emoji, title_text]
 	
 	message.text = message_text
+
+func _fade_out() -> void:
+	var tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(self, "modulate:a", 0, 0.5)
+	tween.tween_callback(queue_free)

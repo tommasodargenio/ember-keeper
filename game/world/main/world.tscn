@@ -74,3 +74,5 @@ position = Vector2(250, 109)
 
 [node name="PlayerStartMarker" type="Marker2D" parent="." unique_id=420086395]
 position = Vector2(156, 129)
+
+[editable path="UI/HUD"]

@@ -49,6 +49,11 @@ func _register_events() -> void:
 	blink_timer.timeout.connect(_on_blink_timeout)	
 
 func display_message(type: Constants.MESSAGE_WINDOW_FLAG, title: String, message: String, action: String = "CLOSE", disable_ui: bool = false):
+	var any_message = bottom_left.get_child_count()
+	if any_message:
+		for m in bottom_left.get_children():
+			m._fade_out()
+	await get_tree().create_timer(0.5).timeout
 	var new_msg = message_window.instantiate()
 	new_msg.title_text = title
 	new_msg.message_text = message
