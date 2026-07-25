@@ -7,7 +7,8 @@
 [sub_resource type="Resource" id="Resource_xlkxe"]
 script = ExtResource("3_xlkxe")
 name = "Play"
-destination_scene = ""
+transition = true
+destination_scene = "Game"
 action = "None"
 metadata/_custom_type_script = "uid://dckbgyalb1pmr"
 
@@ -21,7 +22,8 @@ metadata/_custom_type_script = "uid://dckbgyalb1pmr"
 [sub_resource type="Resource" id="Resource_5naww"]
 script = ExtResource("3_xlkxe")
 name = "Credits"
-destination_scene = ""
+transition = true
+destination_scene = "Credits"
 action = "None"
 metadata/_custom_type_script = "uid://dckbgyalb1pmr"
 
@@ -36,10 +38,6 @@ metadata/_custom_type_script = "uid://dckbgyalb1pmr"
 script = ExtResource("2_5bjn0")
 menu_footer = "0.1.0-26.5 Copyright (c) 2026-2026"
 menu_items = Array[ExtResource("3_xlkxe")]([SubResource("Resource_xlkxe"), SubResource("Resource_n3xbt"), SubResource("Resource_5naww"), SubResource("Resource_swmnj")])
-
-[node name="MenuTitleLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="0" unique_id=323291262]
-custom_minimum_size = Vector2(180, 61)
-text = "Project J"
 
 [node name="MenuFooterLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="4" unique_id=462098605]
 text = "0.1.0-26.5 Copyright (c) 2026-2026"

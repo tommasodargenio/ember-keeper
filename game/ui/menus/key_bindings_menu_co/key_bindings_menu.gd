@@ -5,7 +5,7 @@ extends MainMenu
 @export var placeholder_awaiting_input : String = "..."
 @onready var controls_container: GridContainer = %ControlsContainer
 
-var input_button := preload("res://ui/key_bindings_menu_co/control_map_button.tscn")
+var input_button = preload("res://game/ui/menus/key_bindings_menu_co/control_map_button.tscn")
 
 var current_actions : Array[StringName]
 

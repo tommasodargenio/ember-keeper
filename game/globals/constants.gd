@@ -7,6 +7,13 @@ const DEBUG_TYPE : DEBUG_LAYERS = DEBUG_LAYERS.GAME
 const GAME_NAME : String = "Ember Keeper"
 const GAME_VERSION : String = "0.1.0-26.7"
 
+# CREDITS
+const CREDIT_AUTHOR = "sydream"
+const CREDIT_ENGINE = "Godot"
+const CREDIT_ART = ["Kenney", "Other"]
+const CREDIT_MUSIC = []
+const CREDIT_SFX = []
+
 # SAVE MANAGER
 const MAX_AUTOSAVE_SLOTS : int = 3
 const ENCRYPTION_KEY : String = "U(CTna;}3vK<m$+:drj;"
@@ -71,13 +78,13 @@ const SCENE_PATHS : Dictionary = {
 	"HotBarItem" : "uid://cy717i5jy85m4",
 	"FloatingIcon": "uid://baxhl45rv2b6a",
 	"SaveLoadMenu": "",
-	"Credits": "",
-	"Game": "",
+	"Credits": "uid://grfv787skusj",
+	"Game": "uid://c1jut3diux3vh",
 	"Tutorial": "",
 	"Settings" : "",
 	"LoadingScreen": "",
 	"KeyBindings": "",
-	"Pause": "",
+	"Pause": "uid://dbngrypwajlmq",
 	"Quit": ""
 }
 
@@ -111,10 +118,10 @@ const MENU_ACTIONS: Dictionary = {
 }
 
 const TRANSITIONS_SHADERS : Dictionary = {
-	"Curtain": "",
-	"Dissolve": "",
-	"Circular": "",
-	"Pixelated": "",
+	"Curtain": "uid://ox5j7ay6rlww",
+	"Dissolve": "uid://dslbars51mlp3",
+	"Circular": "uid://b5sjhty0emqg1",
+	"Pixelated": "uid://7tobwfll2evx",
 }
 
 # UI Theming

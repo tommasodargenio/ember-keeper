@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://grfv787skusj"]
+
+[ext_resource type="PackedScene" uid="uid://nhv1aqgtybwm" path="res://base_components/ui/menus/main_menu_co/main_menu.tscn" id="1_amcoq"]
+[ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="2_woglg"]
+[ext_resource type="Script" uid="uid://bn4p36avnibyx" path="res://game/ui/menus/credits/credits.gd" id="2_xgj3s"]
+[ext_resource type="LabelSettings" uid="uid://xm6tjqqy3waf" path="res://game/resources/models/ui/label_settings.tres" id="3_du34r"]
+[ext_resource type="Script" uid="uid://dckbgyalb1pmr" path="res://base_components/ui/menus/main_menu_co/menu_item_definition.gd" id="3_uobj6"]
+[ext_resource type="LabelSettings" uid="uid://dg4rysr5187ye" path="res://game/resources/models/ui/label_title_settings.tres" id="4_imqso"]
+[ext_resource type="StyleBox" uid="uid://c6kciv845e2vy" path="res://game/resources/models/ui/panel_style.tres" id="6_imqso"]
+
+[sub_resource type="Resource" id="Resource_xgj3s"]
+script = ExtResource("3_uobj6")
+name = "Back"
+destination_scene = "MainMenu"
+action = "Back"
+metadata/_custom_type_script = "uid://dckbgyalb1pmr"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4l7av"]
+
+[node name="Credits" unique_id=467531739 instance=ExtResource("1_amcoq")]
+theme = ExtResource("2_woglg")
+script = ExtResource("2_xgj3s")
+normal_label = ExtResource("3_du34r")
+title_label = ExtResource("4_imqso")
+menu_items = Array[ExtResource("3_uobj6")]([SubResource("Resource_xgj3s")])
+
+[node name="CreditSContainer" type="ScrollContainer" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="2" unique_id=815527372]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("6_imqso")
+scroll_hint_mode = 1
+
+[node name="CreditContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/CreditSContainer" index="0" unique_id=984092532]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HSeparator3" type="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="3" unique_id=1203432321]
+layout_mode = 2
+theme_override_constants/separation = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_4l7av")
