@@ -1,8 +1,7 @@
 extends Node
 
-enum DEBUG_LAYERS {ALL, NPC, VM, WALLET, GAME, MAP, PATHFINDING}
-
-const DEBUG := false
+enum DEBUG_LAYERS {ALL, NPC, VM, WALLET, GAME, MAP, PATHFINDING, LOADING}
+const DEBUG := true
 const DEBUG_TYPE : DEBUG_LAYERS = DEBUG_LAYERS.GAME
 const GAME_NAME : String = "Ember Keeper"
 const GAME_VERSION : String = "0.1.0-26.7"
@@ -81,7 +80,7 @@ const SCENE_PATHS : Dictionary = {
 	"Credits": "uid://grfv787skusj",
 	"Game": "uid://c1jut3diux3vh",
 	"Tutorial": "",
-	"Settings" : "",
+	"Settings" : "uid://dr554h7o64nh3",
 	"LoadingScreen": "",
 	"KeyBindings": "",
 	"Pause": "uid://dbngrypwajlmq",

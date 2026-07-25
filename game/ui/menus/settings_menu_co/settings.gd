@@ -6,11 +6,7 @@ extends MainMenu
 @onready var sfx_toggle: CheckButton = %SFXToggle
 @onready var main_volume: HSlider = %MainVolume
 @onready var music_volume: HSlider = %MusicVolume
-@onready var auto_save_toggle: CheckButton = %AutoSaveToggle
-@onready var auto_save_frequency: OptionButton = %AutoSaveFrequency
-@onready var auto_load_last_save: CheckButton = %AutoLoadLastSave
 @onready var sound_volume: HSlider = %SoundVolume
-@onready var save_before_exiting: CheckButton = %SaveBeforeExiting
 
 var active_timer: SceneTreeTimer = null
 
@@ -96,18 +92,6 @@ func _ready() -> void:
 		EventBus.sound_volume.emit(value)
 		active_timer = null
 	)
-	auto_save_toggle.toggled.connect(func(toggled_on: bool):
-		EventBus.auto_save.emit(toggled_on)
-	)
-	auto_load_last_save.toggled.connect(func(toggled_on: bool):
-		EventBus.start_from_last_save.emit(toggled_on)
-	)
-	save_before_exiting.toggled.connect(func(toggled_on: bool):
-		EventBus.save_before_exiting.emit(toggled_on)
-	)
-	auto_save_frequency.item_selected.connect(func(index: int):
-		EventBus.auto_save_frequency.emit(auto_save_frequency.get_item_text(index))
-	)
 	
 func set_values_from_user_prefs() -> void:
 	if Engine.is_editor_hint(): return
@@ -122,15 +106,7 @@ func set_values_from_user_prefs() -> void:
 	
 	main_volume.value = GameManager.player_prefs.main_volume
 	
-	auto_save_toggle.button_pressed = GameManager.player_prefs.auto_save
-	auto_load_last_save.button_pressed = GameManager.player_prefs.start_from_last_save
-	save_before_exiting.button_pressed = GameManager.player_prefs.save_before_exiting
 	
-	var save_frequency_minutes := str(GameManager.player_prefs.auto_save_frequency / 60)
-	for i in auto_save_frequency.item_count:
-		if auto_save_frequency.get_item_text(i) == save_frequency_minutes:
-			auto_save_frequency.select(i)
-			return
 	
 func trigger_debounced_action() -> void:
 	if is_instance_valid(active_timer):

@@ -68,7 +68,7 @@ func _execute_action(action_key: String) -> void:
 		"Quit":			_handle_save_on_quit(tree)
 		"Pause":		EventBus.game_paused.emit()
 		"Resume":		EventBus.game_resumed.emit()
-		"SavePrefs":	print("save options")
+		"SavePrefs":	SaveManager.save_preferences(GameManager.player_prefs)
 		"SaveAndQuit":  _handle_save_and_quit(tree)
 		"Back":			_go_back(tree)
 		"Close":		_close(tree)

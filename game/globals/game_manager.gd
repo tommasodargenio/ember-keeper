@@ -25,7 +25,7 @@ var show_tutorial : bool = true
 
 var current_furnace : Furnace
 
-
+var player_prefs: Preferences
 
 # Game Stats
 var reported_incidents : int = 0
@@ -34,6 +34,32 @@ var town_mood : int = 100:
 	set(value):
 		town_mood = clamp(value, 0, 100)
 
+
+func _game_bootstrap() -> void:
+	_register_events()
+	
+func _register_events() -> void:
+	EventBus.game_ready.connect(func():
+		game_in_progress = true
+	)
+	EventBus.main_volume.connect(func(level: float):
+		player_prefs.main_volume = level
+	)
+	EventBus.sound_volume.connect(func(level: float):
+		player_prefs.sfx_volume = level
+	)
+	EventBus.music_volume.connect(func(level: float):
+		player_prefs.music_volume = level
+	)
+	EventBus.music_toggle.connect(func(status: bool):
+		player_prefs.music_toggle = status
+	)
+	EventBus.sound_toggle.connect(func(status: bool):
+		player_prefs.sfx_toggle_toggle = status
+	)	
+	EventBus.game_ended.connect(func():
+		game_in_progress = false
+	)
 
 func _refresh_lanterns_count() -> void:
 	total_lanterns = get_tree().get_node_count_in_group(Constants.LANTERNS_GROUP)

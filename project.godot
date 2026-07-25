@@ -15,7 +15,7 @@ config/version="0.0.1"
 config/tags=PackedStringArray("jams")
 run/main_scene="uid://dxxhrn63qhpvu"
 config/use_custom_user_dir=true
-config/custom_user_dir_name="ProjectJ"
+config/custom_user_dir_name="EmberKeeper"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 

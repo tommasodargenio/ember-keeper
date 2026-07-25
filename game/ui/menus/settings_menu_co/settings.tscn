@@ -1,35 +1,30 @@
 [gd_scene format=3 uid="uid://dr554h7o64nh3"]
 
-[ext_resource type="PackedScene" uid="uid://nhv1aqgtybwm" path="res://ui/main_menu_co/main_menu.tscn" id="1_d7gj8"]
-[ext_resource type="Script" uid="uid://darokab7kak2t" path="res://ui/settings_menu_co/settings.gd" id="2_ma8e3"]
-[ext_resource type="Script" uid="uid://dckbgyalb1pmr" path="res://ui/main_menu_co/menu_item_definition.gd" id="3_co64o"]
-[ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://fonts/lilita_one_regular.ttf" id="5_y5e76"]
-[ext_resource type="LabelSettings" uid="uid://xm6tjqqy3waf" path="res://resources/ui/label_settings.tres" id="6_rcyix"]
-[ext_resource type="StyleBox" uid="uid://dl8mh7h4onvrm" path="res://resources/ui/button_style_normal.tres" id="7_niw71"]
-[ext_resource type="StyleBox" uid="uid://d3b1wm0mqnmnw" path="res://resources/ui/button_style_pressed.tres" id="8_ay71n"]
-[ext_resource type="StyleBox" uid="uid://cbfhaxmikkffj" path="res://resources/ui/button_style_hover.tres" id="9_vlajc"]
-[ext_resource type="Script" uid="uid://e5yvr65r3hl7" path="res://ui/menu_button_co/menu_button.gd" id="10_bmrss"]
+[ext_resource type="PackedScene" uid="uid://nhv1aqgtybwm" path="res://base_components/ui/menus/main_menu_co/main_menu.tscn" id="1_d7gj8"]
+[ext_resource type="Script" uid="uid://darokab7kak2t" path="res://game/ui/menus/settings_menu_co/settings.gd" id="2_ma8e3"]
+[ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="2_y3wwk"]
+[ext_resource type="Script" uid="uid://dckbgyalb1pmr" path="res://base_components/ui/menus/main_menu_co/menu_item_definition.gd" id="3_co64o"]
+[ext_resource type="FontFile" uid="uid://r4q6kyv7uj8e" path="res://game/resources/models/ui/fonts/Kenney Mini.ttf" id="6_br8q1"]
+[ext_resource type="LabelSettings" uid="uid://xm6tjqqy3waf" path="res://game/resources/models/ui/label_settings.tres" id="6_rcyix"]
+[ext_resource type="StyleBox" uid="uid://dl8mh7h4onvrm" path="res://game/resources/models/ui/button_style_normal.tres" id="7_niw71"]
+[ext_resource type="StyleBox" uid="uid://d3b1wm0mqnmnw" path="res://game/resources/models/ui/button_style_pressed.tres" id="8_ay71n"]
+[ext_resource type="StyleBox" uid="uid://cbfhaxmikkffj" path="res://game/resources/models/ui/button_style_hover.tres" id="9_vlajc"]
+[ext_resource type="Script" uid="uid://e5yvr65r3hl7" path="res://base_components/ui/menus/menu_button_co/menu_button.gd" id="10_bmrss"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_52g8v"]
 
-[sub_resource type="Resource" id="Resource_xnw6r"]
+[sub_resource type="Resource" id="Resource_1fygu"]
 script = ExtResource("3_co64o")
-name = "Back To Main"
+name = "Back"
 transition = true
 destination_scene = "MainMenu"
 action = "Back"
 
-[sub_resource type="Resource" id="Resource_y5e76"]
+[sub_resource type="Resource" id="Resource_ih2v3"]
 script = ExtResource("3_co64o")
 name = "Save"
 destination_scene = ""
 action = "SavePrefs"
-
-[sub_resource type="Resource" id="Resource_rcyix"]
-script = ExtResource("3_co64o")
-name = "Quit To Desktop"
-destination_scene = ""
-action = "Quit"
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4l7av"]
 
@@ -51,13 +46,14 @@ corner_radius_bottom_left = 2
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y5e76"]
 
 [node name="Settings" unique_id=467531739 instance=ExtResource("1_d7gj8")]
+theme = ExtResource("2_y3wwk")
 script = ExtResource("2_ma8e3")
 menu_title = "Settings"
 label_setting = SubResource("LabelSettings_52g8v")
-menu_items = Array[ExtResource("3_co64o")]([SubResource("Resource_xnw6r"), SubResource("Resource_y5e76"), SubResource("Resource_rcyix")])
+menu_items = Array[ExtResource("3_co64o")]([SubResource("Resource_1fygu"), SubResource("Resource_ih2v3")])
 
 [node name="MenuTitleLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="0" unique_id=323291262]
-custom_minimum_size = Vector2(173, 61)
+custom_minimum_size = Vector2(98, 34)
 text = "Settings"
 
 [node name="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="1" unique_id=485742059]
@@ -74,18 +70,15 @@ size_flags_horizontal = 3
 [node name="MusicToggle" type="CheckButton" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" index="0" unique_id=1612651288]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = ExtResource("5_y5e76")
-theme_override_font_sizes/font_size = 20
 text = "Music"
 
 [node name="SFXToggle" type="CheckButton" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" index="1" unique_id=1877890812]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = ExtResource("5_y5e76")
-theme_override_font_sizes/font_size = 20
 text = "Sound Effects"
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" index="2" unique_id=1136744295]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 7
 
@@ -142,88 +135,27 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer" index="1" unique_id=618731384]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="AutoSaveToggle" type="CheckButton" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2" index="0" unique_id=1619416920]
+[node name="ControlsBtn" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" index="3" unique_id=783178609]
 unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_y5e76")
-theme_override_font_sizes/font_size = 20
-text = "Auto save"
-
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2" index="1" unique_id=1041597739]
-layout_mode = 2
-theme_override_constants/margin_left = 7
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer" index="0" unique_id=575083771]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/HBoxContainer" index="0" unique_id=630546062]
-layout_mode = 2
-text = "Every"
-label_settings = ExtResource("6_rcyix")
-
-[node name="AutoSaveFrequency" type="OptionButton" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/HBoxContainer" index="1" unique_id=870970520]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_y5e76")
-theme_override_font_sizes/font_size = 20
-selected = 1
-item_count = 4
-popup/item_0/text = "1"
-popup/item_0/id = 0
-popup/item_1/text = "5"
-popup/item_1/id = 1
-popup/item_2/text = "10"
-popup/item_2/id = 2
-popup/item_3/text = "15"
-popup/item_3/id = 3
-
-[node name="Label2" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MarginContainer/HBoxContainer" index="2" unique_id=330892515]
-layout_mode = 2
-text = "mins"
-label_settings = ExtResource("6_rcyix")
-
-[node name="AutoLoadLastSave" type="CheckButton" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2" index="2" unique_id=570872464]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_y5e76")
-theme_override_font_sizes/font_size = 20
-text = "Auto load last save"
-
-[node name="SaveBeforeExiting" type="CheckButton" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2" index="3" unique_id=273495695]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_y5e76")
-theme_override_font_sizes/font_size = 20
-text = "Save before exiting"
-
-[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2" index="4" unique_id=690248507]
-layout_mode = 2
-
-[node name="ControlsBtn" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer2" index="5" unique_id=783178609]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 40)
+visible = false
+custom_minimum_size = Vector2(150, 20)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("5_y5e76")
-theme_override_font_sizes/font_size = 20
+theme_override_fonts/font = ExtResource("6_br8q1")
+theme_override_font_sizes/font_size = 0
 theme_override_styles/normal = ExtResource("7_niw71")
 theme_override_styles/pressed = ExtResource("8_ay71n")
 theme_override_styles/hover = ExtResource("9_vlajc")
 text = "Controls"
 script = ExtResource("10_bmrss")
-label_font = ExtResource("5_y5e76")
-label_font_size = 20
-min_height = 40.0
-min_width = 200.0
+label_font = ExtResource("6_br8q1")
+min_height = 20.0
+min_width = 150.0
 metadata/_custom_type_script = "uid://e5yvr65r3hl7"
 
 [node name="HSeparator3" type="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="3" unique_id=492744468]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_y5e76")
 
 [node name="HSeparator2" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="5" unique_id=398373851]

@@ -9,6 +9,8 @@ extends Control
 var tween : Tween
 var next : int = 0
 func _ready() -> void:
+	_load_user_preferences()
+	GameManager._game_bootstrap()
 	if Constants.DEBUG and Constants.SCENE_PATHS["MainMenu"] != "":
 		var settings : SceneTransition.TransitionSettings = SceneTransition.TransitionSettings.new()
 		settings.target = Constants.SCENE_PATHS["MainMenu"]
@@ -19,6 +21,24 @@ func _ready() -> void:
 		set_texture_rect()
 		fade_out()
 		
+func _load_user_preferences() -> void:
+	var prefs_result := SaveManager.load_preferences()
+	var prefs := prefs_result[1] as Preferences
+	var err := prefs_result[0] as Error
+	if err != OK:
+		Utility.logger(Constants.DEBUG_LAYERS.LOADING,"Error loading user's preferences %s" % error_string(err))
+		prefs = Preferences.new()
+		SaveManager.save_preferences(prefs)
+	if prefs:
+		GameManager.player_prefs = prefs
+	
+		EventBus.music_toggle.emit(prefs.music_toggle)
+		EventBus.music_volume.emit(prefs.music_volume)
+		EventBus.sound_toggle.emit(prefs.sfx_toggle)
+		EventBus.sound_volume.emit(prefs.sfx_volume)
+		EventBus.main_volume.emit(prefs.main_volume)
+		
+	EventBus.game_options_loaded.emit()
 
 func set_texture_rect() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -41,12 +61,11 @@ func next_tex() -> void:
 		await get_tree().process_frame
 		fade_in()
 	else:
-		print("Going to Main Menu or Game")
-		#var settings : SceneTransition.TransitionSettings = SceneTransition.TransitionSettings.new()
-		#settings.target = Constants.SCENE_PATHS["MainMenu"]
-		#settings.transitionMode = SceneTransition.mode.GAME_STARTUP
-		#settings.useLoadingScreen = true		
-		#SceneTransition.transition_scene_to_file(settings)
+		var settings : SceneTransition.TransitionSettings = SceneTransition.TransitionSettings.new()
+		settings.target = Constants.SCENE_PATHS["MainMenu"]
+		settings.transitionMode = SceneTransition.mode.GAME_STARTUP
+		settings.useLoadingScreen = false
+		SceneTransition.transition_scene_to_file(settings)
 		
 
 func fade_in() -> void:
