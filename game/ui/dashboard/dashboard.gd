@@ -52,6 +52,11 @@ func _register_events() -> void:
 		if hide_ui:
 			EventBus.show_ui.emit()
 	)
+	EventBus.game_restart.connect(func():
+		_transition_out()
+		if hide_ui:
+			EventBus.show_ui.emit()	
+	)
 
 	EnergyNetwork.network_updated.connect(func(_supply: int, _demand: int, lit_count: int, total_count: int):
 		var ratio: float = float(lit_count) / float(total_count) if total_count > 0 else 0.0

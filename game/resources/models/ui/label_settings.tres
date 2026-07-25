@@ -1,8 +1,8 @@
 [gd_resource type="LabelSettings" format=3 uid="uid://xm6tjqqy3waf"]
 
-[ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://fonts/lilita_one_regular.ttf" id="1_je6qc"]
+[ext_resource type="FontFile" uid="uid://r4q6kyv7uj8e" path="res://game/resources/models/ui/fonts/Kenney Mini.ttf" id="1_al1b6"]
 
 [resource]
-font = ExtResource("1_je6qc")
-font_size = 20
+font = ExtResource("1_al1b6")
+font_size = 12
 shadow_color = Color(0, 0, 0, 0.392157)

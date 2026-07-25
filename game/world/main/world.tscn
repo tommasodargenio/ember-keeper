@@ -8,6 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://dw71dvs0xp545" path="res://game/ui/hud/hud.tscn" id="4_382eu"]
 [ext_resource type="PackedScene" uid="uid://dbngrypwajlmq" path="res://game/ui/menus/pause_menu_co/pause_menu.tscn" id="6_61rfq"]
 [ext_resource type="PackedScene" uid="uid://bh4j8fdgtcspu" path="res://game/ui/dashboard/dashboard.tscn" id="6_n7a80"]
+[ext_resource type="Shader" uid="uid://b1oflutuij11i" path="res://game/fx/vfx/shaders/blur.gdshader" id="8_k82js"]
+[ext_resource type="LabelSettings" uid="uid://xm6tjqqy3waf" path="res://game/resources/models/ui/label_settings.tres" id="9_evsdv"]
+[ext_resource type="PackedScene" uid="uid://ddhfcdtf1dlmc" path="res://game/ui/menus/game_over/game_over_n.tscn" id="11_k82js"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gft63"]
+shader = ExtResource("8_k82js")
+shader_parameter/amount = 1.5000000712500001
 
 [node name="World" type="Node2D" unique_id=676933265]
 script = ExtResource("1_h0x6e")
@@ -18,7 +25,7 @@ script = ExtResource("1_h0x6e")
 position = Vector2(318, 16)
 
 [node name="Player" parent="." unique_id=25781300 instance=ExtResource("2_382eu")]
-position = Vector2(156, 118)
+position = Vector2(41, 149)
 
 [node name="Environment" parent="." unique_id=639537444 instance=ExtResource("3_ln34i")]
 
@@ -32,8 +39,24 @@ visible = false
 
 [node name="Menus" type="CanvasLayer" parent="." unique_id=232628924]
 
-[node name="PauseMenu" parent="Menus" unique_id=467531739 instance=ExtResource("6_61rfq")]
-menu_footer = "0.1.0-26.7 Copyright (c) 2026-2026"
+[node name="BlurRect" type="ColorRect" parent="Menus" unique_id=1019046141]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_gft63")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="PauseMenu" parent="Menus" unique_id=467531739 node_paths=PackedStringArray("blur_rect") instance=ExtResource("6_61rfq")]
+blur_rect = NodePath("../BlurRect")
+label_setting = ExtResource("9_evsdv")
+
+[node name="GameOver" parent="Menus" unique_id=418825991 node_paths=PackedStringArray("blur_rect") instance=ExtResource("11_k82js")]
+visible = false
+blur_rect = NodePath("../BlurRect")
 
 [node name="GameLanterns" type="Node" parent="." unique_id=986306071]
 unique_name_in_owner = true
@@ -45,3 +68,6 @@ position = Vector2(406, 77)
 [node name="ChairRoomMarker" type="Marker2D" parent="." unique_id=157189685]
 unique_name_in_owner = true
 position = Vector2(250, 109)
+
+[node name="PlayerStartMarker" type="Marker2D" parent="." unique_id=420086395]
+position = Vector2(156, 129)

@@ -21,45 +21,24 @@ var max_level : int = 3
 @export var max_energy_output: int = 0
 
 @export var fuel_type : Fuel.fuel_type
-# --- Pressure tuning ---
-# Pressure chases a target proportional to current fuel intensity (how full
-# the furnace is right now), but asymmetrically: quick to climb, slow to
-# fall — thermal inertia, like a stove that stays hot well after the fire's
-# mostly out. min_operating_pressure is informational only (a "running
-# efficiently" reference line on the gauge) — it doesn't force a shutdown,
-# since low pressure from low fuel is expected, not a malfunction.
-# max_operating_pressure is the one real hard limit: overheating from not
-# venting is a genuine mismanagement failure, independent of fuel level.
+
 @export var pressure_rise_rate: float = 15.0             # pressure units/sec climbing toward target
 @export var pressure_cooldown_rate: float = 2.0           # pressure units/sec falling toward target — much slower, thermal mass
 @export var pressure_vent_rate: float = 12.0              # extra pressure lost per second while player actively vents
 @export var min_operating_pressure: float = 10.0          # visual reference only — "running efficiently" line on the gauge
 @export var max_operating_pressure: float = 85.0          # at/above this = overheat, damages furnace over time
 @export var overheat_damage_per_second: float = 2.0
-# --- Puffback ---
-# Fires when the furnace is BOTH over-pressured AND already damaged — a
-# flare-up, not just plain overheating. Ends the moment EITHER condition
-# clears, since health has no other way to recover — requiring both to
-# clear (as an AND) would mean puffback could trigger once and then never
-# turn off again for that furnace's remaining lifetime.
+
 @export var puffback_pressure_threshold: float = 80.0
 @export var puffback_health_threshold : float = 70.0
-# --- Watering ---
-# Player-driven fix for an active puffback: dumping water rapidly knocks
-# pressure down, distinct from the slow passive vent.
-@export var water_pressure_reduction: float = 1.5  # total pressure removed per unit of water used, spread over time
-@export var dousing_rate: float = 5.0                 # pressure removed per second while actively dousing
 
-# --- Output tuning ---
-# Guarantees the furnace keeps producing at least a trickle of energy as
-# long as ANY fuel is loaded, so it never goes fully dark from scarcity
-# alone — output fades toward this floor as fuel runs low instead of
-# cutting off. Tune per furnace type if some models should sputter more
-# gracefully than others.
+@export var water_pressure_reduction: float = 1.5  
+@export var dousing_rate: float = 5.0               
+
+
 @export var min_output_floor: int = 1
 
-# --- Runtime state (not exported, not part of the saved profile design necessarily —
-#     decide separately whether this belongs in your to_dict()/from_dict() save pattern) ---
+
 var current_fuel_units: int = 0
 var loaded_fuel: Fuel = null
 var pressure: float = 0.0
@@ -67,7 +46,6 @@ var health: float = 100.0
 var state: furnace_state = furnace_state.OFF
 var _burn_time_left: float = 0.0
 var _venting: bool = false
-var _has_reached_operating_pressure: bool = false
 var _puffback : bool = false
 var _dousing_remaining: float = 0.0
 
@@ -83,6 +61,24 @@ signal health_changed(current_health: int)
 signal furnace_puffback
 signal furnace_puffback_ended
 
+
+func init_furnace() -> void:
+	level = 1
+	current_fuel_units = 0
+	loaded_fuel = null
+	health = 100.0
+	pressure = 0.0
+	state = furnace_state.OFF
+	_venting = false
+	_dousing_remaining = 0.0
+	_burn_time_left = 0.0
+	health_changed.emit(health)
+	
+	if energy_output != 0:
+		energy_output = 0
+		energy_output_changed.emit(energy_output)
+
+	_check_puffback()  
 func can_accept_fuel(fuel: Fuel) -> bool:
 	if fuel.type != fuel_type:
 		return false
@@ -119,17 +115,13 @@ func _try_ignite() -> bool:
 		return false
 	state = furnace_state.BURNING
 	_burn_time_left = loaded_fuel.combustion_time
-	_has_reached_operating_pressure = false
 	furnace_ignited.emit()
 	return true
  
 func vent_pressure(is_venting: bool) -> void:
 	_venting = is_venting
  
-# Returns how much water was actually used (currently always equal to
-# `amount` — no capacity limit on watering itself, unlike fuel/pressure
-# which do have caps). Re-checks puffback immediately rather than waiting
-# for the next tick, so extinguishing a flare feels instant to the player.
+
 func add_water(amount: int) -> int:
 	if amount <= 0:
 		return 0
@@ -157,12 +149,7 @@ func _process_burn(delta: float) -> void:
 	if _burn_time_left <= 0.0:
 		_consume_one_unit()
 
-# Fuel level sets the CEILING (how much energy this furnace could put out at
-# full pressure). Current pressure gates how much of that ceiling is actually
-# delivered right now — so output ramps up alongside pressure instead of
-# snapping instantly. min_output_floor still guarantees a small trickle the
-# moment the furnace is burning, so it's never fully dark while fuel remains,
-# even before pressure has had time to build.
+
 func _update_output() -> void:
 	var fuel_ratio := get_fuel_ratio()
 	var ceiling: int = int(round(loaded_fuel.energy * fuel_ratio))
@@ -177,7 +164,6 @@ func _update_output() -> void:
 		energy_output_changed.emit(energy_output)
  
 func _consume_one_unit() -> void:
-	print("One unit of fuel consumed")
 	current_fuel_units -= 1
 	
 	if current_fuel_units <= 0:
@@ -188,15 +174,9 @@ func _consume_one_unit() -> void:
 		fuel_depleted.emit()
 	else:
 		_burn_time_left = loaded_fuel.combustion_time
-		_update_output()  # fuel_ratio just dropped, reflect it immediately
+		_update_output()  
  
-# Target is proportional to current fuel intensity — a full hopper pulls
-# pressure toward 100, an empty/off furnace pulls it toward 0. Climbing
-# toward the target is fast (pressure_rise_rate); falling toward it is slow
-# (pressure_cooldown_rate) — thermal inertia, so pressure lingers even as
-# fuel runs low or the fire goes out. Venting is a separate, faster, active
-# release that always applies regardless of which direction pressure is
-# already heading.
+
 func _update_pressure(delta: float) -> void:
 	var target: float = get_fuel_ratio() * 100.0 if state == furnace_state.BURNING else 0.0
  
@@ -215,21 +195,17 @@ func _update_pressure(delta: float) -> void:
 	pressure = clamp(pressure, 0.0, 100.0)
 	pressure_changed.emit(pressure)
  
-		
-
-	if pressure >= max_operating_pressure:
+	if state == furnace_state.BURNING and pressure >= max_operating_pressure:
 		health -= overheat_damage_per_second * delta
 		health_changed.emit(health)
 		overheated.emit()
 		if health <= 0.0:
+			health = 0.0
 			_shutdown("overheat_damage")
 	
 	_check_puffback()
 
-# A flare-up needs BOTH conditions at once. It ends the moment either one
-# clears — dropping pressure below the threshold (e.g. via water) stops the
-# active flare even though the furnace is still damaged; it just means the
-# furnace remains vulnerable to flaring up again if pressure climbs back up.
+
 func _check_puffback() -> void:
 	var puffback_condition: bool = pressure >= puffback_pressure_threshold and health <= puffback_health_threshold
  
@@ -241,6 +217,8 @@ func _check_puffback() -> void:
 		furnace_puffback_ended.emit()
  
 func _shutdown(reason: String) -> void:
+	if state == furnace_state.SHUTDOWN_OVERHEAT:
+		return
 	state = furnace_state.SHUTDOWN_OVERHEAT
 	energy_output = 0
 	energy_output_changed.emit(energy_output)

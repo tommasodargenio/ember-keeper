@@ -38,11 +38,11 @@ func _register_events() -> void:
 	EventBus.hide_ui.connect(_transition_out)
 	EventBus.show_ui.connect(_transition_in)
 	
-	
-	EventBus.game_ended.connect(func(won: bool, forced_reason: String):
-		var msg = "won: %s - forced_reason: %s" % [won, forced_reason]
-		display_message(Constants.MESSAGE_WINDOW_FLAG.INFO, "Game Ended", msg, "CLOSE", true)
-	)
+	#
+	#EventBus.game_ended.connect(func(won: bool, forced_reason: String):
+		#var msg = "won: %s - forced_reason: %s" % [won, forced_reason]
+		#display_message(Constants.MESSAGE_WINDOW_FLAG.INFO, "Game Ended", msg, "CLOSE", true)
+	#)
 	
 
 	GameClock.clock_parts_updated.connect(_on_clock_parts_updated)

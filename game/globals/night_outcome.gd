@@ -23,6 +23,7 @@ extends Node
 var _current_dark_ratio: float = 0.0
 var _outage_timer: float = 0.0
 var _incident_cooldown: float = 0.0
+var _game_over: bool = false
 
 
 func _ready() -> void:
@@ -34,6 +35,12 @@ func _ready() -> void:
 		_watch_furnace(GameManager.current_furnace)
 
 
+func _reset() -> void:
+	_outage_timer = 0.0
+	_incident_cooldown = 0.0
+	_current_dark_ratio = 0.0
+	_game_over = false
+	
 func _watch_furnace(furnace: Furnace) -> void:
 	if furnace:
 		furnace.furnace_shutdown.connect(_on_furnace_shutdown)
@@ -86,5 +93,8 @@ func _on_dawn_reached() -> void:
 
 
 func _end_game(won: bool, forced_reason: String) -> void:
+	if _game_over:
+		return
+	_game_over = true
 	GameClock.stop()
 	EventBus.game_ended.emit(won, forced_reason)

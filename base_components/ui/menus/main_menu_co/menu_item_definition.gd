@@ -64,6 +64,7 @@ func _execute_action(action_key: String) -> void:
 		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.ERROR, "Error", msg, "QUIT", true)		
 		return
 	match action_key:
+		"Restart":		EventBus.game_restart.emit()
 		"Quit":			_handle_save_on_quit(tree)
 		"Pause":		EventBus.game_paused.emit()
 		"Resume":		EventBus.game_resumed.emit()

@@ -2,7 +2,7 @@ extends Node
 
 enum DEBUG_LAYERS {ALL, NPC, VM, WALLET, GAME, MAP, PATHFINDING}
 
-const DEBUG := true
+const DEBUG := false
 const DEBUG_TYPE : DEBUG_LAYERS = DEBUG_LAYERS.GAME
 const GAME_NAME : String = "Ember Keeper"
 const GAME_VERSION : String = "0.1.0-26.7"
@@ -65,7 +65,7 @@ const RESOURCES : Dictionary = {
 }
 
 const SCENE_PATHS : Dictionary = {
-	"GameOver": "",
+	"GameOver": "uid://ddhfcdtf1dlmc",
 	"Lantern": "uid://nts6xlg42gy6",
 	"MainMenu": "uid://c5ogfpcb8jlb3",
 	"HotBarItem" : "uid://cy717i5jy85m4",
@@ -104,6 +104,7 @@ const MENU_ACTIONS: Dictionary = {
 	"Pause":     "pause",
 	"Resume":    "resume",
 	"SaveAndQuit": "savequit",
+	"Restart": "restart",
 	"Back":		 "",
 	"SavePrefs": "",
 	"Close": ""

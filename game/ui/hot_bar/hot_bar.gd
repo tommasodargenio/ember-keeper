@@ -13,6 +13,10 @@ func _register_events() -> void:
 	EventBus.update_hotbar.connect(func(item_name : String, quantity : int): 
 		_update_item(item_name, quantity)
 	)
+	EventBus.reset_hotbar.connect(func():
+		for i in grid.get_children():
+			i.queue_free()
+	)
 
 func _item_in_grid(item_name: String) -> HotBarItem:
 	for i: HotBarItem in grid.get_children():

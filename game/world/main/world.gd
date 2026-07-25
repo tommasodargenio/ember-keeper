@@ -1,10 +1,11 @@
 extends Node2D
 
-@onready var game_lanterns: Node = %GameLanterns
 
+@onready var game_lanterns: Node = %GameLanterns
 @onready var chair_marker: Marker2D = %ChairMarker
 @onready var chair_room_marker: Marker2D = %ChairRoomMarker
 @onready var ui: CanvasLayer = %UI
+@onready var player_start_marker: Marker2D = $PlayerStartMarker
 
 
 var tutorial_shown : bool = false
@@ -14,12 +15,22 @@ func _ready() -> void:
 	_init_game()
 	_register_events()
 	
+		
 func _init_game() -> void:
+	get_tree().paused = false
+	GameManager.game_over = false
+	GameManager.town_mood = 100
+	GameManager.reported_incidents = 0
 	GameManager._init_town_lantern(game_lanterns)
 	GameManager._refresh_lanterns_count()
+	GameManager.current_furnace.init_furnace()
 	GameClock.start_night()
-	EventBus.game_ready.emit()
+	NightOutcome._reset()
+	EventBus.player_reset.emit(player_start_marker.position)
+	EventBus.reset_hotbar.emit()
 	
+	EventBus.game_ready.emit()
+	GameManager.game_in_progress = true
 	if GameManager.show_tutorial and not tutorial_shown:
 		_show_tutorial_sequence()
 
@@ -36,7 +47,10 @@ func _register_events() -> void:
 			if GameManager.show_tutorial:
 				_show_chair_key_prompt()
 	)
-		
+	EventBus.game_restart.connect(func():
+		_init_game()
+	)
+	
 func _show_tutorial_sequence() -> void:
 	await get_tree().create_timer(2.0).timeout
 	var arrow := preload(Constants.SCENE_PATHS["FloatingIcon"]).instantiate()

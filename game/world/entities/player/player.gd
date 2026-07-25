@@ -23,6 +23,16 @@ func _physics_process(delta: float) -> void:
 
 #region events
 func _register_events() -> void:
+	EventBus.player_set_position.connect(func(pos: Vector2):
+		position = pos
+	)
+	EventBus.player_reset.connect(func(pos: Vector2): 
+		position = pos
+		carrying = {"fuel": null, "quantity": 0}
+		can_walk = true
+		is_sitting = false
+		carrying_water = 0
+	)
 	EventBus.player_has_water.connect(func(quantity: int):
 		carrying_water += quantity
 		EventBus.add_to_hotbar.emit("Water",load(Constants.RESOURCES["WaterBucket"]), quantity, Utility.get_action_key_binding("watering") )
@@ -49,6 +59,7 @@ func _register_events() -> void:
 		if tex.animation == "standing":
 			is_sitting = false
 			can_walk = true
+			last_direction.y = 1.0
 			tex.play("idle_down")
 	)
 	

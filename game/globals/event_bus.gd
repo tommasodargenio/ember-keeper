@@ -6,6 +6,7 @@ signal level_started()
 signal map_loaded()
 signal game_ready()
 signal save_loaded()
+signal game_restart()
 signal game_saved(save_filename : String, saved_at: String, quit_on_save: bool)
 signal game_options_saved()
 signal game_options_loaded()
@@ -35,12 +36,15 @@ signal player_sitting()
 signal player_standing()
 signal player_sat()
 signal player_entered_room(room: String)
+signal player_set_position(pos: Vector2)
+signal player_reset(pos: Vector2)
 
 
 # FURNACE
 signal active_furnace_changed(furnace: Furnace)
 
 # UI
+signal reset_hotbar()
 signal add_to_hotbar(name: String, tex: Texture, quantity: int, shortcut: String)
 signal update_hotbar(name: String, quantity: int)
 signal palette_changed(new_palette: String)

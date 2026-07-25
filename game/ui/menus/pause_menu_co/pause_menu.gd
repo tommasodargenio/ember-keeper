@@ -5,7 +5,6 @@ extends MainMenu
 
 @export var blur_rect : ColorRect
 
-@onready var grid_container: GridContainer = %GridContainer
 
 var blur_tween : Tween
 var is_paused : bool = false
@@ -13,7 +12,6 @@ var is_paused : bool = false
 # Called when the node enters the scene tree for the first time._on_menu_show()
 func _ready() -> void:
 	super()
-	call_deferred("_update_stats")
 	_register_events()
 
 func _register_events() -> void:
@@ -32,15 +30,7 @@ func _register_events() -> void:
 			_pop_out_menu()
 )	
 
-func _update_stats() -> void:
-	_clear_stats()
-	if Engine.is_editor_hint():
-		return
-	if GameManager.game_in_progress:
-		grid_container.add_child(_create_label("[color=green][b]Game in progress[/b][/color]"))
-	else:
-		grid_container.add_child(_create_label("[color=red][b]No Game running[/b][/color]"))
-		
+
 func _create_label(text: String) -> HBoxContainer:
 	var c := HBoxContainer.new()
 	var l := RichTextLabel.new()
@@ -57,11 +47,7 @@ func _create_label(text: String) -> HBoxContainer:
 	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	l.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	return c
-	
-func _clear_stats() -> void:	
-	if grid_container.get_child_count() > 0:
-		for s in grid_container.get_children():
-			s.queue_free()
+
 
 func _blur_on() -> void:
 	if not blur_rect: return
@@ -88,7 +74,7 @@ func _input(event: InputEvent) -> void:
 		if not get_tree().paused:
 			EventBus.game_paused.emit()
 			# Pause the game
-			_update_stats()
+			#_update_stats()
 			_blur_on()
 			_pop_up_menu()
 		else:

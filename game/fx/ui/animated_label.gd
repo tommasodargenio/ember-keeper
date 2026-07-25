@@ -40,7 +40,7 @@ func _build_chars() -> void:
 	_container = HBoxContainer.new()
 	_container.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_container.add_theme_constant_override("separation", 0)
-	_container.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	_container.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
 	add_child(_container)
 
 	for ch in text:
