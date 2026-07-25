@@ -13,6 +13,7 @@ signal init_new_map()
 signal game_paused()
 signal game_resumed()
 signal town_mood_updated()
+signal game_ended(won: bool, forced_reason: String)
 
 # Settings
 signal music_toggle(status: bool)
@@ -33,6 +34,7 @@ signal player_watering(quantity: int)
 signal player_sitting()
 signal player_standing()
 signal player_sat()
+signal player_entered_room(room: String)
 
 
 # FURNACE

@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://baxhl45rv2b6a"]
+
+[ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="1_u5ed8"]
+[ext_resource type="Script" uid="uid://hqa0db2gavrl" path="res://game/ui/floating_icon/floating_icon.gd" id="1_wyouv"]
+[ext_resource type="Texture2D" uid="uid://dbvsihb7wxdnm" path="res://assets/sprites/ui/emote_empty.png" id="3_u5ed8"]
+
+[node name="FloatingIcon" type="Control" unique_id=1775184340]
+custom_minimum_size = Vector2(16, 16)
+custom_maximum_size = Vector2(16, 16)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 16.0
+offset_bottom = 16.0
+theme = ExtResource("1_u5ed8")
+script = ExtResource("1_wyouv")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=125599891]
+unique_name_in_owner = true
+layout_mode = 0
+texture = ExtResource("3_u5ed8")
+stretch_mode = 5
+
+[node name="KeyLabel" type="RichTextLabel" parent="." unique_id=129205953]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -50,7 +50,7 @@ fit_content = true
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=204899073]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1830264508]
+[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1651003217]
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -59,6 +59,23 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
+text = "ada"
+fit_content = true
+
+[node name="LanternCount" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1422112467]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "asas"
+fit_content = true
+
+[node name="EnergyNetworkStatus" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=571939751]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Unknown"
 fit_content = true
 
 [node name="Close" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1749115010]

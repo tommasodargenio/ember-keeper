@@ -206,3 +206,8 @@ func get_next_autosave_index() -> int:
 		highest +=1
 	
 	return highest
+
+
+func get_action_key_binding(action_name : String) -> String:
+	var im = InputMap.action_get_events(action_name)
+	return im[0].as_text().replacen("- Physical", "").strip_edges()

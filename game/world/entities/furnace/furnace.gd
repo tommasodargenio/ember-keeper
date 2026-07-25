@@ -19,13 +19,14 @@ extends StaticBody2D
 		if is_node_ready():
 			_update_tex()
 
+@onready var icon_position: Marker2D = %IconPosition
 
 @onready var tex: Sprite2D = %Tex
 @onready var interact_sensor: Area2D = %InteractSensor
 
 var can_interact : bool = false
 var interacting_player : Player
-
+var tutorial_shown : bool = false
 var current_fuel_load : int = 0
 
 var model_lit : Dictionary = {
@@ -83,6 +84,9 @@ func _register_events() -> void:
 		if body is Player:
 			can_interact = true
 			interacting_player = body
+			if GameManager.show_tutorial and not tutorial_shown:
+				_tutorial_sequence()
+				tutorial_shown = true		
 	)
 	interact_sensor.body_exited.connect(func(body: Node2D):
 		if body is Player:
@@ -90,6 +94,15 @@ func _register_events() -> void:
 			interacting_player = null
 	)
 
+func _tutorial_sequence() -> void:
+	var tutorial := preload(Constants.SCENE_PATHS["FloatingIcon"]).instantiate()
+	add_child(tutorial)
+	tutorial.font_size = 8
+	tutorial.place_at(icon_position.global_position)
+	tutorial.set_icon(preload(Constants.RESOURCES["EmpytEmote"]))
+	tutorial.set_key_text("%s/%s" % [Utility.get_action_key_binding("interact"),Utility.get_action_key_binding("watering")])
+	tutorial.display_duration = 2.0
+	
 func _handle_state() -> void:
 	match profile.state:
 		Furnace.furnace_state.BURNING:

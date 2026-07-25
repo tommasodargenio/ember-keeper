@@ -6,6 +6,8 @@ extends Control
 @onready var close: Button = %Close
 
 @onready var town_mood_status: RichTextLabel = %TownMoodStatus
+@onready var lantern_count: RichTextLabel = %LanternCount
+@onready var energy_network_status: RichTextLabel = %EnergyNetworkStatus
 
 var tween : Tween
 
@@ -24,6 +26,7 @@ func _register_events() -> void:
 	EventBus.town_mood_updated.connect(update_mood_status)	
 	EventBus.player_sat.connect(func():
 		_transition_in()
+		update_data()
 		if hide_ui:
 			EventBus.hide_ui.emit()
 	)
@@ -34,8 +37,20 @@ func _register_events() -> void:
 			EventBus.show_ui.emit()
 	)
 
+	EnergyNetwork.network_updated.connect(func(supply: int, demand: int, lit_count: int, total_count: int):
+		var msg = "S: %s - D: %s - L: %s - T: %s" % [supply, demand, lit_count, total_count]
+		energy_network_status.text = msg
+	)
+
+func update_data() -> void:
+	update_mood_status()
+	lantern_count.text = "Lanterns: [b]%s[/b]" % [GameManager.total_lanterns]
+
+	
 func update_mood_status() -> void:
-		town_mood_status.text = "%s" % [GameManager.get_town_mood(true)]	
+		var mood_str =  GameManager.get_town_mood(true)
+		var mood_color = GameManager.mood_color[mood_str]
+		town_mood_status.text = "Town mood: [color=%s][b]%s[/b][/color]" % [mood_color, mood_str]	
 	
 
 func _transition_in() -> void:

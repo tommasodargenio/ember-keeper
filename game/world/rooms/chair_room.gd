@@ -1,10 +1,11 @@
 extends Node2D
 
 @onready var chair_sensor: Area2D = %ChairSensor
+@onready var room_entrance_sensor: Area2D = %RoomEntranceSensor
 
 var can_sit : bool = false
 var is_sitting : bool = false
-
+var room_name = "Chair"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_register_events()
@@ -25,6 +26,11 @@ func _register_events() -> void:
 	EventBus.player_standing.connect(func():
 		is_sitting = false
 	)
+	room_entrance_sensor.body_entered.connect(func(body: Node2D):
+		if body is Player:
+			EventBus.player_entered_room.emit(room_name)
+	)
+	
 	
 func _handle_interact() -> void:
 	if is_sitting:

@@ -7,7 +7,7 @@
 size = Vector2(28.940903, 38.260853)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7deas"]
-size = Vector2(34.9907, 36.46227)
+size = Vector2(44.964684, 51.014465)
 
 [node name="Furnace" type="StaticBody2D" unique_id=1361453064]
 collision_layer = 2
@@ -32,8 +32,12 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractSensor" unique_id=1743516335]
-position = Vector2(-0.011585236, 16.759062)
+position = Vector2(-0.25684738, 24.03516)
 shape = SubResource("RectangleShape2D_7deas")
 
 [node name="FuelBurningTimer" type="Timer" parent="." unique_id=249615355]
 unique_name_in_owner = true
+
+[node name="IconPosition" type="Marker2D" parent="." unique_id=375204767]
+unique_name_in_owner = true
+position = Vector2(-19.620949, -30.903)

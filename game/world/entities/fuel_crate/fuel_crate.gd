@@ -18,9 +18,12 @@ const FUEL_TEX_GROUP = "FuelTex"
 
 @onready var crate_tex: Sprite2D = %CrateTex
 @onready var interact_sensor: Area2D = %InteractSensor
+@onready var icon_position: Marker2D = %IconPosition
 
 var empty_create : Rect2 = Rect2(0, 157, 15, 19)
 var can_interact : bool = false
+
+var tutorial_shown : bool = false
 
 func _ready() -> void:
 	_update_crate_tex()
@@ -36,12 +39,23 @@ func _register_events() -> void:
 	interact_sensor.body_entered.connect(func(body: Node2D):
 		if body is Player:
 			can_interact = true
+			if GameManager.show_tutorial and not tutorial_shown:
+				_tutorial_sequence()
+				tutorial_shown = true			
 	)
 	interact_sensor.body_exited.connect(func(body: Node2D):
 		if body is Player:
 			can_interact = false
 	)
 
+func _tutorial_sequence() -> void:
+	var tutorial := preload(Constants.SCENE_PATHS["FloatingIcon"]).instantiate()
+	add_child(tutorial)
+	tutorial.place_at(icon_position.global_position)
+	tutorial.set_icon(preload(Constants.RESOURCES["EmpytEmote"]))
+	tutorial.set_key_text(Utility.get_action_key_binding("interact"))
+	tutorial.display_duration = 2.0
+	
 func _handle_interact() -> void:
 	if fuel and quantity > 0:
 		quantity -= 1

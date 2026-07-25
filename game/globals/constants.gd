@@ -54,7 +54,14 @@ var WINDOW_TITLE_FORMAT = func(title: String):
 const RESOURCES : Dictionary = {
 	"WaterBucket": "uid://c2laqg6ww1g0p",
 	"FuelWood": "uid://8n2mapwkgmp0",
-	"FuelCoal": "uid://3rkli5loqurd"
+	"FuelCoal": "uid://3rkli5loqurd",
+	"EmpytEmote": "uid://dbvsihb7wxdnm",
+	"EmoteArrowRight": "uid://cmgtoabevrjmc",
+	"EmoteArrowLeft": "uid://mxeggk1ukhxl",
+	"EmoteTear": "uid://mprm7qylmk0g",
+	"EmoteTears": "uid://cftuq7sw5y53p",
+	"EmoteQuestion": "uid://dnw27o1hcv4sq",
+	"EmoteExclamations": "uid://d1y1n6rtkksbw" 
 }
 
 const SCENE_PATHS : Dictionary = {
@@ -62,6 +69,7 @@ const SCENE_PATHS : Dictionary = {
 	"Lantern": "uid://nts6xlg42gy6",
 	"MainMenu": "uid://c5ogfpcb8jlb3",
 	"HotBarItem" : "uid://cy717i5jy85m4",
+	"FloatingIcon": "uid://baxhl45rv2b6a",
 	"SaveLoadMenu": "",
 	"Credits": "",
 	"Game": "",

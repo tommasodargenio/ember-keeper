@@ -66,6 +66,9 @@ sources/0 = SubResource("TileSetAtlasSource_cqon5")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gft63"]
 size = Vector2(40, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cqon5"]
+size = Vector2(26, 44)
+
 [node name="ChairRoom" type="Node2D" unique_id=1533580783]
 script = ExtResource("1_cqon5")
 
@@ -97,3 +100,12 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChairSensor" unique_id=203225155]
 position = Vector2(88, 95)
 shape = SubResource("RectangleShape2D_gft63")
+
+[node name="RoomEntranceSensor" type="Area2D" parent="." unique_id=932350150]
+unique_name_in_owner = true
+position = Vector2(39, 151)
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomEntranceSensor" unique_id=1380485007]
+position = Vector2(-5, 1)
+shape = SubResource("RectangleShape2D_cqon5")

@@ -8,12 +8,20 @@ var mood_str : Dictionary = {
 	"HAPPY" : 70, 
 	"MERRY" : 90
 }
-
+var mood_color : Dictionary = {
+	"FURIOUS": Color.DARK_RED.to_html(),
+	"BLEAK": Color.BLACK.to_html(),
+	"SAD": Color.DIM_GRAY.to_html(),
+	"MEH": Color.SALMON.to_html(),
+	"HAPPY": Color.GREEN_YELLOW.to_html(),
+	"MERRY": Color.GREEN.to_html()
+}
 var game_in_progress : bool = false
 var game_loaded : bool = false
 var game_over : bool = false
 var game_win : bool = false
 
+var show_tutorial : bool = true
 
 var current_furnace : Furnace
 
@@ -27,6 +35,10 @@ var town_mood : int = 100:
 		town_mood = clamp(value, 0, 100)
 
 
+func _refresh_lanterns_count() -> void:
+	total_lanterns = get_tree().get_node_count_in_group(Constants.LANTERNS_GROUP)
+		
+
 func _init_town_lantern(folder_node: Node) -> void:
 	var lantern_ = preload(Constants.SCENE_PATHS["Lantern"])
 	if Constants.STARTING_TOWN_LANTERNS > 0:
@@ -36,6 +48,8 @@ func _init_town_lantern(folder_node: Node) -> void:
 			folder_node.add_child(l)
 			l.profile = town_lantern
 			l.hide()
+			l.add_to_group(Constants.LANTERNS_GROUP)
+			total_lanterns += 1
 	if Constants.STARTING_WOODS_LANTERNS > 0:
 		var wood_lantern = load("uid://bvimwp5f46eal")
 		for i in range(Constants.STARTING_WOODS_LANTERNS):
@@ -43,6 +57,8 @@ func _init_town_lantern(folder_node: Node) -> void:
 			folder_node.add_child(l)
 			l.profile = wood_lantern
 			l.hide()
+			l.add_to_group(Constants.LANTERNS_GROUP)
+			total_lanterns += 1
 			
 
 func get_town_mood(to_str: bool = true) -> String:
@@ -63,3 +79,4 @@ func get_town_mood(to_str: bool = true) -> String:
 			break
 
 	return result
+	

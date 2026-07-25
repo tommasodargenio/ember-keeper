@@ -22,6 +22,46 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 32.0
 
+[node name="HBoxContainer" type="HBoxContainer" parent="TopLeft" unique_id=1169186295]
+layout_mode = 0
+offset_right = 55.0
+offset_bottom = 13.0
+theme_override_constants/separation = 0
+
+[node name="clock_hour" type="RichTextLabel" parent="TopLeft/HBoxContainer" unique_id=94991816]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(13, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "12"
+fit_content = true
+horizontal_alignment = 2
+
+[node name="clock_separator" type="RichTextLabel" parent="TopLeft/HBoxContainer" unique_id=187965714]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = ":"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="clock_minute" type="RichTextLabel" parent="TopLeft/HBoxContainer" unique_id=1099023033]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(13, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "59"
+fit_content = true
+
+[node name="clock_ampm" type="RichTextLabel" parent="TopLeft/HBoxContainer" unique_id=1639745679]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "PM"
+fit_content = true
+
 [node name="TopCenter" type="Control" parent="." unique_id=1311690514]
 unique_name_in_owner = true
 layout_mode = 1
@@ -164,3 +204,8 @@ gauge_health = true
 [node name="Gauge2" parent="BottomRight/HBoxContainer" unique_id=370312131 instance=ExtResource("2_l7e5k")]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="BlinkTimer" type="Timer" parent="." unique_id=1183858138]
+unique_name_in_owner = true
+wait_time = 0.5
+autostart = true
