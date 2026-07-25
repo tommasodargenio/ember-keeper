@@ -11,7 +11,7 @@ extends Control
 @onready var bottom_right: Control = %BottomRight
 
 
-@onready var network: RichTextLabel = %Network
+
 @onready var blink_timer: Timer = %BlinkTimer
 
 @onready var clock_hour: RichTextLabel = %clock_hour
@@ -44,11 +44,7 @@ func _register_events() -> void:
 		display_message(Constants.MESSAGE_WINDOW_FLAG.INFO, "Game Ended", msg, "CLOSE", true)
 	)
 	
-	EnergyNetwork.network_updated.connect(func(supply: int, demand: int, lit_count: int, total_count: int):
-		var msg = "S: %s - D: %s - L: %s - T: %s" % [supply, demand, lit_count, total_count]
-		network.text = msg
-	)
-	
+
 	GameClock.clock_parts_updated.connect(_on_clock_parts_updated)
 	blink_timer.timeout.connect(_on_blink_timeout)	
 

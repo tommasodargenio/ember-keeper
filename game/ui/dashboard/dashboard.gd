@@ -9,6 +9,22 @@ extends Control
 @onready var lantern_count: RichTextLabel = %LanternCount
 @onready var energy_network_status: RichTextLabel = %EnergyNetworkStatus
 
+var network_status_str: Dictionary = {
+	"DARK": 0.0,
+	"FAILING": 0.25,
+	"FLICKERING": 0.6,
+	"STABLE": 0.9,
+	"THRIVING": 1.0
+}
+
+var network_status_color: Dictionary = {
+	"DARK": "#8a2f2f",
+	"FAILING": "#c2462b",
+	"FLICKERING": "#d99a2b",
+	"STABLE": "#5a9b5a",
+	"THRIVING": "#4fc76a"
+}
+
 var tween : Tween
 
 # Called when the node enters the scene tree for the first time.
@@ -37,15 +53,30 @@ func _register_events() -> void:
 			EventBus.show_ui.emit()
 	)
 
-	EnergyNetwork.network_updated.connect(func(supply: int, demand: int, lit_count: int, total_count: int):
-		var msg = "S: %s - D: %s - L: %s - T: %s" % [supply, demand, lit_count, total_count]
-		energy_network_status.text = msg
-	)
+	EnergyNetwork.network_updated.connect(func(_supply: int, _demand: int, lit_count: int, total_count: int):
+		var ratio: float = float(lit_count) / float(total_count) if total_count > 0 else 0.0
+		var status_word: String = _get_network_status(ratio)
+		var status_color: String = network_status_color[status_word]
 
+		energy_network_status.text = "[font_size=%s][color=%s]%s[/color][/font_size]\n%d / %d lanterns lit" % [
+			10, status_color, status_word, lit_count, total_count
+		]
+	)
 func update_data() -> void:
 	update_mood_status()
 	lantern_count.text = "Lanterns: [b]%s[/b]" % [GameManager.total_lanterns]
 
+func _get_network_status(ratio: float) -> String:
+	var names: Array = network_status_str.keys()
+	names.sort_custom(func(a, b): return network_status_str[a] < network_status_str[b])
+
+	var result: String = names[0]
+	for status_name in names:
+		if ratio >= network_status_str[status_name]:
+			result = status_name
+		else:
+			break
+	return result
 	
 func update_mood_status() -> void:
 		var mood_str =  GameManager.get_town_mood(true)
