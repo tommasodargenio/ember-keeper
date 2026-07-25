@@ -27,6 +27,8 @@ const SAVE_PREFERENCES_FILE : String = "prefs.json"
 
 # Game play
 const LANTERNS_GROUP = "lanterns"
+const CITY_LANTERNS_GROUP = "city_lanterns"
+const WOODS_LANTERNS_GROUP = "woods_lanters"
 const STARTING_TOWN_LANTERNS = 0
 const STARTING_WOODS_LANTERNS = 0
 const WATER_TO_USE = 10

@@ -15,6 +15,7 @@ signal game_paused()
 signal game_resumed()
 signal town_mood_updated()
 signal game_ended(won: bool, forced_reason: String)
+signal intro_finished()
 
 # Settings
 signal music_toggle(status: bool)

@@ -15,7 +15,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gft63"]
 shader = ExtResource("8_k82js")
-shader_parameter/amount = 1.5000000712500001
+shader_parameter/amount = 1.50000007125
 
 [node name="World" type="Node2D" unique_id=676933265]
 script = ExtResource("1_h0x6e")
@@ -30,19 +30,9 @@ position = Vector2(41, 149)
 
 [node name="Environment" parent="." unique_id=639537444 instance=ExtResource("3_ln34i")]
 
-[node name="FXDangerVignette" parent="." unique_id=178270019 instance=ExtResource("6_g6kqt")]
+[node name="FX" type="CanvasLayer" parent="." unique_id=84296280]
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1938653477]
-unique_name_in_owner = true
-
-[node name="HUD" parent="UI" unique_id=245103641 instance=ExtResource("4_382eu")]
-
-[node name="Dashboard" parent="UI" unique_id=524229284 instance=ExtResource("6_n7a80")]
-visible = false
-
-[node name="Menus" type="CanvasLayer" parent="." unique_id=232628924]
-
-[node name="BlurRect" type="ColorRect" parent="Menus" unique_id=1019046141]
+[node name="BlurRect" type="ColorRect" parent="FX" unique_id=1019046141]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_gft63")
 anchors_preset = 15
@@ -53,13 +43,26 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
+[node name="FXDangerVignette" parent="FX" unique_id=178270019 instance=ExtResource("6_g6kqt")]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1938653477]
+unique_name_in_owner = true
+
+[node name="HUD" parent="UI" unique_id=245103641 instance=ExtResource("4_382eu")]
+
+[node name="Dashboard" parent="UI" unique_id=524229284 node_paths=PackedStringArray("blur_rect") instance=ExtResource("6_n7a80")]
+visible = false
+blur_rect = NodePath("../../FX/BlurRect")
+
+[node name="Menus" type="CanvasLayer" parent="." unique_id=232628924]
+
 [node name="PauseMenu" parent="Menus" unique_id=467531739 node_paths=PackedStringArray("blur_rect") instance=ExtResource("6_61rfq")]
-blur_rect = NodePath("../BlurRect")
+blur_rect = NodePath("../../FX/BlurRect")
 label_setting = ExtResource("9_evsdv")
 
 [node name="GameOver" parent="Menus" unique_id=418825991 node_paths=PackedStringArray("blur_rect") instance=ExtResource("11_k82js")]
 visible = false
-blur_rect = NodePath("../BlurRect")
+blur_rect = NodePath("../../FX/BlurRect")
 
 [node name="GameLanterns" type="Node" parent="." unique_id=986306071]
 unique_name_in_owner = true

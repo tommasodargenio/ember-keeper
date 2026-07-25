@@ -32,6 +32,7 @@ func _init_game() -> void:
 	
 	EventBus.game_ready.emit()
 	GameManager.game_in_progress = true
+	
 	if GameManager.show_tutorial and not tutorial_shown:
 		_show_tutorial_sequence()
 

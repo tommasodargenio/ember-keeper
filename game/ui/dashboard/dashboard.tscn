@@ -1,9 +1,24 @@
 [gd_scene format=3 uid="uid://bh4j8fdgtcspu"]
 
-[ext_resource type="StyleBox" uid="uid://c6kciv845e2vy" path="res://game/resources/models/ui/panel_style.tres" id="1_ldci2"]
 [ext_resource type="Script" uid="uid://doit3ijgsctwj" path="res://game/ui/dashboard/dashboard.gd" id="1_w7oji"]
 [ext_resource type="StyleBox" uid="uid://d3q4vhqeku4x0" path="res://game/resources/models/ui/label_tag.tres" id="2_w7oji"]
 [ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="3_emk42"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ldci2"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.1680183, 0.1680183, 0.41140202, 0.39600003)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="Dashboard" type="Control" unique_id=524229284]
 layout_mode = 3
@@ -13,6 +28,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(0.5, 0.5)
+theme = ExtResource("3_emk42")
 script = ExtResource("1_w7oji")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=86459668]
@@ -29,7 +45,7 @@ theme_override_constants/margin_bottom = 5
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=1264616210]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("1_ldci2")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ldci2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=594957993]
 layout_mode = 2
@@ -62,13 +78,65 @@ bbcode_enabled = true
 text = "ada"
 fit_content = true
 
-[node name="LanternCount" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1422112467]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=40305969]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=1557496467]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "City Lights"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=2133982615]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Woods Lights"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=282556877]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Castle Lights"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=932749866]
+layout_mode = 2
+
+[node name="CityLightsCount" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer2" unique_id=1456329993]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "asas"
 fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WoodsLightsCount" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer2" unique_id=1437934714]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CastleLightsCount" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer2" unique_id=1057895291]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="EnergyNetworkStatus" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=571939751]
 unique_name_in_owner = true

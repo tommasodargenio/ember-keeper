@@ -2,12 +2,15 @@ extends Control
 
 @export var start_hidden : bool = true
 @export var hide_ui : bool = true
+@export var blur_rect : ColorRect
 
 @onready var close: Button = %Close
 
 @onready var town_mood_status: RichTextLabel = %TownMoodStatus
-@onready var lantern_count: RichTextLabel = %LanternCount
 @onready var energy_network_status: RichTextLabel = %EnergyNetworkStatus
+@onready var city_lights_count: RichTextLabel = %CityLightsCount
+@onready var woods_lights_count: RichTextLabel = %WoodsLightsCount
+@onready var castle_lights_count: RichTextLabel = %CastleLightsCount
 
 var network_status_str: Dictionary = {
 	"DARK": 0.0,
@@ -26,7 +29,7 @@ var network_status_color: Dictionary = {
 }
 
 var tween : Tween
-
+var blur_tween : Tween
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	show()
@@ -42,17 +45,20 @@ func _register_events() -> void:
 	EventBus.town_mood_updated.connect(update_mood_status)	
 	EventBus.player_sat.connect(func():
 		_transition_in()
+		_blur_on()
 		update_data()
 		if hide_ui:
 			EventBus.hide_ui.emit()
 	)
 	close.pressed.connect(func():
 		EventBus.player_standing.emit()
+		_blur_off()
 		_transition_out()
 		if hide_ui:
 			EventBus.show_ui.emit()
 	)
 	EventBus.game_restart.connect(func():
+		_blur_off()
 		_transition_out()
 		if hide_ui:
 			EventBus.show_ui.emit()	
@@ -69,7 +75,17 @@ func _register_events() -> void:
 	)
 func update_data() -> void:
 	update_mood_status()
-	lantern_count.text = "Lanterns: [b]%s[/b]" % [GameManager.total_lanterns]
+	
+	var city_lanterns := get_tree().get_node_count_in_group(Constants.CITY_LANTERNS_GROUP)
+	var woods_lanters := get_tree().get_node_count_in_group(Constants.WOODS_LANTERNS_GROUP)
+	
+	var city_lights_str = "[color=%s][b]%s[/b][/color]" % [Palette.get_color("bright"), city_lanterns]
+	var woods_lights_str = "[color=%s][b]%s[/b][/color]" % [Palette.get_color("bright"), woods_lanters]
+	var castle_lights_str = "[color=%s][b]%s[/b][/color]" % [Palette.get_color("bright"), GameManager.total_lanterns - city_lanterns - woods_lanters]
+	
+	city_lights_count.text = city_lights_str
+	woods_lights_count.text = woods_lights_str
+	castle_lights_count.text = castle_lights_str
 
 func _get_network_status(ratio: float) -> String:
 	var names: Array = network_status_str.keys()
@@ -108,6 +124,21 @@ func _transition_out() -> void:
 	tween.tween_property(self, "scale", Vector2.ZERO, 0.3)
 	tween.tween_callback(_hide)
 	
+func _blur_on() -> void:
+	if not blur_rect: return
+	if blur_tween and blur_tween.is_running():
+		blur_tween.kill()
+		
+	blur_tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	blur_tween.tween_property(blur_rect, "color:a", 1.0, 0.01)
 	
+func _blur_off() -> void:
+	if not blur_rect: return
+	if blur_tween and blur_tween.is_running():
+		blur_tween.kill()
+		
+	blur_tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	blur_tween.tween_property(blur_rect, "color:a", 0.0, 0.01)	
+		
 func _hide() -> void:
 	self.modulate.a = 0.0

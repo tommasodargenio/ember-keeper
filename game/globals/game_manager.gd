@@ -75,6 +75,7 @@ func _init_town_lantern(folder_node: Node) -> void:
 			l.profile = town_lantern
 			l.hide()
 			l.add_to_group(Constants.LANTERNS_GROUP)
+			l.add_to_group(Constants.CITY_LANTERNS_GROUP)
 			total_lanterns += 1
 	if Constants.STARTING_WOODS_LANTERNS > 0:
 		var wood_lantern = load("uid://bvimwp5f46eal")
@@ -84,6 +85,7 @@ func _init_town_lantern(folder_node: Node) -> void:
 			l.profile = wood_lantern
 			l.hide()
 			l.add_to_group(Constants.LANTERNS_GROUP)
+			l.add_to_group(Constants.WOODS_LANTERNS_GROUP)
 			total_lanterns += 1
 			
 

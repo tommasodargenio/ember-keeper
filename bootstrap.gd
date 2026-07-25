@@ -31,7 +31,7 @@ func _load_user_preferences() -> void:
 		SaveManager.save_preferences(prefs)
 	if prefs:
 		GameManager.player_prefs = prefs
-	
+		GameManager.show_tutorial = prefs.tutorial_shown
 		EventBus.music_toggle.emit(prefs.music_toggle)
 		EventBus.music_volume.emit(prefs.music_volume)
 		EventBus.sound_toggle.emit(prefs.sfx_toggle)

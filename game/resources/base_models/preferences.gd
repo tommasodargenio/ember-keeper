@@ -56,6 +56,7 @@ class KeyBinding:
 @export var key_bindings : Array
 @export var last_game_saved_at: String
 
+@export var tutorial_shown : bool = false
 
 func to_dict() -> Dictionary:
 	return {
@@ -67,6 +68,7 @@ func to_dict() -> Dictionary:
 		"screen_mode":          screen_mode,
 		"last_played_game":     last_played_game,
 		"last_game_saved_at": last_game_saved_at,
+		"tutorial_shown": tutorial_shown,
 		"key_bindings":			save_key_bindings()
 	}
 	
@@ -79,6 +81,7 @@ static func from_dict(d: Dictionary) -> Preferences:
 	p.main_volume		   = d.get("main_volume",		   100.0)
 	p.screen_mode          = d.get("screen_mode",          SCREEN.FULLSCREEN)
 	p.last_played_game     = d.get("last_played_game",     "")
+	p.tutorial_shown		= d.get("tutorial_shown", false)
 	p.last_game_saved_at = d.get("last_game_saved_at", "")
 	p.key_bindings		   = d.get("key_bindings", [])
 	
