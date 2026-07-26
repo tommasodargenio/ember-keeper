@@ -17,6 +17,7 @@ run/main_scene="uid://dxxhrn63qhpvu"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="EmberKeeper"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+boot_splash/bg_color=Color(0.13816993, 0.35419908, 0.13816993, 1)
 config/icon="res://icon.svg"
 
 [autoload]

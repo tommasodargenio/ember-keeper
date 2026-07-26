@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://nhv1aqgtybwm"]
 
 [ext_resource type="Script" uid="uid://bx8bpyn7hpoei" path="res://base_components/ui/menus/main_menu_co/main_menu.gd" id="1_4l7av"]
+[ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="1_pxo8b"]
 [ext_resource type="FontFile" uid="uid://r4q6kyv7uj8e" path="res://game/resources/models/ui/fonts/Kenney Mini.ttf" id="4_xyhqm"]
 [ext_resource type="Script" uid="uid://byu6ijhjbxcpw" path="res://game/fx/ui/animated_label.gd" id="9_0di2d"]
 [ext_resource type="LabelSettings" uid="uid://dg4rysr5187ye" path="res://game/resources/models/ui/label_title_settings.tres" id="10_ucoer"]
@@ -24,6 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("1_pxo8b")
 script = ExtResource("1_4l7av")
 menu_footer = "0.1.0-26.7 Copyright (c) 2026-2026"
 label_setting = ExtResource("10_ucoer")
