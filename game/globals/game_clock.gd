@@ -66,10 +66,22 @@ func _total_display_minutes() -> int:
 	var real_clock_hour: float = fmod(night_start_clock_hour + current_hour, 24.0)
 	return int(real_clock_hour * 60.0)
 
+func _get_sunset_time() -> String:
+	var sunset : float = fmod(night_start_clock_hour, 24.0)
+	var minutes : int = int(sunset * 60.0)
+	return get_clock_string(minutes)
 
-
-func get_clock_parts() -> Dictionary:
-	var total_minutes: int = _total_display_minutes()
+func _get_sunrise_time() -> String:
+	var sunrise : float = fmod(night_start_clock_hour + night_duration_hours, 24.0)
+	var minutes : int = int(sunrise * 60.0)
+	return get_clock_string(minutes)
+	
+func get_clock_parts(tot_minutes: int = -1) -> Dictionary:	
+	var total_minutes: int 
+	if tot_minutes == -1: total_minutes = _total_display_minutes()
+	else: total_minutes = tot_minutes
+	
+	@warning_ignore("integer_division")
 	var hours: int = total_minutes / 60
 	var minutes: int = total_minutes % 60
 
@@ -84,8 +96,8 @@ func get_clock_parts() -> Dictionary:
 
 
 
-func get_clock_string() -> String:
-	var parts: Dictionary = get_clock_parts()
+func get_clock_string(tot_minutes: int = -1) -> String:
+	var parts: Dictionary = get_clock_parts(tot_minutes)
 	if use_24_hour_format:
 		return "%s:%s" % [parts["hours"], parts["minutes"]]
 	return "%s:%s %s" % [parts["hours"], parts["minutes"], parts["ampm"]]
