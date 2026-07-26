@@ -12,7 +12,6 @@ var tutorial_shown : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	_init_game()
 	_register_events()
 	
 		
@@ -52,6 +51,7 @@ func _register_events() -> void:
 	EventBus.game_restart.connect(func():
 		_init_game()
 	)
+	EventBus.intro_finished.connect(_init_game)
 	
 func _show_tutorial_sequence() -> void:
 	await get_tree().create_timer(2.0).timeout

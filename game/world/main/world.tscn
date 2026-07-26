@@ -12,6 +12,7 @@
 [ext_resource type="Shader" uid="uid://b1oflutuij11i" path="res://game/fx/vfx/shaders/blur.gdshader" id="8_k82js"]
 [ext_resource type="LabelSettings" uid="uid://xm6tjqqy3waf" path="res://game/resources/models/ui/label_settings.tres" id="9_evsdv"]
 [ext_resource type="PackedScene" uid="uid://ddhfcdtf1dlmc" path="res://game/ui/menus/game_over/game_over_n.tscn" id="11_k82js"]
+[ext_resource type="PackedScene" uid="uid://d1886r0h4pbhn" path="res://game/ui/newspaper/news_paper.tscn" id="13_3bylh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gft63"]
 shader = ExtResource("8_k82js")
@@ -62,6 +63,11 @@ label_setting = ExtResource("9_evsdv")
 
 [node name="GameOver" parent="Menus" unique_id=418825991 node_paths=PackedStringArray("blur_rect") instance=ExtResource("11_k82js")]
 visible = false
+blur_rect = NodePath("../../FX/BlurRect")
+
+[node name="Intro" type="CanvasLayer" parent="." unique_id=402778158]
+
+[node name="NewsPaper" parent="Intro" unique_id=1704478615 node_paths=PackedStringArray("blur_rect") instance=ExtResource("13_3bylh")]
 blur_rect = NodePath("../../FX/BlurRect")
 
 [node name="GameLanterns" type="Node" parent="." unique_id=986306071]
