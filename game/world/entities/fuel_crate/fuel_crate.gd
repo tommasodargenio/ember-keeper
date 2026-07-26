@@ -12,6 +12,8 @@ const FUEL_TEX_GROUP = "FuelTex"
 @export var quantity : int = 0:
 	set(value):
 		quantity = value
+		if GameManager:
+			GameManager.fuel_quantity = quantity
 		if is_node_ready():
 			_update_crate_tex()
 				
@@ -36,6 +38,11 @@ func _input(event: InputEvent) -> void:
 		_handle_interact()
 
 func _register_events() -> void:
+	EventBus.fuel_restocked.connect(func():
+		if GameManager:
+			quantity = GameManager.fuel_quantity
+			EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.INFO, "INFO", LD.FUEL_RESTOCKED, "TIMEOUT")
+	)
 	interact_sensor.body_entered.connect(func(body: Node2D):
 		if body is Player:
 			can_interact = true

@@ -16,6 +16,8 @@ signal game_resumed()
 signal town_mood_updated()
 signal game_ended(won: bool, forced_reason: String)
 signal intro_finished()
+signal order_fuel(quantity: int)
+signal fuel_restocked()
 
 # Settings
 signal music_toggle(status: bool)

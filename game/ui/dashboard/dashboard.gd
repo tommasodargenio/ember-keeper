@@ -11,6 +11,9 @@ extends Control
 @onready var city_lights_count: RichTextLabel = %CityLightsCount
 @onready var woods_lights_count: RichTextLabel = %WoodsLightsCount
 @onready var castle_lights_count: RichTextLabel = %CastleLightsCount
+@onready var order_fuel: Button = %OrderFuel
+@onready var fuel_status: RichTextLabel = %FuelStatus
+@onready var fuel_ordered: RichTextLabel = %FuelOrdered
 
 var network_status_str: Dictionary = {
 	"DARK": 0.0,
@@ -63,7 +66,15 @@ func _register_events() -> void:
 		if hide_ui:
 			EventBus.show_ui.emit()	
 	)
-
+	order_fuel.pressed.connect(func():
+		EventBus.order_fuel.emit(Constants.FUEL_TO_ORDER)
+		fuel_ordered.text = "[img height=1em]uid://dp4t8bf1kxxua[/img]"
+		order_fuel.disabled = true
+	)
+	EventBus.fuel_restocked.connect(func():
+		fuel_ordered.text = ""
+		order_fuel.disabled = false
+	)
 	EnergyNetwork.network_updated.connect(func(_supply: int, _demand: int, lit_count: int, total_count: int):
 		var ratio: float = float(lit_count) / float(total_count) if total_count > 0 else 0.0
 		var status_word: String = _get_network_status(ratio)
@@ -75,7 +86,7 @@ func _register_events() -> void:
 	)
 func update_data() -> void:
 	update_mood_status()
-	
+	update_fuel_status()
 	var city_lanterns := get_tree().get_node_count_in_group(Constants.CITY_LANTERNS_GROUP)
 	var woods_lanters := get_tree().get_node_count_in_group(Constants.WOODS_LANTERNS_GROUP)
 	
@@ -103,8 +114,11 @@ func update_mood_status() -> void:
 		var mood_str =  GameManager.get_town_mood(true)
 		var mood_color = GameManager.mood_color[mood_str]
 		town_mood_status.text = "Town mood: [color=%s][b]%s[/b][/color]" % [mood_color, mood_str]	
-	
 
+func update_fuel_status() -> void:
+	var fuel_str = "Total Fuel ([img]%s[/img]) : %s" % [Constants.RESOURCES["FuelWood"], GameManager.fuel_quantity]
+	fuel_status.text = fuel_str
+	
 func _transition_in() -> void:
 	if tween and tween.is_running():
 		tween.kill()

@@ -146,6 +146,31 @@ bbcode_enabled = true
 text = "Unknown"
 fit_content = true
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1839613550]
+layout_mode = 2
+
+[node name="FuelStatus" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer3" unique_id=1725276759]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+fit_content = true
+
+[node name="FuelOrdered" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer3" unique_id=845304546]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="OrderFuel" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer3" unique_id=740923480]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "ORDER MORE"
+
 [node name="Close" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1749115010]
 unique_name_in_owner = true
 layout_mode = 2

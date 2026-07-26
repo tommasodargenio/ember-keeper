@@ -27,7 +27,10 @@ func _item_in_grid(item_name: String) -> HotBarItem:
 func _update_item(item_name: String, quantity: int):
 	var existing_item = _item_in_grid(item_name)
 	if existing_item:
-		existing_item.quantity = quantity
+		if quantity <= 0:
+			existing_item.queue_free()
+		else:
+			existing_item.quantity = quantity
 		return
 
 func _add_item(item_name: String, sprite: Texture, quantity: int, item_shortcut: String) -> void:

@@ -18,6 +18,8 @@ static var INTRO_ARTICLE_2 = "The duties are [color=green]simple[/color], the [c
 static var INTRO_ARTICLE_3 = "The [color=navy_blue]council[/color] reminds the new [color=darkred]Keeper[/color] that the town's [color=deep_pink]spirits[/color] — and its patience — will rise and fall with the light.[br][br] Dawn, the almanac assures us, is still some hours off."
 static var INTRO_ARTICLE_4 = "We wish the [color=darkred]Keeper[/color] a quiet watch.[br][hr][br][color=dark_green]ALMANAC TODAY[/color][br][color=darkred]Sunset: [/color] %s[br][color=dark_violet]Sunrise: [/color] %s[br]" % [GameClock._get_sunset_time(), GameClock._get_sunrise_time()]
 static var INTRO_ARTICLE : Array = [INTRO_ARTICLE_1, INTRO_ARTICLE_2, INTRO_ARTICLE_3, INTRO_ARTICLE_4]
+# FUEL
+static var FUEL_RESTOCKED = "We just got a new shipment of fuel boss!"
 #FURNACE
 static var FURNACE_NOT_FUEL = "Not sure what you are carrying but this ain't fuel!!"
 static var FURNACE_WRONG_FUEL = "You can't load %s into this furnace which only accepts %s"

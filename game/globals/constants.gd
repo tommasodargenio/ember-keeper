@@ -32,6 +32,8 @@ const WOODS_LANTERNS_GROUP = "woods_lanters"
 const STARTING_TOWN_LANTERNS = 0
 const STARTING_WOODS_LANTERNS = 0
 const WATER_TO_USE = 10
+const FUEL_TO_ORDER = 20
+const FUEL_ORDER_TIMEOUT = 5.0
 
 const DEFAULT_KEY_BINDINGS = {
 	"game" : ["save", "load", "pause", "exit"],
@@ -60,6 +62,7 @@ var WINDOW_TITLE_FORMAT = func(title: String):
 
 
 const RESOURCES : Dictionary = {
+	"Truck": "uid://dp4t8bf1kxxua",
 	"WaterBucket": "uid://c2laqg6ww1g0p",
 	"FuelWood": "uid://8n2mapwkgmp0",
 	"FuelCoal": "uid://3rkli5loqurd",

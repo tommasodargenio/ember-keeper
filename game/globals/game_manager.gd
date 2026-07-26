@@ -34,6 +34,7 @@ var town_mood : int = 100:
 	set(value):
 		town_mood = clamp(value, 0, 100)
 
+var fuel_quantity : int = 0
 
 func _game_bootstrap() -> void:
 	_register_events()
@@ -59,6 +60,11 @@ func _register_events() -> void:
 	)	
 	EventBus.game_ended.connect(func():
 		game_in_progress = false
+	)
+	EventBus.order_fuel.connect(func(quantity: int):
+		await get_tree().create_timer(Constants.FUEL_ORDER_TIMEOUT).timeout
+		fuel_quantity += quantity
+		EventBus.fuel_restocked.emit()
 	)
 
 func _refresh_lanterns_count() -> void:
