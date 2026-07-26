@@ -99,7 +99,7 @@ func _on_furnace_shutdown(reason: String) -> void:
 
 func _on_dawn_reached() -> void:
 	var won: bool = GameManager.town_mood >= win_min_mood and GameManager.reported_incidents <= win_max_incidents
-	_end_game(won, "")
+	_end_game(won, "you survived the night! Bravo!")
 
 
 func _end_game(won: bool, forced_reason: String) -> void:
