@@ -8,6 +8,14 @@ extends Control
 @export var continue_prompt_position: Vector2
 @export var continue_key_icon: Texture2D
 @export var blur_rect : ColorRect
+@export_group("Newspaper Intro")
+@export var newspaper_spin_start_rotation_deg: float = -720.0  # total degrees it spins through before settling — multiples of 360 for a clean whole-spin count
+@export var newspaper_start_scale: float = 0.05
+@export var newspaper_settle_duration: float = 1.0
+ 
+
+
+
 @onready var intro_article: RichTextLabel = %IntroArticle
 
 var _continue_prompt: FloatingIcon
@@ -15,18 +23,39 @@ var tween : Tween
 var tutorial_shown : bool = false
 var blur_tween : Tween
 func _ready() -> void:
+	
 	show()
-	pivot_offset = size / 2.0
 	if start_hidden:
 		self.modulate.a = 0.0
 	else:
 		self.modulate.a = 1.0
 	if GameManager.show_tutorial and not tutorial_shown:
 		EventBus.hide_ui.emit()
-		_transition_in()
+		await get_tree().process_frame
+		_blur_on()
+		_play_intro()
 	else:
 		_move_on()
 
+func _play_intro() -> void:
+	self.pivot_offset = self.size / 2.0
+ 
+	self.scale = Vector2.ONE * newspaper_start_scale
+	self.rotation_degrees = newspaper_spin_start_rotation_deg
+	
+	if tween and tween.is_running():
+		tween.kill() 
+	tween = get_tree().create_tween()
+	tween.set_parallel(true)
+ 
+	tween.tween_property(self, "scale", Vector2.ONE, newspaper_settle_duration) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT) 
+	tween.tween_property(self, "rotation_degrees", 0.0, newspaper_settle_duration) \
+		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)  
+	tween.tween_property(self, "modulate:a", 1.0, 0.5)
+	tween.tween_callback(_run_intro_sequence)
+ 
+ 
 func _run_intro_sequence() -> void:
 	for article_text in LD.INTRO_ARTICLE:
 		await _show_page(article_text)

@@ -16,9 +16,11 @@ grow_vertical = 2
 theme = ExtResource("1_jrr3s")
 script = ExtResource("2_a5284")
 page_reveal_duration = 4.0
+start_hidden = false
 continue_prompt_scene = ExtResource("3_4w03j")
 continue_prompt_position = Vector2(250, 160)
 continue_key_icon = ExtResource("4_4w03j")
+newspaper_start_scale = 0.0
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=92521710]
 layout_mode = 0

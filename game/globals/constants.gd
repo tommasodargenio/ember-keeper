@@ -81,7 +81,7 @@ const SCENE_PATHS : Dictionary = {
 	"SaveLoadMenu": "",
 	"Credits": "uid://grfv787skusj",
 	"Game": "uid://c1jut3diux3vh",
-	"Tutorial": "",
+	"Tutorial": "uid://d1886r0h4pbhn",
 	"Settings" : "uid://dr554h7o64nh3",
 	"LoadingScreen": "",
 	"KeyBindings": "",
