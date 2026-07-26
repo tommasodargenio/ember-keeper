@@ -11,6 +11,7 @@ var last_direction : Vector2 = Vector2.RIGHT
 var carrying : Dictionary = {"fuel": null, "quantity": 0}
 var can_walk : bool = true
 var is_sitting : bool = false
+var is_watering : bool = false
 var carrying_water : int = 0
 
 func _ready() -> void:
@@ -38,7 +39,6 @@ func _register_events() -> void:
 		EventBus.add_to_hotbar.emit("Water",load(Constants.RESOURCES["WaterBucket"]), quantity, Utility.get_action_key_binding("watering") )
 	)
 	EventBus.player_loading_fuel.connect(func(fuel : Fuel, quantity: int):
-		print("Loading some %s" % fuel.name)
 		carrying.fuel = fuel
 		carrying.quantity = quantity
 		var fuel_tex = Constants.RESOURCES["FuelWood"] if fuel.type == Fuel.fuel_type.WOOD else Constants.RESOURCES["FuelCoal"]
@@ -52,13 +52,22 @@ func _register_events() -> void:
 	EventBus.player_standing.connect(func():
 		tex.play("standing")
 	)
+	EventBus.player_watering.connect(func(_quantity: int):
+		can_walk = false
+		is_watering = true
+		tex.play("water_up")
+	)
 	tex.animation_finished.connect(func():
 		if tex.animation == "sitting":
-			print("we sat")
 			EventBus.player_sat.emit()
 		if tex.animation == "standing":
 			is_sitting = false
 			can_walk = true
+			last_direction.y = 1.0
+			tex.play("idle_down")
+		if tex.animation == "water_up":
+			can_walk = true
+			is_watering = false
 			last_direction.y = 1.0
 			tex.play("idle_down")
 	)
@@ -83,6 +92,7 @@ func _handle_movements(delta: float) -> void:
 
 func _animation_state() -> void:
 	if is_sitting: return
+	if is_watering: return
 	
 	if velocity != Vector2.ZERO:
 		_handle_animation("walking", last_direction)

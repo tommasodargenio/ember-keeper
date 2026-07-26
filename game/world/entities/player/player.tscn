@@ -615,7 +615,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yveqr")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"water_down",
 "speed": 5.0
 }, {
@@ -635,7 +635,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_plncd")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"water_left",
 "speed": 5.0
 }, {
@@ -655,7 +655,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wuvak")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"water_right",
 "speed": 5.0
 }, {
@@ -675,7 +675,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_84muo")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"water_up",
 "speed": 5.0
 }]
@@ -691,7 +691,7 @@ script = ExtResource("1_ucj5q")
 [node name="Tex" type="AnimatedSprite2D" parent="." unique_id=296954677]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_gft63")
-animation = &"standing"
+animation = &"walking_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2075826669]
 position = Vector2(0.5, 13)

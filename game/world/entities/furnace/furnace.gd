@@ -123,8 +123,8 @@ func _handle_watering() -> void:
 		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.PLAYER_DRY, "TIMEOUT")
 		print(LD.PLAYER_DRY)
 		return		
-		
 	var used: int = profile.add_water(Constants.WATER_TO_USE)
+	EventBus.player_watering.emit(used)
 	interacting_player.carrying_water -= used
 	EventBus.update_hotbar.emit("Water", interacting_player.carrying_water)
  

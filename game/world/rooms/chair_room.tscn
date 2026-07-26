@@ -4,6 +4,8 @@
 [ext_resource type="TileSet" uid="uid://dt1nk4e55s4re" path="res://game/resources/models/tilesets/interior_walls.tres" id="1_lpt1f"]
 [ext_resource type="TileSet" uid="uid://blef0bdwgmgcw" path="res://game/resources/models/tilesets/interior_props.tres" id="2_qjaba"]
 [ext_resource type="Texture2D" uid="uid://gd46a21apb2f" path="res://assets/tiles/Esoteric.png" id="3_qjaba"]
+[ext_resource type="PackedScene" uid="uid://nts6xlg42gy6" path="res://game/world/entities/lantern/lantern.tscn" id="5_scga1"]
+[ext_resource type="Resource" uid="uid://dcpwx41ohj2ew" path="res://game/resources/models/game/basic_lantern.tres" id="6_6qk1d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cqon5"]
 texture = ExtResource("3_qjaba")
@@ -91,6 +93,18 @@ tile_set = ExtResource("2_qjaba")
 [node name="PropsOnTables" type="TileMapLayer" parent="." unique_id=1131842755]
 tile_map_data = PackedByteArray("AAAIAAQAAAACAAUAAAAIAAUAAAACAAYAAAAHAAUAAAADAAgAAAAHAAYAAAAAAAoAAGA=")
 tile_set = SubResource("TileSet_gft63")
+
+[node name="Lantern" parent="." unique_id=348096580 instance=ExtResource("5_scga1")]
+position = Vector2(137, 112)
+profile = ExtResource("6_6qk1d")
+
+[node name="Lantern2" parent="." unique_id=675136141 instance=ExtResource("5_scga1")]
+position = Vector2(33, 41)
+profile = ExtResource("6_6qk1d")
+
+[node name="Lantern3" parent="." unique_id=1257717838 instance=ExtResource("5_scga1")]
+position = Vector2(150, 40)
+profile = ExtResource("6_6qk1d")
 
 [node name="ChairSensor" type="Area2D" parent="." unique_id=596520723]
 unique_name_in_owner = true

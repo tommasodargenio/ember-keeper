@@ -9,7 +9,7 @@ const GAME_VERSION : String = "0.1.0-26.7"
 # CREDITS
 const CREDIT_AUTHOR = "sydream"
 const CREDIT_ENGINE = "Godot"
-const CREDIT_ART = ["Kenney", "Other"]
+const CREDIT_ART = ["Kenney", "TheStarvingArtificer", "Other"]
 const CREDIT_MUSIC = []
 const CREDIT_SFX = []
 
