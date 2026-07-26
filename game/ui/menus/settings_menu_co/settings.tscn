@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://nhv1aqgtybwm" path="res://base_components/ui/menus/main_menu_co/main_menu.tscn" id="1_d7gj8"]
 [ext_resource type="Script" uid="uid://darokab7kak2t" path="res://game/ui/menus/settings_menu_co/settings.gd" id="2_ma8e3"]
-[ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="2_y3wwk"]
 [ext_resource type="Script" uid="uid://dckbgyalb1pmr" path="res://base_components/ui/menus/main_menu_co/menu_item_definition.gd" id="3_co64o"]
 [ext_resource type="FontFile" uid="uid://r4q6kyv7uj8e" path="res://game/resources/models/ui/fonts/Kenney Mini.ttf" id="6_br8q1"]
 [ext_resource type="LabelSettings" uid="uid://xm6tjqqy3waf" path="res://game/resources/models/ui/label_settings.tres" id="6_rcyix"]
@@ -10,17 +9,19 @@
 [ext_resource type="StyleBox" uid="uid://d3b1wm0mqnmnw" path="res://game/resources/models/ui/button_style_pressed.tres" id="8_ay71n"]
 [ext_resource type="StyleBox" uid="uid://cbfhaxmikkffj" path="res://game/resources/models/ui/button_style_hover.tres" id="9_vlajc"]
 [ext_resource type="Script" uid="uid://e5yvr65r3hl7" path="res://base_components/ui/menus/menu_button_co/menu_button.gd" id="10_bmrss"]
+[ext_resource type="AudioStream" uid="uid://b50to6fhjtu38" path="res://assets/audio/sfx/toggle_004.ogg" id="10_br8q1"]
+[ext_resource type="Script" uid="uid://cvuf4lcawtr0x" path="res://game/globals/sound_fx_co/sound_fx_co.gd" id="11_1fygu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_52g8v"]
 
-[sub_resource type="Resource" id="Resource_1fygu"]
+[sub_resource type="Resource" id="Resource_br8q1"]
 script = ExtResource("3_co64o")
-name = "Back"
+name = "Back To Main"
 transition = true
 destination_scene = "MainMenu"
 action = "Back"
 
-[sub_resource type="Resource" id="Resource_ih2v3"]
+[sub_resource type="Resource" id="Resource_1fygu"]
 script = ExtResource("3_co64o")
 name = "Save"
 destination_scene = ""
@@ -46,11 +47,11 @@ corner_radius_bottom_left = 2
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y5e76"]
 
 [node name="Settings" unique_id=467531739 instance=ExtResource("1_d7gj8")]
-theme = ExtResource("2_y3wwk")
 script = ExtResource("2_ma8e3")
 menu_title = "Settings"
+menu_footer = ""
 label_setting = SubResource("LabelSettings_52g8v")
-menu_items = Array[ExtResource("3_co64o")]([SubResource("Resource_1fygu"), SubResource("Resource_ih2v3")])
+menu_items = Array[ExtResource("3_co64o")]([SubResource("Resource_br8q1"), SubResource("Resource_1fygu")])
 
 [node name="MenuTitleLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="0" unique_id=323291262]
 custom_minimum_size = Vector2(98, 34)
@@ -160,3 +161,13 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_y5e76")
 
 [node name="HSeparator2" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="5" unique_id=398373851]
 theme_override_styles/separator = SubResource("StyleBoxEmpty_4l7av")
+
+[node name="MenuFooterLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="6" unique_id=462098605]
+text = ""
+
+[node name="SFXToggleP" type="AudioStreamPlayer" parent="." index="4" unique_id=2018806074]
+unique_name_in_owner = true
+stream = ExtResource("10_br8q1")
+volume_db = -11.304
+script = ExtResource("11_1fygu")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"

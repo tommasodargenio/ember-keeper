@@ -13,6 +13,12 @@ var tutorial_shown : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_register_events()
+	if GameManager and \
+	 GameManager.player_prefs and \
+	GameManager.player_prefs.tutorial_newspaper_shown and \
+	GameManager.game_in_progress == false:
+		_init_game()
+
 	
 		
 func _init_game() -> void:
@@ -20,6 +26,8 @@ func _init_game() -> void:
 	GameManager.game_over = false
 	GameManager.town_mood = 100
 	GameManager.reported_incidents = 0
+	GameManager.player_in_chair_room = false
+	GameManager.player_in_furnace_room = true
 	GameManager._init_town_lantern(game_lanterns)
 	GameManager._refresh_lanterns_count()
 	GameManager.current_furnace.init_furnace()
@@ -31,8 +39,10 @@ func _init_game() -> void:
 	
 	EventBus.game_ready.emit()
 	GameManager.game_in_progress = true
-	
-	if GameManager.show_tutorial and not tutorial_shown:
+	if  GameManager and \
+	GameManager.player_prefs and \
+	not GameManager.player_prefs.tutorial_chair_room_shown and \
+	GameManager.show_tutorial:
 		_show_tutorial_sequence()
 
 
@@ -60,6 +70,8 @@ func _show_tutorial_sequence() -> void:
 	arrow.place_at(chair_room_marker.global_position)
 	arrow.set_icon(preload(Constants.RESOURCES["EmoteArrowRight"]))
 	arrow.display_duration = 2.0
+	GameManager.player_prefs.tutorial_chair_room_shown = true
+	EventBus.tutorial_progress.emit()
 
 
 
@@ -70,4 +82,5 @@ func _show_chair_key_prompt() -> void:
 	prompt.set_icon(preload(Constants.RESOURCES["EmpytEmote"]))
 	prompt.set_key_text(Utility.get_action_key_binding("interact"))
 	prompt.display_duration = 2.0
-	tutorial_shown = true
+	GameManager.player_prefs.tutorial_dashboard_shown = true
+	EventBus.tutorial_progress.emit()

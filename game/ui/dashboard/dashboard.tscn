@@ -3,6 +3,10 @@
 [ext_resource type="Script" uid="uid://doit3ijgsctwj" path="res://game/ui/dashboard/dashboard.gd" id="1_w7oji"]
 [ext_resource type="StyleBox" uid="uid://d3q4vhqeku4x0" path="res://game/resources/models/ui/label_tag.tres" id="2_w7oji"]
 [ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="3_emk42"]
+[ext_resource type="AudioStream" uid="uid://6j85jfufj3o" path="res://assets/audio/sfx/minimize_008.ogg" id="4_51vf6"]
+[ext_resource type="Script" uid="uid://cvuf4lcawtr0x" path="res://game/globals/sound_fx_co/sound_fx_co.gd" id="5_lnd6m"]
+[ext_resource type="AudioStream" uid="uid://t60eetfol2pm" path="res://assets/audio/sfx/maximize_008.ogg" id="6_ygumx"]
+[ext_resource type="AudioStream" uid="uid://bs8vicyyf87sm" path="res://assets/audio/sfx/select_007.ogg" id="7_lnd6m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ldci2"]
 content_margin_left = 5.0
@@ -189,3 +193,21 @@ layout_mode = 2
 theme = ExtResource("3_emk42")
 theme_override_font_sizes/font_size = 10
 text = "Close"
+
+[node name="SFXMinimize" type="AudioStreamPlayer" parent="." unique_id=1786323555]
+unique_name_in_owner = true
+stream = ExtResource("4_51vf6")
+script = ExtResource("5_lnd6m")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
+
+[node name="SFXMaximize" type="AudioStreamPlayer" parent="." unique_id=1655783721]
+unique_name_in_owner = true
+stream = ExtResource("6_ygumx")
+script = ExtResource("5_lnd6m")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
+
+[node name="SFXButtonClick" type="AudioStreamPlayer" parent="." unique_id=1270366334]
+unique_name_in_owner = true
+stream = ExtResource("7_lnd6m")
+script = ExtResource("5_lnd6m")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"

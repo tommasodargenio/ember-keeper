@@ -8,13 +8,16 @@ extends Node
 @export var win_min_mood: int = 50
 @export var win_max_incidents: int = 6
 
+@export var mood_recovery_rate: float = 1.5          # mood points per second, while the network is healthy
+@export var mood_recovery_min_lit_ratio: float = 0.8   # network needs to be at least this lit for mood to recover at all
+
 signal danger_level_changed(level: float)  # 0.0 = network fine, 1.0 = incident about to fire
 
 var _current_dark_ratio: float = 0.0
 var _outage_timer: float = 0.0
 var _incident_cooldown: float = 0.0
 var _game_over: bool = false
-
+var _mood_recovery_accum: float = 0.0 
 
 func _ready() -> void:
 	EnergyNetwork.network_updated.connect(_on_network_updated)
@@ -30,6 +33,7 @@ func _reset() -> void:
 	_incident_cooldown = 0.0
 	_current_dark_ratio = 0.0
 	_game_over = false
+	_mood_recovery_accum = 0.0
 	
 func _watch_furnace(furnace: Furnace) -> void:
 	if furnace:
@@ -49,7 +53,21 @@ func _process(delta: float) -> void:
 		if _outage_timer != 0.0:
 			danger_level_changed.emit(0.0)
 		_outage_timer = 0.0
+	_process_mood_recovery(delta)
 
+func _process_mood_recovery(delta: float) -> void:
+	if GameManager.town_mood >= 100:
+		return
+ 
+	var lit_ratio: float = 1.0 - _current_dark_ratio
+	if lit_ratio < mood_recovery_min_lit_ratio:
+		return
+ 
+	_mood_recovery_accum += mood_recovery_rate * delta
+	while _mood_recovery_accum >= 1.0:
+		_mood_recovery_accum -= 1.0
+		GameManager.town_mood = min(100, GameManager.town_mood + 1)
+ 	
 func _on_network_updated(_supply: int, _demand: int, lit_count: int, total_count: int) -> void:
 	if total_count == 0:
 		_current_dark_ratio = 0.0

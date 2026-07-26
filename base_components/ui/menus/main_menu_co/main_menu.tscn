@@ -3,7 +3,10 @@
 [ext_resource type="Script" uid="uid://bx8bpyn7hpoei" path="res://base_components/ui/menus/main_menu_co/main_menu.gd" id="1_4l7av"]
 [ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="1_pxo8b"]
 [ext_resource type="FontFile" uid="uid://r4q6kyv7uj8e" path="res://game/resources/models/ui/fonts/Kenney Mini.ttf" id="4_xyhqm"]
+[ext_resource type="Script" uid="uid://cvx3rsqdekkmd" path="res://game/globals/audio_manager_co/audio_manager_co.gd" id="7_e7u4a"]
+[ext_resource type="AudioStream" uid="uid://bs8vicyyf87sm" path="res://assets/audio/sfx/select_007.ogg" id="8_7ep8y"]
 [ext_resource type="Script" uid="uid://byu6ijhjbxcpw" path="res://game/fx/ui/animated_label.gd" id="9_0di2d"]
+[ext_resource type="Script" uid="uid://cvuf4lcawtr0x" path="res://game/globals/sound_fx_co/sound_fx_co.gd" id="9_sck7s"]
 [ext_resource type="LabelSettings" uid="uid://dg4rysr5187ye" path="res://game/resources/models/ui/label_title_settings.tres" id="10_ucoer"]
 [ext_resource type="Script" uid="uid://dlc3vj3ynnj7h" path="res://game/fx/vfx/tweens/window_slide_scroll/vfx_window_slide_scroll.gd" id="12_ks2mp"]
 
@@ -106,3 +109,14 @@ easing = 1
 exit_direction = 3
 entry_direction = 2
 metadata/_custom_type_script = "uid://dlc3vj3ynnj7h"
+
+[node name="AudioManagerCo" type="Node" parent="." unique_id=743434933]
+script = ExtResource("7_e7u4a")
+metadata/_custom_type_script = "uid://cvx3rsqdekkmd"
+
+[node name="SFXButtonOver" type="AudioStreamPlayer" parent="." unique_id=408538065]
+unique_name_in_owner = true
+stream = ExtResource("8_7ep8y")
+volume_db = -11.895
+script = ExtResource("9_sck7s")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"

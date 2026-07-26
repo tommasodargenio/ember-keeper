@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dwpak5bg1u4pq" path="res://assets/tiles/Resources.png" id="1_babms"]
 [ext_resource type="Script" uid="uid://dil5pjtwjfnrh" path="res://game/world/entities/fuel_crate/fuel_crate.gd" id="1_rc7es"]
+[ext_resource type="Script" uid="uid://cvuf4lcawtr0x" path="res://game/globals/sound_fx_co/sound_fx_co.gd" id="3_1hdsf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o40nt"]
 size = Vector2(13, 18)
@@ -44,3 +45,8 @@ shape = SubResource("CircleShape2D_o40nt")
 [node name="IconPosition" type="Marker2D" parent="." unique_id=1044427190]
 unique_name_in_owner = true
 position = Vector2(-7, -34)
+
+[node name="SFXPickupWood" type="AudioStreamPlayer" parent="." unique_id=282585804]
+unique_name_in_owner = true
+script = ExtResource("3_1hdsf")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"

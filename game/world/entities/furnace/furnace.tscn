@@ -2,6 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://qn3ssphl6m78" path="res://assets/tiles/Furnace.png" id="1_6ww2w"]
 [ext_resource type="Script" uid="uid://clufqd6do5ayu" path="res://game/world/entities/furnace/furnace.gd" id="1_ixjuu"]
+[ext_resource type="AudioStream" uid="uid://i8s666iux44h" path="res://assets/audio/sfx/stove_ignite.mp3" id="3_gi00r"]
+[ext_resource type="Script" uid="uid://cvuf4lcawtr0x" path="res://game/globals/sound_fx_co/sound_fx_co.gd" id="4_o84ys"]
+[ext_resource type="AudioStream" uid="uid://babbvrhqtw2ci" path="res://assets/audio/sfx/stove_working.mp3" id="5_507g7"]
+[ext_resource type="AudioStream" uid="uid://canj8wsswfqpf" path="res://assets/audio/sfx/fire-breath.mp3" id="6_7gtuw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gft63"]
 size = Vector2(28.940903, 38.260853)
@@ -41,3 +45,22 @@ unique_name_in_owner = true
 [node name="IconPosition" type="Marker2D" parent="." unique_id=375204767]
 unique_name_in_owner = true
 position = Vector2(-19.620949, -30.903)
+
+[node name="SFXIgniteFurnace" type="AudioStreamPlayer" parent="." unique_id=942116855]
+unique_name_in_owner = true
+stream = ExtResource("3_gi00r")
+volume_db = -11.304
+script = ExtResource("4_o84ys")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
+
+[node name="SFXWorkingFurnace" type="AudioStreamPlayer" parent="." unique_id=1151175097]
+unique_name_in_owner = true
+stream = ExtResource("5_507g7")
+script = ExtResource("4_o84ys")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
+
+[node name="SFXPuffing" type="AudioStreamPlayer" parent="." unique_id=1650087019]
+unique_name_in_owner = true
+stream = ExtResource("6_7gtuw")
+script = ExtResource("4_o84ys")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"

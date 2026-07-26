@@ -21,7 +21,7 @@ var max_level : int = 3
 @export var max_energy_output: int = 0
 
 @export var fuel_type : Fuel.fuel_type
-
+@export var fuel_energy_reference: float = 10.0
 @export var pressure_rise_rate: float = 15.0             # pressure units/sec climbing toward target
 @export var pressure_cooldown_rate: float = 2.0           # pressure units/sec falling toward target — much slower, thermal mass
 @export var pressure_vent_rate: float = 12.0              # extra pressure lost per second while player actively vents
@@ -43,6 +43,7 @@ var current_fuel_units: int = 0
 var loaded_fuel: Fuel = null
 var pressure: float = 0.0
 var health: float = 100.0
+var max_health : float = 100.0
 var state: furnace_state = furnace_state.OFF
 var _burn_time_left: float = 0.0
 var _venting: bool = false
@@ -66,7 +67,7 @@ func init_furnace() -> void:
 	level = 1
 	current_fuel_units = 0
 	loaded_fuel = null
-	health = 100.0
+	health = max_health
 	pressure = 0.0
 	state = furnace_state.OFF
 	_venting = false
@@ -150,9 +151,11 @@ func _process_burn(delta: float) -> void:
 		_consume_one_unit()
 
 
+
 func _update_output() -> void:
 	var fuel_ratio := get_fuel_ratio()
-	var ceiling: int = int(round(loaded_fuel.energy * fuel_ratio))
+	var fuel_multiplier: float = loaded_fuel.energy / fuel_energy_reference
+	var ceiling: int = int(round(max_energy_output * fuel_ratio * fuel_multiplier))
 	ceiling = clamp(ceiling, 0, max_energy_output)
  
 	var spool_ratio: float = clamp(pressure / 100.0, 0.0, 1.0)
@@ -162,7 +165,8 @@ func _update_output() -> void:
 	if energy_output != target_output:
 		energy_output = target_output
 		energy_output_changed.emit(energy_output)
- 
+  
+
 func _consume_one_unit() -> void:
 	current_fuel_units -= 1
 	

@@ -6,6 +6,7 @@ extends StaticBody2D
 
 @onready var interact_sensor: Area2D = %InteractSensor
 @onready var icon_position: Marker2D = %IconPosition
+@onready var sfx_pick_water: SoundFxCo = %SFXPickWater
 
 
 var water_qty : int = 100000
@@ -27,6 +28,8 @@ func _handle_interact() -> void:
 	if water_qty - water_given >= 0:
 		water_qty -= water_given
 		EventBus.player_has_water.emit(water_given)
+		sfx_pick_water.stream = [preload(Constants.SFX["pickupwater1"]),preload(Constants.SFX["pickupwater2"]),preload(Constants.SFX["pickupwater3"])].pick_random()
+		sfx_pick_water.play()
 	else:
 		if water_qty <= 0:
 			tex.region_rect = model_empty
@@ -40,9 +43,13 @@ func _register_events() -> void:
 	interact_sensor.body_entered.connect(func(body: Node2D):
 		if body is Player:
 			can_interact = true
-			if GameManager.show_tutorial and not tutorial_shown:
+			if  GameManager and \
+			GameManager.player_prefs and \
+			not GameManager.player_prefs.tutorial_water_bucket_shown and \
+			GameManager.show_tutorial:			
 				_tutorial_sequence()
-				tutorial_shown = true						
+				GameManager.player_prefs.tutorial_water_bucket_shown = true
+				EventBus.tutorial_progress.emit()				
 	)
 	interact_sensor.body_exited.connect(func(body: Node2D):
 		if body is Player:

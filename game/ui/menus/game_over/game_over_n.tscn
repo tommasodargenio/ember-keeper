@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://ddhfcdtf1dlmc"]
 
 [ext_resource type="PackedScene" uid="uid://nhv1aqgtybwm" path="res://base_components/ui/menus/main_menu_co/main_menu.tscn" id="1_14l7k"]
-[ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="2_htr8r"]
 [ext_resource type="Script" uid="uid://bnkcy14iado5b" path="res://game/ui/menus/game_over/game_over_n.gd" id="2_psp8b"]
 [ext_resource type="Script" uid="uid://dckbgyalb1pmr" path="res://base_components/ui/menus/main_menu_co/menu_item_definition.gd" id="3_f2ira"]
 
@@ -14,20 +13,26 @@ metadata/_custom_type_script = "uid://dckbgyalb1pmr"
 
 [sub_resource type="Resource" id="Resource_f2ira"]
 script = ExtResource("3_f2ira")
-name = "Quit"
-destination_scene = ""
-action = "Quit"
+name = "Back To Main"
+transition = true
+destination_scene = "MainMenu"
+action = "None"
 metadata/_custom_type_script = "uid://dckbgyalb1pmr"
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4l7av"]
 
 [node name="GameOver" unique_id=467531739 instance=ExtResource("1_14l7k")]
-theme = ExtResource("2_htr8r")
+visible = false
 script = ExtResource("2_psp8b")
 start_hidden = true
 hide_as_close = true
 menu_title = "Game Over"
+menu_footer = ""
 menu_items = Array[ExtResource("3_f2ira")]([SubResource("Resource_psp8b"), SubResource("Resource_f2ira")])
+
+[node name="MenuTitleLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="0" unique_id=323291262]
+custom_minimum_size = Vector2(0, 34)
+text = "Game Over"
 
 [node name="Message" type="RichTextLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="2" unique_id=1413483971]
 unique_name_in_owner = true
@@ -42,3 +47,6 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_4l7av")
+
+[node name="MenuFooterLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="6" unique_id=462098605]
+text = ""

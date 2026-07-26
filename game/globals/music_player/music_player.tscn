@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://52cam7l740pm"]
+
+[ext_resource type="AudioStream" uid="uid://bsee1hwkonlls" path="res://assets/audio/music/starostin-background-music-soft-calm-15-sec-368068.mp3" id="1_lwb7p"]
+[ext_resource type="Script" uid="uid://cptdchj8bwhpf" path="res://game/globals/music_player/music_player.gd" id="2_dqwji"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" unique_id=392979434]
+process_mode = 3
+stream = ExtResource("1_lwb7p")
+bus = &"Music"
+script = ExtResource("2_dqwji")

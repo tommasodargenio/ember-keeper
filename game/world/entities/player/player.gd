@@ -5,8 +5,16 @@ const SPEED : int = 100
 const ACCELERATION : int = 5
 const FRICTION : int = 8
 
+@export var step_interval: float = 0.35 
 @onready var tex: AnimatedSprite2D = %Tex
+@onready var sfx_step_stone: SoundFxCo = %SFXStepStone
+@onready var sfx_step_soft: SoundFxCo = %SFXStepSoft
+@onready var sfx_rumble: SoundFxCo = %SFXRumble
+@onready var sfx_watering: SoundFxCo = %SFXWatering
 
+@onready var step_timer: Timer = %StepTimer
+
+var _stepping: bool = false
 var last_direction : Vector2 = Vector2.RIGHT
 var carrying : Dictionary = {"fuel": null, "quantity": 0}
 var can_walk : bool = true
@@ -16,6 +24,9 @@ var carrying_water : int = 0
 
 func _ready() -> void:
 	_register_events()
+	step_timer.one_shot = true
+
+	
 
 func _physics_process(delta: float) -> void:
 	_handle_movements(delta)
@@ -24,6 +35,8 @@ func _physics_process(delta: float) -> void:
 
 #region events
 func _register_events() -> void:
+	step_timer.timeout.connect(func(): _stepping = false)
+	
 	EventBus.player_set_position.connect(func(pos: Vector2):
 		position = pos
 	)
@@ -56,6 +69,7 @@ func _register_events() -> void:
 		can_walk = false
 		is_watering = true
 		tex.play("water_up")
+		sfx_watering.play()
 	)
 	tex.animation_finished.connect(func():
 		if tex.animation == "sitting":
@@ -96,10 +110,23 @@ func _animation_state() -> void:
 	
 	if velocity != Vector2.ZERO:
 		_handle_animation("walking", last_direction)
+		_play_footstep()		
 	else:
 		_handle_animation("idle", last_direction)
+		_stepping = false
+		step_timer.stop()
 		
+func _play_footstep() -> void:
+	if _stepping:
+		return
+	_stepping = true
+	step_timer.start(step_interval)
 
+	if GameManager.player_in_chair_room:
+		sfx_step_soft.play()
+	elif GameManager.player_in_furnace_room:
+		sfx_step_stone.play()
+		
 func _handle_animation(prefix: String, dir: Vector2) -> void:
 	if prefix != "idle":
 		tex.speed_scale = (velocity/SPEED).distance_to(Vector2.ZERO) + 0.5

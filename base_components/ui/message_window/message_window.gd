@@ -9,9 +9,12 @@ extends Control
 @onready var message: RichTextLabel = %Message
 @onready var close: Button = %Close
 
+@onready var sfx_pop_up: SoundFxCo = %SFXPopUp
+
 var timeout : int = 3
 
 func _ready() -> void:
+	sfx_pop_up.play_with_random_pitch()
 	EventBus.force_close_message_windows.connect(func():
 		_fade_out()
 		EventBus.message_window_closed.emit(title)

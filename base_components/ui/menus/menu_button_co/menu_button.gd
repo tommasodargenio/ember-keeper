@@ -26,6 +26,9 @@ class_name MenuBtn extends Button
 	
 @export var float_animation : bool = false
 
+@export var hover_sfx : SoundFxCo
+@export var click_sfx : SoundFxCo
+
 const WIDTH_FULL_ROT := 10.0
 const HOVER_SCALE := Vector2(1.08, 1.08)
 const NORMAL_SCALE := Vector2.ONE
@@ -106,12 +109,15 @@ func _on_hover() -> void:
 	scale_ratio = clampf(WIDTH_FULL_ROT/size.x, 0.5, 1.0)
 	scale_target = 1.0 + (0.2) * scale_ratio	
 	_animate(Vector2(scale_target, scale_target), HOVER_DURATION)
+	if hover_sfx: hover_sfx.play_with_random_pitch()
+	
 
 func _on_unhover() -> void:
 	_animate(NORMAL_SCALE, HOVER_DURATION)
 
 func _on_click() -> void:
 	_animate(CLICK_SCALE, CLICK_DURATION)
+	if click_sfx: click_sfx.play_with_random_pitch()
 
 func _on_release() -> void:
 	_animate(HOVER_SCALE, RELEASE_DURATION)

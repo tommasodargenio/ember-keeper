@@ -29,7 +29,10 @@ func _ready() -> void:
 		self.modulate.a = 0.0
 	else:
 		self.modulate.a = 1.0
-	if GameManager.show_tutorial and not tutorial_shown:
+	if  GameManager and \
+		GameManager.player_prefs and \
+		not GameManager.player_prefs.tutorial_newspaper_shown and \
+		GameManager.show_tutorial:
 		EventBus.hide_ui.emit()
 		await get_tree().process_frame
 		_blur_on()
@@ -61,6 +64,8 @@ func _run_intro_sequence() -> void:
 		await _show_page(article_text)
 	
 	tutorial_shown = true
+	GameManager.player_prefs.tutorial_newspaper_shown = true
+	EventBus.tutorial_progress.emit()
 	_transition_out()
 
 
@@ -113,7 +118,6 @@ func _transition_in() -> void:
 	_blur_on()
 	if tween and tween.is_running():
 		tween.kill()
-	print("newspaper in")
 	tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BACK)
 	tween.set_parallel()	
 	tween.tween_property(self, "modulate:a", 1.0, 0.5)

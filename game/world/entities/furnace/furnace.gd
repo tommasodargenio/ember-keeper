@@ -23,6 +23,9 @@ extends StaticBody2D
 
 @onready var tex: Sprite2D = %Tex
 @onready var interact_sensor: Area2D = %InteractSensor
+@onready var sfx_ignite_furnace: SoundFxCo = %SFXIgniteFurnace
+@onready var sfx_puffing: SoundFxCo = %SFXPuffing
+@onready var sfx_working_furnace: SoundFxCo = %SFXWorkingFurnace
 
 var can_interact : bool = false
 var interacting_player : Player
@@ -62,34 +65,41 @@ func _input(event: InputEvent) -> void:
 		_handle_interact()
 	if event.is_action_pressed("watering") and can_interact:
 		_handle_watering()
-	if event.is_action_pressed("ui_accept"):
-		var f = preload("res://game/resources/models/game/basic_wood.tres")
-		
-		profile.load_fuel(f, 20)
 
 func _process(delta: float) -> void:
 	profile.tick(delta)
 	_handle_state()
 	
 func _register_events() -> void:
+	profile.furnace_ignited.connect(sfx_ignite_furnace.play)
 	profile.furnace_puffback_ended.connect(func():
-		print("No longer puffing")
-		# Switch off FX
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.INFO, "Info", LD.FURNACE_UNPUFFING, "TIMEOUT")
 	)
 	profile.furnace_puffback.connect(func():
-		print("We are on fire, literally")
-		# Swithc on FX
+		sfx_puffing.play()
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.ERROR, "Attention", LD.FURNACE_PUFFING, "TIMEOUT")
+	)
+	profile.pressure_changed.connect(func(pressure: float):
+		if pressure <= 0 :
+			sfx_working_furnace.stop()
 	)
 	interact_sensor.body_entered.connect(func(body: Node2D):
 		if body is Player:
+			if profile.pressure > 0:
+				sfx_working_furnace.play()
 			can_interact = true
 			interacting_player = body
-			if GameManager.show_tutorial and not tutorial_shown:
+			if  GameManager and \
+			GameManager.player_prefs and \
+			not GameManager.player_prefs.tutorial_furnace_shown and \
+			GameManager.show_tutorial:			
 				_tutorial_sequence()
-				tutorial_shown = true		
-	)
+				GameManager.player_prefs.tutorial_furnace_shown = true
+				EventBus.tutorial_progress.emit()
+	)			
 	interact_sensor.body_exited.connect(func(body: Node2D):
 		if body is Player:
+			sfx_working_furnace.stop()
 			can_interact = false
 			interacting_player = null
 	)
@@ -121,16 +131,12 @@ func _handle_watering() -> void:
 
 	if not (interacting_player.carrying_water > 0):
 		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.PLAYER_DRY, "TIMEOUT")
-		print(LD.PLAYER_DRY)
 		return		
 	var used: int = profile.add_water(Constants.WATER_TO_USE)
 	EventBus.player_watering.emit(used)
 	interacting_player.carrying_water -= used
 	EventBus.update_hotbar.emit("Water", interacting_player.carrying_water)
  
-	#if used > 0:
-		#EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.INFO, "Watering", LD.FURNACE_DOUSED, "TIMEOUT")
- 	
 
 func _handle_interact() -> void:
 	if not (interacting_player is Player):
@@ -138,14 +144,12 @@ func _handle_interact() -> void:
 
 	if not (interacting_player.carrying.fuel is Fuel):
 		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.FURNACE_NOT_FUEL, "TIMEOUT")
-		print(LD.FURNACE_NOT_FUEL)
 		return
 
 	var player_carrying: Dictionary = interacting_player.carrying
 
 	if player_carrying.quantity <= 0:
 		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.PLAYER_EMPTY_HANDED, "TIMEOUT")
-		print(LD.PLAYER_EMPTY_HANDED)
 		return
 
 	if player_carrying.fuel.type != profile.fuel_type:
@@ -154,14 +158,12 @@ func _handle_interact() -> void:
 		]
 		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", msg, "TIMEOUT")
 
-		print(msg)
 		return
 
 	var accepted := profile.load_fuel(player_carrying.fuel, player_carrying.quantity)
 
 	if accepted == 0:
 		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", LD.FURNACE_FULL, "TIMEOUT")
-		print(LD.FURNACE_FULL)
 		return
 
 	player_carrying.quantity -= accepted
@@ -171,11 +173,9 @@ func _handle_interact() -> void:
 	if accepted < player_carrying.quantity + accepted:
 		var msg = LD.FURNACE_FUEL_LOADED % [accepted, player_carrying.quantity]
 		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", msg, "TIMEOUT")
-		print(msg)
 	else:
 		var msg = LD.FURNACE_BURNING_FUEL % profile.current_fuel_units
 		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.WARNING, "Warning", msg, "TIMEOUT")
-		print(msg)
 			
 func _update_tex() -> void:
 	if not profile: return

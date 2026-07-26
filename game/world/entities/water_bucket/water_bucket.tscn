@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://d3rig2x6xbenk" path="res://assets/tiles/Interior_Props_01.png" id="1_qouvb"]
 [ext_resource type="Script" uid="uid://dqg34biwlcd46" path="res://game/world/entities/water_bucket/water_bucket.gd" id="1_s2oa0"]
+[ext_resource type="Script" uid="uid://cvuf4lcawtr0x" path="res://game/globals/sound_fx_co/sound_fx_co.gd" id="3_eamiy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gft63"]
 size = Vector2(13, 15)
@@ -34,3 +35,8 @@ shape = SubResource("CircleShape2D_o40nt")
 [node name="IconPosition" type="Marker2D" parent="." unique_id=277585043]
 unique_name_in_owner = true
 position = Vector2(-7, -23)
+
+[node name="SFXPickWater" type="AudioStreamPlayer" parent="." unique_id=1542528894]
+unique_name_in_owner = true
+script = ExtResource("3_eamiy")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"

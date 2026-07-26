@@ -117,7 +117,6 @@ func change_scene() -> void:
 				var loaded_scene = load(transition_settings["target"]).instantiate()
 				#var target_node = get_tree().root.get_node(transition_settings["targetNode"])
 				transition_settings["targetNode"].add_child(loaded_scene)
-				print("trans in %s with %s" % [transition_settings["target"], type.keys()[transition_settings["targetTransition"]]])
 				transition_in(loaded_scene, transition_settings["targetTransition"])		
 			else:
 				transition_settings.targetNode.show()
@@ -173,7 +172,6 @@ func transition_both() -> void:
 	# while Target Scene transition in
 	if transition_settings["nodeToNode"]:
 		if transition_settings["sourceNode"]:
-			print("trans out %s with %s" % [transition_settings["sourceNode"], type.keys()[transition_settings["sourceTransition"]]])
 
 			transition_out(transition_settings["sourceNode"], transition_settings["sourceTransition"])
 
@@ -206,14 +204,12 @@ func wipe_in(object : Node = dissolve_rect) -> void:
 	object.modulate.a = 1.0
 	tween = create_tween().set_trans(Tween.TRANS_SINE)
 	tween.tween_property(object, "position:x", 0, duration / 2)
-	#tween.tween_callback(func(): EventBus.transition_half_completed.emit())
 	
 func wipe_out(object : Node = dissolve_rect) -> void:
 	if tween and tween.is_running():
 		tween.kill()
 	tween = create_tween().set_trans(Tween.TRANS_SINE)
 	tween.tween_property(object, "position:x", get_viewport().size.x, duration / 2)
-	#tween.tween_callback(func(): EventBus.transition_completed.emit())
 	
 func curtain_in(object : Node = dissolve_rect) -> void:
 	if "color" in object:
@@ -226,7 +222,6 @@ func curtain_in(object : Node = dissolve_rect) -> void:
 		tween.kill()
 	tween = create_tween().set_trans(Tween.TRANS_SINE)
 	tween.tween_method(set_param.bind("progress", object), 0.0, 1.0, duration / 2)
-	#tween.tween_callback(func(): EventBus.transition_half_completed.emit())
 	
 func set_param(value: float, param_name: String, object : Node = dissolve_rect) -> void:
 	object.material.set_shader_parameter(param_name, value)
@@ -241,7 +236,6 @@ func curtain_out(object : Node = dissolve_rect) -> void:
 	
 	tween = create_tween().set_trans(Tween.TRANS_SINE)
 	tween.tween_method(set_param.bind("progress", object), 1.0, 2.0, duration / 2)
-	#tween.tween_callback(func(): EventBus.transition_completed.emit())
 
 func dissolve_in(object : Node = dissolve_rect) -> void:
 	var noise_texture = NoiseTexture2D.new()
@@ -286,7 +280,6 @@ func dissolve_out(object : Node = dissolve_rect) -> void:
 		
 	tween = create_tween().set_trans(Tween.TRANS_SINE)
 	tween.tween_method(set_param.bind("threshold", object), 1.0, 0.0, duration / 2)
-	#tween.tween_callback(func(): EventBus.transition_completed.emit())
 
 func circular_in(object : Node = dissolve_rect) -> void:
 	if "color" in object:
@@ -301,7 +294,6 @@ func circular_in(object : Node = dissolve_rect) -> void:
 		tween.kill()
 	tween = create_tween().set_trans(Tween.TRANS_SINE)
 	tween.tween_method(set_param.bind("radius", object), 0.0, 1.5, duration / 2)
-	#tween.tween_callback(func(): EventBus.transition_half_completed.emit())	
 	
 func circular_out(object : Node = dissolve_rect) -> void:
 	if tween and tween.is_running():
@@ -314,7 +306,6 @@ func circular_out(object : Node = dissolve_rect) -> void:
 		object.material.set_shader_parameter("radius", 1.5)				
 	tween = create_tween().set_trans(Tween.TRANS_SINE)
 	tween.tween_method(set_param.bind("radius", object), 1.5, 0.0, duration / 2)
-	#tween.tween_callback(func(): EventBus.transition_completed.emit())
 
 func pixelated_in(object : Node = dissolve_rect) -> void:
 	if "color" in object:
@@ -330,7 +321,6 @@ func pixelated_in(object : Node = dissolve_rect) -> void:
 	tween = create_tween().set_trans(Tween.TRANS_SINE)
 	tween.tween_method(set_param.bind("pixel_size", object), 1.0, 20.0, duration / 4)
 	tween.tween_method(set_param.bind("darkness", object), 0.0, 1.0, duration / 4)
-	#tween.tween_callback(func(): EventBus.transition_half_completed.emit())	
 	
 func pixelated_out(object : Node = dissolve_rect) -> void:
 	if tween and tween.is_running():
@@ -339,6 +329,5 @@ func pixelated_out(object : Node = dissolve_rect) -> void:
 	tween.tween_method(set_param.bind("darkness", object), 1.0, 0.0, duration / 4)
 	tween.tween_method(set_param.bind("pixel_size", object), 20.0, 1.0, duration / 4)
 	tween.tween_property(object, "modulate:a", 0.0, duration / 4)
-	#tween.tween_callback(func(): EventBus.transition_completed.emit())
 	
 #endregion

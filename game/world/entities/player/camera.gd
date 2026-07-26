@@ -24,9 +24,11 @@ var _pulse_trauma: float = 0.0
 var _pulse_hold_remaining: float = 0.0
 var _sustained_trauma: float = 0.0
 var _noise_offset: float = 0.0
-
+var _rumbling: bool = false
+ 
 @onready var _noise_x := FastNoiseLite.new()
 @onready var _noise_y := FastNoiseLite.new()
+@onready var sfx_rumble: SoundFxCo = %SFXRumble
 
 var furnace: Furnace
 
@@ -93,3 +95,9 @@ func _shake() -> void:
 	var amount: float = pow(trauma, trauma_power)
 	offset.x = amplitude * amount * _noise_x.get_noise_1d(_noise_offset)
 	offset.y = amplitude * amount * _noise_y.get_noise_1d(_noise_offset)
+	if amount > 0.0 and not _rumbling:
+		_rumbling = true
+		sfx_rumble.play()
+	elif amount <= 0.0 and _rumbling:
+		_rumbling = false
+		sfx_rumble.stop()

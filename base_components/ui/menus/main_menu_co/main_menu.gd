@@ -78,6 +78,7 @@ enum scale_from_type {CENTER, TOP_LEFT, TOP_CENTER}
 @onready var menu_footer_label: RichTextLabel = %MenuFooterLabel
 @onready var center_container: CenterContainer = %CenterContainer
 @onready var vfx_window_slide_scroll: VFXWindowSlideScroll = %VFXWindowSlideScroll
+@onready var sfx_button_over: SoundFxCo = %SFXButtonOver
 
 var font : Font
 var font_size : float
@@ -94,54 +95,31 @@ func _ready() -> void:
 		font = label_setting.font
 		font_size = label_setting.font_size
 		font_color = label_setting.font_color
-	
-	#call_deferred("_on_menu_show")	
-	#call_deferred("_animate_menu_items")
-	#if not Engine.is_editor_hint():
-		#EventBus.close_menu.connect(func():
-			#print("call animate exit on close_menu event triggered")
-			#var t: = _animate_menu_exit()
-			#if t and t.is_valid():
-				#await t.finished
-				#print("scroll out finished captured in animate_menu_items close_menu event: %s" % Time.get_ticks_msec())		
-				#if not hide_as_close: 
-					#self.queue_free()
-					#print("deleting scene %s [%s/%s]" % [Time.get_ticks_msec(),self.name, self.is_queued_for_deletion()])
-				#else: 
-					#print("hiding scene %s " % Time.get_ticks_msec())					
-					#self.hide()
-		#)
+
 	await get_tree().process_frame
 	await get_tree().process_frame
 	if not start_hidden:
 		_pop_up_menu()
 
 func _pop_out_menu() -> void:
-	print("call animate exit on close_menu event triggered")
 	var t: = _animate_menu_exit()
 	if t and t.is_valid():
 		await t.finished
-		print("scroll out finished captured in animate_menu_items close_menu event: %s" % Time.get_ticks_msec())		
 		if not hide_as_close: 
 			self.queue_free()
-			print("deleting scene %s [%s/%s]" % [Time.get_ticks_msec(),self.name, self.is_queued_for_deletion()])
 		else: 
-			print("hiding scene %s " % Time.get_ticks_msec())					
 			self.hide()	
-			print("reset position to 0.0 from %s" % position )
 			self.position.y = 0.0
 			
 func _pop_up_menu() -> void:
 	if Engine.is_editor_hint():
 		return
-	print("pop up menu called %s" % Time.get_ticks_msec())
 	self.show()
 	_on_menu_show()
 	await _animate_menu_items()
 	EventBus.menu_loaded.emit()
 
 func _on_menu_show() -> void:
-	print("on menu show %s " % Time.get_ticks_msec())
 	if animate_title:
 		menu_title_label.play_wave()
 	
@@ -187,59 +165,47 @@ func _update_menu() -> void:
 		entry.menu_item_parent = self
 		#if container_animation:
 			#btn.modulate.a = 0.0
-		
+		btn.hover_sfx = sfx_button_over
+		btn.click_sfx = sfx_button_over
 		container.add_child(btn)
 		# Only connect signals at runtime, not in editor
 		if not Engine.is_editor_hint():
 			btn.pressed.connect(entry._run)
 
 
+
 func _animate_menu_enter() -> Tween:
 	if not Engine.is_editor_hint():
-		print("animate menu enter %s " % Time.get_ticks_msec())
 		return vfx_window_slide_scroll.scroll_in(self)
 	return null
 
 func _animate_menu_exit() -> Tween:
-	print("animate menu exit %s " % Time.get_ticks_msec())
 	return vfx_window_slide_scroll.scroll_out(self)
 
 
 func _animate_menu_items() -> void:
-	print("animate menu entered %s " % Time.get_ticks_msec())
 	if not container_animation: return
 	if not target_container: return
-	print("animate menu items %s " % Time.get_ticks_msec())
 
 	match container_animation_type:
 		animation_type.SCALE:
 			for c: Control in target_container.get_children():
-				print("animating [%s] %s " % [animation_type.keys()[container_animation_type],c.name])
 				c.scale = Vector2.ZERO
 				c.modulate.a = 0.0
 				_set_pivot(c, scale_from)
 		animation_type.SLIDE_IN_LEFT, animation_type.SLIDE_IN_RIGHT:
 			for c: Control in target_container.get_children():
-				print("animating [%s] %s " % [animation_type.keys()[container_animation_type],c.name])
 				c.modulate.a = 0.0
 		animation_type.SLIDE_IN_TOP, animation_type.SLIDE_IN_BOTTOM:				
 			for c: Control in target_container.get_children():
-				print("animating [%s] %s " % [animation_type.keys()[container_animation_type],c.name])				
 				c.modulate.a = 0.0
 
 	var t : Tween =  _animate_menu_enter()
-	print("Process mode in main_menu.gd: %s" % self.process_mode)
-	#print("tween returned by vfx scroll: %s - is it valid? %s - is it running? %s" % [t, t.is_valid(), t.is_running()])
 	if t and t.is_valid():
-		#print("Tween is valid awaiting - how long it has been running: %s" % t.get_total_elapsed_time())
 		var  p = get_tree().get_processed_tweens()
-		#print("process tweens found %s" % p.size())
-		#print("Processed tweens: %s" % JSON.stringify(p))
 		await t.finished
 		await get_tree().process_frame
-		print("scroll in finished captured in animate_menu_items: %s" % Time.get_ticks_msec())
-	else:
-		print("balls")
+
 	if tween and tween.is_running():
 		tween.kill()
 		
@@ -257,7 +223,6 @@ func _animate_menu_items() -> void:
 	var final_positions : Dictionary = {}
 	for c: Control in children:
 		final_positions[c] = c.global_position
-	print("start tweening buttons, how about the window tween? is it still valid? %s - is it still running? %s" % [t.is_valid(), t.is_running()])
 	var idx: int = 0
 	for c: Control in children:
 		match container_animation_type:

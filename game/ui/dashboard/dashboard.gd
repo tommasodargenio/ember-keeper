@@ -15,6 +15,9 @@ extends Control
 @onready var fuel_status: RichTextLabel = %FuelStatus
 @onready var fuel_ordered: RichTextLabel = %FuelOrdered
 @onready var incidents: RichTextLabel = %Incidents
+@onready var sfx_minimize: SoundFxCo = %SFXMinimize
+@onready var sfx_maximize: SoundFxCo = %SFXMaximize
+@onready var sfx_button_click: SoundFxCo = %SFXButtonClick
 
 var network_status_str: Dictionary = {
 	"DARK": 0.0,
@@ -34,6 +37,7 @@ var network_status_color: Dictionary = {
 
 var tween : Tween
 var blur_tween : Tween
+var is_up : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	show()
@@ -49,28 +53,37 @@ func _register_events() -> void:
 	EventBus.town_mood_updated.connect(update_mood_status)	
 	EventBus.player_sat.connect(func():
 		_transition_in()
+		is_up = true
+		if is_up: sfx_maximize.play_with_random_pitch()
 		_blur_on()
 		update_data()
 		if hide_ui:
 			EventBus.hide_ui.emit()
 	)
 	close.pressed.connect(func():
-		EventBus.player_standing.emit()
-		_blur_off()
-		_transition_out()
+		if is_up:
+			EventBus.player_standing.emit()
+			_blur_off()
+			sfx_button_click.play_with_random_pitch()
+			sfx_minimize.play_with_random_pitch()
+			is_up = false
+			_transition_out()
 		if hide_ui:
 			EventBus.show_ui.emit()
 	)
 	EventBus.game_restart.connect(func():
 		_blur_off()
+		is_up = false
 		_transition_out()
 		if hide_ui:
 			EventBus.show_ui.emit()	
 	)
 	order_fuel.pressed.connect(func():
-		EventBus.order_fuel.emit(Constants.FUEL_TO_ORDER)
-		fuel_ordered.text = "[img height=1em]uid://dp4t8bf1kxxua[/img]"
-		order_fuel.disabled = true
+		if is_up: 
+			sfx_button_click.play_with_random_pitch()
+			EventBus.order_fuel.emit(Constants.FUEL_TO_ORDER)
+			fuel_ordered.text = "[img height=1em]uid://dp4t8bf1kxxua[/img]"
+			order_fuel.disabled = true
 	)
 	EventBus.fuel_restocked.connect(func():
 		fuel_ordered.text = ""

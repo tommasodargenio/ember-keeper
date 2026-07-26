@@ -14,10 +14,32 @@
 [ext_resource type="LabelSettings" uid="uid://xm6tjqqy3waf" path="res://game/resources/models/ui/label_settings.tres" id="9_evsdv"]
 [ext_resource type="PackedScene" uid="uid://ddhfcdtf1dlmc" path="res://game/ui/menus/game_over/game_over_n.tscn" id="11_k82js"]
 [ext_resource type="PackedScene" uid="uid://d1886r0h4pbhn" path="res://game/ui/newspaper/news_paper.tscn" id="13_3bylh"]
+[ext_resource type="PackedScene" uid="uid://dr554h7o64nh3" path="res://game/ui/menus/settings_menu_co/settings.tscn" id="14_ktntp"]
+[ext_resource type="Script" uid="uid://dckbgyalb1pmr" path="res://base_components/ui/menus/main_menu_co/menu_item_definition.gd" id="15_wc4cm"]
+[ext_resource type="Script" uid="uid://cvx3rsqdekkmd" path="res://game/globals/audio_manager_co/audio_manager_co.gd" id="17_wc4cm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gft63"]
 shader = ExtResource("8_k82js")
 shader_parameter/amount = 1.50000007125
+
+[sub_resource type="Resource" id="Resource_wc4cm"]
+script = ExtResource("15_wc4cm")
+name = "Back To Main"
+transition = true
+destination_scene = "MainMenu"
+action = "Back"
+
+[sub_resource type="Resource" id="Resource_6gocw"]
+script = ExtResource("15_wc4cm")
+name = "Save"
+destination_scene = ""
+action = "SavePrefs"
+
+[sub_resource type="Resource" id="Resource_m5u6f"]
+script = ExtResource("15_wc4cm")
+name = "Quit To Desktop"
+destination_scene = ""
+action = "Quit"
 
 [node name="World" type="Node2D" unique_id=676933265]
 script = ExtResource("1_h0x6e")
@@ -92,8 +114,13 @@ blur_rect = NodePath("../../FX/BlurRect")
 label_setting = ExtResource("9_evsdv")
 
 [node name="GameOver" parent="Menus" unique_id=418825991 node_paths=PackedStringArray("blur_rect") instance=ExtResource("11_k82js")]
-visible = false
 blur_rect = NodePath("../../FX/BlurRect")
+
+[node name="Settings" parent="Menus" unique_id=915147037 instance=ExtResource("14_ktntp")]
+visible = false
+start_hidden = true
+hide_as_close = true
+menu_items = Array[ExtResource("15_wc4cm")]([SubResource("Resource_wc4cm"), SubResource("Resource_6gocw"), SubResource("Resource_m5u6f")])
 
 [node name="Intro" type="CanvasLayer" parent="." unique_id=402778158]
 
@@ -114,5 +141,9 @@ position = Vector2(250, 109)
 
 [node name="PlayerStartMarker" type="Marker2D" parent="." unique_id=420086395]
 position = Vector2(156, 129)
+
+[node name="AudioManagerCo" type="Node" parent="." unique_id=1067581445]
+script = ExtResource("17_wc4cm")
+metadata/_custom_type_script = "uid://cvx3rsqdekkmd"
 
 [editable path="UI/HUD"]

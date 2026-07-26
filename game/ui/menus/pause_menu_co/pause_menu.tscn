@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://nhv1aqgtybwm" path="res://base_components/ui/menus/main_menu_co/main_menu.tscn" id="1_3su8j"]
 [ext_resource type="Script" uid="uid://dpomgkyj5igfh" path="res://game/ui/menus/pause_menu_co/pause_menu.gd" id="1_h4i23"]
-[ext_resource type="Theme" uid="uid://qqngc4whi7uh" path="res://game/resources/models/ui/main_default_theme.tres" id="2_467ib"]
 [ext_resource type="Script" uid="uid://dckbgyalb1pmr" path="res://base_components/ui/menus/main_menu_co/menu_item_definition.gd" id="2_xh6te"]
 
 [sub_resource type="Resource" id="Resource_xh6te"]
@@ -17,15 +16,18 @@ metadata/_custom_type_script = "uid://dckbgyalb1pmr"
 script = ExtResource("2_xh6te")
 name = "Settings"
 transition = true
-destination_scene = "Settings"
+source_node = &"PauseMenu"
+unhide_scene = &"Settings"
+destination_scene = ""
 action = "None"
 metadata/_custom_type_script = "uid://dckbgyalb1pmr"
 
 [sub_resource type="Resource" id="Resource_ijhdf"]
 script = ExtResource("2_xh6te")
-name = "Quit"
+name = "Back To Main"
 transition = true
-destination_scene = ""
+resume_game_if_paused = true
+destination_scene = "MainMenu"
 action = "None"
 metadata/_custom_type_script = "uid://dckbgyalb1pmr"
 
@@ -33,16 +35,16 @@ metadata/_custom_type_script = "uid://dckbgyalb1pmr"
 
 [node name="PauseMenu" unique_id=467531739 instance=ExtResource("1_3su8j")]
 visible = false
-theme = ExtResource("2_467ib")
 script = ExtResource("1_h4i23")
 start_hidden = true
 hide_as_close = true
 menu_title = "Pause"
+menu_footer = ""
 menu_items = Array[ExtResource("2_xh6te")]([SubResource("Resource_xh6te"), SubResource("Resource_ibae5"), SubResource("Resource_ijhdf")])
 menu_item_min_size = Vector2(100, 15)
 
 [node name="MenuTitleLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="0" unique_id=323291262]
-custom_minimum_size = Vector2(70, 34)
+custom_minimum_size = Vector2(0, 34)
 text = "Pause"
 
 [node name="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="1" unique_id=485742059]
@@ -50,3 +52,6 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_4l7av")
 
 [node name="HSeparator2" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="3" unique_id=398373851]
 theme_override_styles/separator = SubResource("StyleBoxEmpty_4l7av")
+
+[node name="MenuFooterLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="4" unique_id=462098605]
+text = ""

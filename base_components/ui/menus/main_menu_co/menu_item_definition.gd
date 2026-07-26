@@ -96,9 +96,9 @@ func _handle_save_on_quit(tree: SceneTree) -> void:
 		# if save before exit is on we save, and then quit
 		# we quit otherwise
 	if GameManager.game_in_progress:
-		if GameManager.player_prefs and GameManager.player_prefs.save_before_exiting:
-			print("save")
-			#SaveManager.save_game(Constants.SESSION_SAVE_DIRECTORY_NAME, true)
+		if GameManager.player_prefs:
+			SaveManager.save_preferences(GameManager.player_prefs)
+			tree.quit()
 		else:
 			tree.quit()
 

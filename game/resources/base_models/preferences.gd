@@ -57,6 +57,12 @@ class KeyBinding:
 @export var last_game_saved_at: String
 
 @export var tutorial_shown : bool = false
+@export var tutorial_newspaper_shown : bool = false
+@export var tutorial_dashboard_shown : bool = false
+@export var tutorial_furnace_shown : bool = false
+@export var tutorial_water_bucket_shown : bool = false
+@export var tutorial_fuel_crate_shown : bool = false
+@export var tutorial_chair_room_shown : bool = false
 
 func to_dict() -> Dictionary:
 	return {
@@ -69,6 +75,12 @@ func to_dict() -> Dictionary:
 		"last_played_game":     last_played_game,
 		"last_game_saved_at": last_game_saved_at,
 		"tutorial_shown": tutorial_shown,
+		"tutorial_newspaper_shown": tutorial_newspaper_shown,
+		"tutorial_dashboard_shown": tutorial_dashboard_shown,
+		"tutorial_furnace_shown": tutorial_furnace_shown,
+		"tutorial_water_bucket_shown": tutorial_water_bucket_shown,
+		"tutorial_fuel_crate_shown": tutorial_fuel_crate_shown,
+		"tutorial_chair_room_shown": tutorial_chair_room_shown,
 		"key_bindings":			save_key_bindings()
 	}
 	
@@ -82,6 +94,12 @@ static func from_dict(d: Dictionary) -> Preferences:
 	p.screen_mode          = d.get("screen_mode",          SCREEN.FULLSCREEN)
 	p.last_played_game     = d.get("last_played_game",     "")
 	p.tutorial_shown		= d.get("tutorial_shown", false)
+	p.tutorial_newspaper_shown	= d.get("tutorial_newspaper_shown", false)
+	p.tutorial_dashboard_shown	= d.get("tutorial_dashboard_shown", false)
+	p.tutorial_furnace_shown	= d.get("tutorial_furnace_shown", false)
+	p.tutorial_water_bucket_shown	= d.get("tutorial_water_bucket_shown", false)
+	p.tutorial_fuel_crate_shown	= d.get("tutorial_fuel_crate_shown", false)
+	p.tutorial_chair_room_shown	= d.get("tutorial_chair_room_shown", false) 
 	p.last_game_saved_at = d.get("last_game_saved_at", "")
 	p.key_bindings		   = d.get("key_bindings", [])
 	

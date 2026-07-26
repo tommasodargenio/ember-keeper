@@ -12,6 +12,7 @@ func _ready() -> void:
 	_register_events()
 		
 func _register_events() -> void:
+	if Engine.is_editor_hint(): return
 	EventBus.game_ended.connect(func(_won: bool, forced_reason: String):
 		message.text = "[wave amp=20.0 freq=4.0][color=%s][b]%s[/b][/color][/wave]" % [Palette.get_color("bright"), forced_reason]
 		_blur_on()

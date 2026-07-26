@@ -14,7 +14,6 @@ func _set(property: StringName, value: Variant) -> bool:
 	return false
 	
 func animate() -> void:
-	print("autoanimate")
 	pivot_offset = size / 2.0
 	if tween and tween.is_running():
 		tween.kill()

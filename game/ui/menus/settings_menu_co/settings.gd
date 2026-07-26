@@ -7,6 +7,7 @@ extends MainMenu
 @onready var main_volume: HSlider = %MainVolume
 @onready var music_volume: HSlider = %MusicVolume
 @onready var sound_volume: HSlider = %SoundVolume
+@onready var sfx_toggle_p: SoundFxCo = %SFXToggleP
 
 var active_timer: SceneTreeTimer = null
 
@@ -37,9 +38,9 @@ func _ready() -> void:
 	go_back_to_main_menu.action = "Back"
 	
 	if get_tree().paused:
-		menu_items = [go_back, save_item, quit_item]
+		menu_items = [go_back, save_item]
 	else:
-		menu_items = [go_back_to_main_menu, save_item, quit_item]	
+		menu_items = [go_back_to_main_menu, save_item]	
 	
 	set_values_from_user_prefs()
 	
@@ -77,6 +78,7 @@ func _ready() -> void:
 		active_timer = null
 	)
 	music_toggle.toggled.connect(func(toggled_on: bool):
+		sfx_toggle_p.play_with_random_pitch()
 		EventBus.music_toggle.emit(toggled_on)
 	)
 	music_volume.value_changed.connect(func(value: float):
@@ -85,6 +87,7 @@ func _ready() -> void:
 		active_timer = null
 	)	
 	sfx_toggle.toggled.connect(func(toggled_on: bool):
+		sfx_toggle_p.play_with_random_pitch()
 		EventBus.sound_toggle.emit(toggled_on)
 	)
 	sound_volume.value_changed.connect(func(value: float):

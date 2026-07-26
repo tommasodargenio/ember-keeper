@@ -7,11 +7,11 @@ const GAME_NAME : String = "Ember Keeper"
 const GAME_VERSION : String = "1.0.0-26.7"
 
 # CREDITS
-const CREDIT_AUTHOR = "sydream"
+const CREDIT_AUTHOR = "TomDubliner"
 const CREDIT_ENGINE = "Godot"
 const CREDIT_ART = ["Kenney", "TheStarvingArtificer", "kalebsilva", "Other"]
-const CREDIT_MUSIC = []
-const CREDIT_SFX = []
+const CREDIT_MUSIC = ["Starostin"]
+const CREDIT_SFX = ["Freesound Community", "Gearpile"]
 
 # SAVE MANAGER
 const MAX_AUTOSAVE_SLOTS : int = 3
@@ -29,8 +29,8 @@ const SAVE_PREFERENCES_FILE : String = "prefs.json"
 const LANTERNS_GROUP = "lanterns"
 const CITY_LANTERNS_GROUP = "city_lanterns"
 const WOODS_LANTERNS_GROUP = "woods_lanters"
-const STARTING_TOWN_LANTERNS = 0
-const STARTING_WOODS_LANTERNS = 0
+const STARTING_TOWN_LANTERNS = 2
+const STARTING_WOODS_LANTERNS = 3
 const WATER_TO_USE = 10
 const FUEL_TO_ORDER = 20
 const FUEL_ORDER_TIMEOUT = 5.0
@@ -100,6 +100,27 @@ const UI_RESOURCES : Dictionary = {
 	"labelsGeneric": "uid://xm6tjqqy3waf",
 	"labelTitles": "uid://dg4rysr5187ye",
 	"labelTags": "uid://d3q4vhqeku4x0"
+	
+}
+
+const SFX : Dictionary = {
+	"pickupwater1" : "uid://cdlw01asxlcni",
+	"pickupwater2" : "uid://i50kkm7qv2sw",
+	"pickupwater3" : "uid://c2ta8bi4hau7i",
+	"pickwood1": "uid://difmkekk6vhoy",
+	"pickwood2": "uid://b7a475srji1u1",
+	"placewood1": "uid://dr2qaoggu2wge",
+	"placewood2": "uid://dsx70nj67scsh",
+	"placewood3": "uid://sho01ub7bm43",
+	"furnaceignite": "uid://i8s666iux44h",
+	"sit": "uid://dqthmr57bd1in",
+	"footstep_soft": "uid://dq5hymbgsnfhg",
+	"footstep_stone": "uid://1qtwrnbavx2s",
+	"stove_working": "uid://babbvrhqtw2ci",
+	"rumble": "uid://ctjanrpn8eom4",
+	"puffing": "uid://canj8wsswfqpf",
+	"menuButton": "uid://bs8vicyyf87sm",
+	"menuToggle": "uid://b50to6fhjtu38",
 	
 }
 

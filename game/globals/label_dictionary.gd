@@ -20,12 +20,15 @@ static var INTRO_ARTICLE_4 = "We wish the [color=darkred]Keeper[/color] a quiet 
 static var INTRO_ARTICLE : Array = [INTRO_ARTICLE_1, INTRO_ARTICLE_2, INTRO_ARTICLE_3, INTRO_ARTICLE_4]
 # FUEL
 static var FUEL_RESTOCKED = "We just got a new shipment of fuel boss!"
+static var FUEL_EMPTY = "Crickets!. Order more boss!"
 #FURNACE
 static var FURNACE_NOT_FUEL = "Not sure what you are carrying but this ain't fuel!!"
 static var FURNACE_WRONG_FUEL = "You can't load %s into this furnace which only accepts %s"
 static var FURNACE_FULL = "Furnace at max capacity, can't load"
 static var FURNACE_FUEL_LOADED = "Loaded %s, furnace is now full — %s still in hand"
 static var FURNACE_BURNING_FUEL = "We are burning baby, current load %s"
+static var FURNACE_PUFFING = "The furnace is exploding, use some water!"
+static var FURNACE_UNPUFFING = "Pfff - Disaster adverted!"
 #PLAYER
 static var PLAYER_EMPTY_HANDED = "You have nothing to load"
 static var PLAYER_DRY = "You don't have any water on you!"

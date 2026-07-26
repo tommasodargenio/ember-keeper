@@ -21,6 +21,7 @@ const FUEL_TEX_GROUP = "FuelTex"
 @onready var crate_tex: Sprite2D = %CrateTex
 @onready var interact_sensor: Area2D = %InteractSensor
 @onready var icon_position: Marker2D = %IconPosition
+@onready var sfx_pickup_wood: SoundFxCo = %SFXPickupWood
 
 var empty_create : Rect2 = Rect2(0, 157, 15, 19)
 var can_interact : bool = false
@@ -46,9 +47,13 @@ func _register_events() -> void:
 	interact_sensor.body_entered.connect(func(body: Node2D):
 		if body is Player:
 			can_interact = true
-			if GameManager.show_tutorial and not tutorial_shown:
+			if  GameManager and \
+			GameManager.player_prefs and \
+			not GameManager.player_prefs.tutorial_fuel_crate_shown and \
+			GameManager.show_tutorial:			
 				_tutorial_sequence()
-				tutorial_shown = true			
+				GameManager.player_prefs.tutorial_fuel_crate_shown = true		
+				EventBus.tutorial_progress.emit()	
 	)
 	interact_sensor.body_exited.connect(func(body: Node2D):
 		if body is Player:
@@ -67,8 +72,10 @@ func _handle_interact() -> void:
 	if fuel and quantity > 0:
 		quantity -= 1
 		EventBus.player_loading_fuel.emit(fuel, 1)
+		sfx_pickup_wood.stream = [preload(Constants.SFX["pickwood1"]),preload(Constants.SFX["pickwood2"])].pick_random()
+		sfx_pickup_wood.play()
 	else:
-		print("Argh nothing in this crate to pickup")
+		EventBus.show_message.emit(Constants.MESSAGE_WINDOW_FLAG.ERROR, "Attention", LD.FUEL_EMPTY, "TIMEOUT")
 
 func _update_fuel_tex() -> void:
 	for n in get_tree().get_nodes_in_group(FUEL_TEX_GROUP):

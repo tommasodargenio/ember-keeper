@@ -63,8 +63,17 @@ func _on_meter_changed(value: float) -> void:
 	pressure_read.text = "[color=%s][font_size=10]%.*f[/font_size][/color]" % [Palette.get_color("dark"),decimals, value]
  
 func _update_safe_zone_markers() -> void:
-	marker_min_pressure.rotation_degrees = _angle_for(furnace.min_operating_pressure) + min_marker_rotation_offset_deg
-	marker_max_pressure.rotation_degrees = _angle_for(furnace.max_operating_pressure) + max_marker_rotation_offset_deg
+	var min_operating = 0.0
+	var max_operating = 0.0
+	if gauge_pressure:
+		min_operating = furnace.min_operating_pressure
+		max_operating = furnace.max_operating_pressure
+	elif gauge_health:
+		min_operating = furnace.max_health
+		max_operating = 0.0
+		
+	marker_min_pressure.rotation_degrees = _angle_for(min_operating) + min_marker_rotation_offset_deg
+	marker_max_pressure.rotation_degrees = _angle_for(max_operating) + max_marker_rotation_offset_deg
  
 func _angle_for(pressure_value: float) -> float:
 	var t: float = clamp(pressure_value, 0.0, 100.0) / 100.0

@@ -21,11 +21,14 @@ var game_loaded : bool = false
 var game_over : bool = false
 var game_win : bool = false
 
-var show_tutorial : bool = false
+var show_tutorial : bool = true
 
 var current_furnace : Furnace
 
 var player_prefs: Preferences
+
+var player_in_furnace_room : bool = false
+var player_in_chair_room : bool = false
 
 # Game Stats
 var reported_incidents : int = 0
@@ -56,7 +59,7 @@ func _register_events() -> void:
 		player_prefs.music_toggle = status
 	)
 	EventBus.sound_toggle.connect(func(status: bool):
-		player_prefs.sfx_toggle_toggle = status
+		player_prefs.sfx_toggle = status
 	)	
 	EventBus.game_ended.connect(func(_w: bool, _r: String):
 		game_in_progress = false
@@ -65,6 +68,9 @@ func _register_events() -> void:
 		await get_tree().create_timer(Constants.FUEL_ORDER_TIMEOUT).timeout
 		fuel_quantity += quantity
 		EventBus.fuel_restocked.emit()
+	)
+	EventBus.tutorial_progress.connect(func():
+		SaveManager.save_preferences(player_prefs)
 	)
 
 func _refresh_lanterns_count() -> void:
