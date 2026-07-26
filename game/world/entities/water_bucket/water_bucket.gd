@@ -8,7 +8,7 @@ extends StaticBody2D
 @onready var icon_position: Marker2D = %IconPosition
 
 
-var water_qty : int = 100
+var water_qty : int = 100000
 var model_filled: Rect2 = Rect2(144.0, 128.0, 16.0, 16.0)
 var model_empty : Rect2 = Rect2(128.0, 128.0, 16.0, 16.0)
 var can_interact : bool = false

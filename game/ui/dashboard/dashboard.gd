@@ -14,6 +14,7 @@ extends Control
 @onready var order_fuel: Button = %OrderFuel
 @onready var fuel_status: RichTextLabel = %FuelStatus
 @onready var fuel_ordered: RichTextLabel = %FuelOrdered
+@onready var incidents: RichTextLabel = %Incidents
 
 var network_status_str: Dictionary = {
 	"DARK": 0.0,
@@ -74,6 +75,7 @@ func _register_events() -> void:
 	EventBus.fuel_restocked.connect(func():
 		fuel_ordered.text = ""
 		order_fuel.disabled = false
+		update_data()
 	)
 	EnergyNetwork.network_updated.connect(func(_supply: int, _demand: int, lit_count: int, total_count: int):
 		var ratio: float = float(lit_count) / float(total_count) if total_count > 0 else 0.0
@@ -114,7 +116,8 @@ func update_mood_status() -> void:
 		var mood_str =  GameManager.get_town_mood(true)
 		var mood_color = GameManager.mood_color[mood_str]
 		town_mood_status.text = "Town mood: [color=%s][b]%s[/b][/color]" % [mood_color, mood_str]	
-
+		incidents.text = "Incidents: [color=#fffbce]%s[/color]" % [GameManager.reported_incidents]
+		
 func update_fuel_status() -> void:
 	var fuel_str = "Total Fuel ([img]%s[/img]) : %s" % [Constants.RESOURCES["FuelWood"], GameManager.fuel_quantity]
 	fuel_status.text = fuel_str

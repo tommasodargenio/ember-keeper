@@ -85,7 +85,6 @@ var font_color : Color
 var tween : Tween
 
 func _ready() -> void:
-	print("Game is paused: %s" % get_tree().paused)
 	if start_hidden:
 		self.hide()
 	

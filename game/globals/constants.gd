@@ -1,15 +1,15 @@
 extends Node
 
 enum DEBUG_LAYERS {ALL, NPC, VM, WALLET, GAME, MAP, PATHFINDING, LOADING}
-const DEBUG := true
+const DEBUG := false
 const DEBUG_TYPE : DEBUG_LAYERS = DEBUG_LAYERS.GAME
 const GAME_NAME : String = "Ember Keeper"
-const GAME_VERSION : String = "0.1.0-26.7"
+const GAME_VERSION : String = "1.0.0-26.7"
 
 # CREDITS
 const CREDIT_AUTHOR = "sydream"
 const CREDIT_ENGINE = "Godot"
-const CREDIT_ART = ["Kenney", "TheStarvingArtificer", "Other"]
+const CREDIT_ART = ["Kenney", "TheStarvingArtificer", "kalebsilva", "Other"]
 const CREDIT_MUSIC = []
 const CREDIT_SFX = []
 

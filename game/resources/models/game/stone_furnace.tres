@@ -6,7 +6,7 @@
 script = ExtResource("1_oqdp4")
 name = "Stone Kiln"
 description = "It does the job, just about"
-max_fuel_capacity = 10
+max_fuel_capacity = 15
 energy_burning_capacity = 5
 max_energy_output = 50
 metadata/_custom_type_script = "uid://dhnhwuqrm3qty"

@@ -40,7 +40,7 @@ func _register_events() -> void:
 	)
 	EventBus.player_loading_fuel.connect(func(fuel : Fuel, quantity: int):
 		carrying.fuel = fuel
-		carrying.quantity = quantity
+		carrying.quantity += quantity
 		var fuel_tex = Constants.RESOURCES["FuelWood"] if fuel.type == Fuel.fuel_type.WOOD else Constants.RESOURCES["FuelCoal"]
 		EventBus.add_to_hotbar.emit(fuel.name, load(fuel_tex), quantity,  Utility.get_action_key_binding("interact"))
 	)

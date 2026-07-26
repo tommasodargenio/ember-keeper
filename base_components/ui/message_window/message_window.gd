@@ -12,6 +12,10 @@ extends Control
 var timeout : int = 3
 
 func _ready() -> void:
+	EventBus.force_close_message_windows.connect(func():
+		_fade_out()
+		EventBus.message_window_closed.emit(title)
+	)
 	if close_action != "":
 		if close_action == "TIMEOUT":
 			close.hide()

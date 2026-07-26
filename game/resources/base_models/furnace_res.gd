@@ -91,7 +91,7 @@ func load_fuel(fuel: Fuel, amount: int) -> int:
 		return 0
 	if loaded_fuel == null:
 		loaded_fuel = fuel
- 
+		
 	var space_left := max_fuel_capacity - current_fuel_units
 	var accepted : int = clamp(amount, 0, space_left)
 	current_fuel_units += accepted

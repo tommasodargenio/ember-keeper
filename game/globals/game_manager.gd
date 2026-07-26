@@ -21,7 +21,7 @@ var game_loaded : bool = false
 var game_over : bool = false
 var game_win : bool = false
 
-var show_tutorial : bool = true
+var show_tutorial : bool = false
 
 var current_furnace : Furnace
 
@@ -58,7 +58,7 @@ func _register_events() -> void:
 	EventBus.sound_toggle.connect(func(status: bool):
 		player_prefs.sfx_toggle_toggle = status
 	)	
-	EventBus.game_ended.connect(func():
+	EventBus.game_ended.connect(func(_w: bool, _r: String):
 		game_in_progress = false
 	)
 	EventBus.order_fuel.connect(func(quantity: int):
