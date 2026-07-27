@@ -5,7 +5,7 @@ signal dawn_reached
 signal clock_updated(time_str: String)
 signal clock_parts_updated(hours_str: String, minutes_str: String, ampm_str: String)
 
-@export var night_duration_hours: float = 1.0
+@export var night_duration_hours: float = 8.0
 @export var real_seconds_per_game_hour: float = 50.0 
 
 @export_group("Clock Display")
