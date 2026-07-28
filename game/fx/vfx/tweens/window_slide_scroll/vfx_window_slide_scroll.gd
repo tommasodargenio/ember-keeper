@@ -17,7 +17,7 @@ func tween_purge() -> void:
 		
 func scroll_in(object) -> Tween:
 	tween_purge()
-	tweene = object.get_tree().create_tween().set_trans(transition).set_ease(easing).set_parallel(true)
+	tweene = object.create_tween().set_trans(transition).set_ease(easing).set_parallel(true)
 	object.show()
 	#object.modulate.a = 0.0
 	match entry_direction:
@@ -41,7 +41,7 @@ func scroll_out(object) -> Tween:
 	tween_purge()
 	previous_position = object.position
 		
-	tweene = object.get_tree().create_tween().set_trans(transition).set_ease(easing).set_parallel(true)
+	tweene = object.create_tween().set_trans(transition).set_ease(easing).set_parallel(true)
 	match exit_direction:
 		ANIM_DIRECTION.LEFT:
 			tweene.tween_property(object, "position:x", -get_viewport().size.x, animation_duration)
