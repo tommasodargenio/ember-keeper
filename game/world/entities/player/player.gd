@@ -92,7 +92,9 @@ func _register_events() -> void:
 
 #region Movement and Animation
 func _handle_movements(delta: float) -> void:
-	if not can_walk : return
+	if not can_walk:
+		velocity = Vector2.ZERO
+		return
 	
 	var direction := Input.get_vector("player_left", "player_right", "player_up", "player_down")
 	

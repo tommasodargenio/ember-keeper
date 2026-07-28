@@ -18,7 +18,7 @@ func _register_events() -> void:
 		if won:
 			menu_title = LD.GAME_OVER_WIN_TITLE
 		else:
-			menu_title = LD.GAME_OVER_WIN_TITLE
+			menu_title = LD.GAME_OVER_LOSE_TITLE
 		_blur_on()
 		_pop_up_menu()
 	)
