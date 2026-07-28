@@ -37,6 +37,7 @@ EnergyNetwork="*uid://ddn5foqhoceop"
 GameClock="*uid://cu6s2rhnor4iv"
 NightOutcome="*uid://cfqur8dpbq0n3"
 MusicPlayer="*uid://52cam7l740pm"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [debug]
 
@@ -56,7 +57,7 @@ window/snap/snap_2d_transforms_to_pixel=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/kanban_tasks/plugin.cfg", "res://addons/project-time-tracker/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/tween_composer/plugin.cfg", "res://addons/yard/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/project-time-tracker/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/tween_composer/plugin.cfg", "res://addons/yard/plugin.cfg")
 
 [input]
 
