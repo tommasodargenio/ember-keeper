@@ -89,17 +89,17 @@ func _report_incident() -> void:
 	)
 
 	if GameManager.town_mood <= 0:
-		_end_game(false, "the town's despair became too much to bear")
+		_end_game(false, LD.PLAYER_LOSE_MOOD)
 
 
 func _on_furnace_shutdown(reason: String) -> void:
 	if reason == "overheat_damage":
-		_end_game(false, "the furnace was destroyed by the blaze")
+		_end_game(false, LD.PLAYER_LOSE_FURNACE_EXPLOSION)
 
 
 func _on_dawn_reached() -> void:
 	var won: bool = GameManager.town_mood >= win_min_mood and GameManager.reported_incidents <= win_max_incidents
-	_end_game(won, "you survived the night! Bravo!")
+	_end_game(won, LD.PLAYER_WON)
 
 
 func _end_game(won: bool, forced_reason: String) -> void:

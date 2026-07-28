@@ -32,6 +32,12 @@ static var FURNACE_UNPUFFING = "Pfff - Disaster adverted!"
 #PLAYER
 static var PLAYER_EMPTY_HANDED = "You have nothing to load"
 static var PLAYER_DRY = "You don't have any water on you!"
+static var PLAYER_WON = "You survived the night! Bravo!"
+static var PLAYER_LOSE_MOOD = "The town's despair became too much to bear"
+static var PLAYER_LOSE_FURNACE_EXPLOSION = "The furnace was destroyed by the blaze"
+# UI
+static var GAME_OVER_WIN_TITLE = "Winner"
+static var GAME_OVER_LOSE_TITLE = "Defeated"
 #WATER
 static var WATER_BUCKET_EMPTY = "Not enough water in this bucket"
 #endregion

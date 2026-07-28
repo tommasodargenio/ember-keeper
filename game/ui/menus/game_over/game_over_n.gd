@@ -13,8 +13,12 @@ func _ready() -> void:
 		
 func _register_events() -> void:
 	if Engine.is_editor_hint(): return
-	EventBus.game_ended.connect(func(_won: bool, forced_reason: String):
+	EventBus.game_ended.connect(func(won: bool, forced_reason: String):
 		message.text = "[wave amp=20.0 freq=4.0][color=%s][b]%s[/b][/color][/wave]" % [Palette.get_color("bright"), forced_reason]
+		if won:
+			menu_title = LD.GAME_OVER_WIN_TITLE
+		else:
+			menu_title = LD.GAME_OVER_WIN_TITLE
 		_blur_on()
 		_pop_up_menu()
 	)
