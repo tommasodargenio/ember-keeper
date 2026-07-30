@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://boawbnho6lu30"]
+
+[ext_resource type="Script" uid="uid://ds7tb374wvds5" path="res://game/world/entities/phone/phone.gd" id="1_en71h"]
+[ext_resource type="Texture2D" uid="uid://co3cn28pj3ms5" path="res://assets/spritesheets/rotary-phone-spritesheet.png" id="1_q04tg"]
+[ext_resource type="Script" uid="uid://cvuf4lcawtr0x" path="res://game/globals/sound_fx_co/sound_fx_co.gd" id="3_mbpl7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sa04a"]
+atlas = ExtResource("1_q04tg")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_en71h"]
+atlas = ExtResource("1_q04tg")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbpl7"]
+atlas = ExtResource("1_q04tg")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nkcnq"]
+atlas = ExtResource("1_q04tg")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejd3r"]
+atlas = ExtResource("1_q04tg")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gft63"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sa04a")
+}],
+"loop": 0,
+"name": &"hold",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_en71h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbpl7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nkcnq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejd3r")
+}],
+"loop": 1,
+"name": &"ringing",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gft63"]
+size = Vector2(20, 24)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o40nt"]
+radius = 19.0
+height = 76.0
+
+[node name="Phone" type="StaticBody2D" unique_id=1089770182]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_en71h")
+
+[node name="Tex" type="AnimatedSprite2D" parent="." unique_id=1237293606]
+sprite_frames = SubResource("SpriteFrames_gft63")
+animation = &"hold"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=183679259]
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_gft63")
+
+[node name="InteractSensor" type="Area2D" parent="." unique_id=1440633683]
+unique_name_in_owner = true
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractSensor" unique_id=112692044]
+position = Vector2(-1, 10)
+shape = SubResource("CapsuleShape2D_o40nt")
+
+[node name="IconPosition" type="Marker2D" parent="." unique_id=1716014599]
+unique_name_in_owner = true
+position = Vector2(-7, -23)
+
+[node name="SFXRings" type="AudioStreamPlayer" parent="." unique_id=10339817]
+script = ExtResource("3_mbpl7")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
+
+[node name="SFXPickup" type="AudioStreamPlayer" parent="." unique_id=1978717807]
+script = ExtResource("3_mbpl7")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
+
+[node name="SFXVoice" type="AudioStreamPlayer" parent="." unique_id=1998721005]
+script = ExtResource("3_mbpl7")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
+
+[node name="SFXHangup" type="AudioStreamPlayer" parent="." unique_id=519385160]
+script = ExtResource("3_mbpl7")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
+
+[node name="SFXLineTone" type="AudioStreamPlayer" parent="." unique_id=605790036]
+script = ExtResource("3_mbpl7")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
+
+[node name="SFXDials" type="AudioStreamPlayer" parent="." unique_id=1741708764]
+script = ExtResource("3_mbpl7")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
+
+[node name="SFXCallTone" type="AudioStreamPlayer" parent="." unique_id=932957676]
+script = ExtResource("3_mbpl7")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
+
+[node name="SFXBusyTone" type="AudioStreamPlayer" parent="." unique_id=1118279666]
+script = ExtResource("3_mbpl7")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
+
+[node name="SFXVoiceMail" type="AudioStreamPlayer" parent="." unique_id=1526281564]
+script = ExtResource("3_mbpl7")
+metadata/_custom_type_script = "uid://cvuf4lcawtr0x"
