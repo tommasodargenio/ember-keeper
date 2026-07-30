@@ -24,6 +24,9 @@ var tween : Tween
 var _current_time_str: String = ""
 var _colon_visible: bool = true
 
+var _message_queue: Array = []
+var _processing_message_queue: bool = false
+
 func _ready() -> void:
 	_register_events()
 	init_hud()
@@ -49,18 +52,25 @@ func _register_events() -> void:
 	blink_timer.timeout.connect(_on_blink_timeout)	
 
 func display_message(type: Constants.MESSAGE_WINDOW_FLAG, title: String, message: String, action: String = "CLOSE", disable_ui: bool = false):
-	var any_message = bottom_left.get_child_count()
-	if any_message:
-		for m in bottom_left.get_children():
-			m._fade_out()
-	await get_tree().create_timer(0.5).timeout
+	_message_queue.append([type, title, message, action, disable_ui])
+	if not _processing_message_queue:
+		_process_message_queue()
+
+func _process_message_queue() -> void:
+	_processing_message_queue = true
+	while _message_queue.size() > 0:
+		var args: Array = _message_queue.pop_front()
+		await _show_single_message(args[0], args[1], args[2], args[3], args[4])
+	_processing_message_queue = false
+
+func _show_single_message(type: Constants.MESSAGE_WINDOW_FLAG, title: String, message: String, action: String, disable_ui: bool) -> void:
 	var new_msg = message_window.instantiate()
 	new_msg.title_text = title
 	new_msg.message_text = message
 	new_msg.close_action = action
 	new_msg.message_flag = type
 	bottom_left.add_child(new_msg)
-	
+
 	if disable_ui:
 		top_left.hide()
 		top_right.hide()
@@ -68,7 +78,9 @@ func display_message(type: Constants.MESSAGE_WINDOW_FLAG, title: String, message
 		center_right.hide()
 		bottom_left.hide()
 		bottom_right.hide()
-	
+
+	await new_msg.tree_exited
+
 
 func _on_blink_timeout() -> void:
 	clock_separator.modulate.a = 1.0 if clock_separator.modulate.a < 1.0 else 0.0
