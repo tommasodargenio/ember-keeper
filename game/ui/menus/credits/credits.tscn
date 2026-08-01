@@ -21,7 +21,7 @@ script = ExtResource("2_xgj3s")
 normal_label = ExtResource("3_du34r")
 title_label = ExtResource("4_imqso")
 menu_title = "Credits"
-menu_footer = "1.0.0-26.7 Copyright (c) 2026-2026"
+menu_footer = ""
 menu_items = Array[ExtResource("3_uobj6")]([SubResource("Resource_xgj3s")])
 
 [node name="MenuTitleLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="0" unique_id=323291262]
@@ -47,4 +47,4 @@ theme_override_constants/separation = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_4l7av")
 
 [node name="MenuFooterLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="6" unique_id=462098605]
-text = "1.0.0-26.7 Copyright (c) 2026-2026"
+text = ""

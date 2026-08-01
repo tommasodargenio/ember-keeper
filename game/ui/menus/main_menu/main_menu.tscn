@@ -30,8 +30,8 @@ metadata/_custom_type_script = "uid://dckbgyalb1pmr"
 
 [node name="MainMenu" unique_id=467531739 instance=ExtResource("1_nto6o")]
 script = ExtResource("2_5bjn0")
-menu_footer = "1.0.0-26.7 Copyright (c) 2026-2026"
+menu_footer = ""
 menu_items = Array[ExtResource("3_xlkxe")]([SubResource("Resource_xlkxe"), SubResource("Resource_n3xbt"), SubResource("Resource_5naww")])
 
 [node name="MenuFooterLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="4" unique_id=462098605]
-text = "1.0.0-26.7 Copyright (c) 2026-2026"
+text = ""

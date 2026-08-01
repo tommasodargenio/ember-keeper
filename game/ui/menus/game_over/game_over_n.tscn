@@ -27,7 +27,7 @@ script = ExtResource("2_psp8b")
 start_hidden = true
 hide_as_close = true
 menu_title = "Game Over"
-menu_footer = "1.0.0-26.7 Copyright (c) 2026-2026"
+menu_footer = ""
 menu_items = Array[ExtResource("3_f2ira")]([SubResource("Resource_psp8b"), SubResource("Resource_f2ira")])
 
 [node name="MenuTitleLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="0" unique_id=323291262]
@@ -49,4 +49,4 @@ theme_override_constants/separation = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_4l7av")
 
 [node name="MenuFooterLabel" parent="CenterContainer/PanelContainer/VBoxContainer" parent_id_path=PackedInt32Array(1394013805) index="6" unique_id=462098605]
-text = "1.0.0-26.7 Copyright (c) 2026-2026"
+text = ""
