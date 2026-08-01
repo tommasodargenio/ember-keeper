@@ -78,7 +78,7 @@ func _refresh_lanterns_count() -> void:
 		
 
 func _init_town_lantern(folder_node: Node) -> void:
-	var lantern_ = preload(Constants.SCENE_PATHS["Lantern"])
+	var lantern_ = load(Constants.SCENE_PATHS["Lantern"])
 	if Constants.STARTING_TOWN_LANTERNS > 0:
 		var town_lantern = load("uid://cwnfoj65xk8d1")
 		for i in range(Constants.STARTING_TOWN_LANTERNS):

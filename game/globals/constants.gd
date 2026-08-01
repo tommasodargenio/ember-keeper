@@ -4,7 +4,7 @@ enum DEBUG_LAYERS {ALL, NPC, VM, WALLET, GAME, MAP, PATHFINDING, LOADING}
 const DEBUG := false
 const DEBUG_TYPE : DEBUG_LAYERS = DEBUG_LAYERS.GAME
 const GAME_NAME : String = "Ember Keeper"
-const GAME_VERSION : String = "1.0.1-26.8"
+const GAME_VERSION : String = "1.0.2-26.8"
 
 # CREDITS
 const CREDIT_AUTHOR = "TomDubliner"
